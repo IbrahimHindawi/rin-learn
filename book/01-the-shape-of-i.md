@@ -14,7 +14,11 @@ and generic definitions.
 
 ## Lesson 00 - Hello World
 
-`src/lessons/00_hello_world.i` shows the whole outer shape:
+`src/lessons/00_hello_world.i` asks the smallest possible question: what does a
+complete I program look like?
+
+Before you read the file, ignore the output call and look for the declaration
+shape. The program is one top-level name with one procedure type:
 
 ```i
 main: proc()->i32 = {
@@ -24,10 +28,13 @@ main: proc()->i32 = {
 ```
 
 Read it as a declaration named `main`. Its type is a procedure taking no
-arguments and returning `i32`. Its value is the block after `=`.
+arguments and returning `i32`. Its value is the block after `=`. The block is not
+separate syntax for a special global function; it is the value assigned to the
+name.
 
-Notice the habit this creates. You do not need a separate mental rule for global
-functions. A function is a value with a procedure type.
+After it runs, the important result is not the greeting. The important result is
+that you have seen the outer frame used by every later lesson: name, type, value,
+body, return.
 
 Try this:
 
@@ -37,7 +44,10 @@ Try this:
 
 ## Lesson 01 - Values And Expressions
 
-`src/lessons/01_values_and_expressions.i` adds local variables and casts:
+`src/lessons/01_values_and_expressions.i` asks how typed storage and expressions
+fit together inside a procedure body.
+
+Start by reading the local declarations as little facts about storage:
 
 ```i
 count: i32 = 6;
@@ -46,14 +56,14 @@ total: i32 = count * 3 + 1;
 ratio: f32 = cast(total, f32) / scale;
 ```
 
-The lesson is small, but it teaches three important habits:
+`count` is integer storage. `scale` is floating-point storage. `total` is another
+integer computed from `count`. `ratio` crosses from integer arithmetic into
+floating-point arithmetic, so the conversion is visible with `cast`.
 
-- choose a concrete type for storage
-- let expressions combine values of known type
-- make conversions visible with `cast`
-
-The `2.5f` suffix is also doing work. It keeps the literal in the `f32` world
-before the later print call widens the value for output.
+After it runs, you should be able to predict the printed values before looking at
+them: `count` stays `6`, `total` becomes `19`, and `ratio` is computed from `19 /
+2.5`. The lesson is training you to read types and expressions together, instead
+of treating the type annotation as decoration.
 
 Try this:
 
@@ -63,31 +73,40 @@ Try this:
 
 ## Lesson 02 - Control Flow
 
-`src/lessons/02_control_flow.i` gives you a compact tour of decisions:
+`src/lessons/02_control_flow.i` asks how a program changes direction while still
+keeping scope clear.
+
+The loop gives its counter a type right where the counter is introduced:
 
 ```i
-for (i: i32 = 0; i < 5; i += 1) { ... }
-
-if (i == 3) {
-    continue;
+for (i: i32 = 0; i < 5; i += 1) {
+    if (i == 3) {
+        continue;
+    }
+    sum += i;
 }
 ```
 
-Loops keep their counter declaration in the loop header. `if` blocks are ordinary
-blocks. `continue` moves to the next loop iteration.
+The `if` block makes the exceptional case visible. The `continue` says the loop
+should skip the rest of this iteration and move to the next value of `i`.
 
-The same lesson also shows a scoped `switch`:
+The same file then switches over a named mode:
 
 ```i
 switch (mode) {
-    case Mode.Idle: { ... }
-    case Mode.Walk: { ... }
-    default: { ... }
+    case Mode.Idle: { sum += 10; }
+    case Mode.Walk: { sum += 20; }
+    default: { sum += 30; }
 }
 ```
 
-Each case owns a block. That makes the local scope obvious and keeps each arm
-from accidentally becoming part of the next arm.
+Each case owns a block. That matters because local names introduced in one case
+belong to that case, and the shape of each arm stays explicit.
+
+After it runs, the sum is the story of the branches taken. The loop adds `0`,
+`1`, `2`, and `4`; the selected mode then chooses the default arm and adds more.
+That makes the output a compact check that the loop, branch, and switch all did
+what you expected.
 
 Try this:
 

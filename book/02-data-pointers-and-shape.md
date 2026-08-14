@@ -5,16 +5,20 @@ data shape. The lesson files keep the shapes tiny so you can see every piece.
 
 ## Lesson 03 - Arrays And Pointers
 
-`src/lessons/03_arrays_and_pointers.i` starts with fixed storage:
+`src/lessons/03_arrays_and_pointers.i` asks what it means for a value to live in
+storage that another procedure can touch.
+
+Begin with the array declaration:
 
 ```i
 values: [4]i32 = {};
 ```
 
 The count is part of the type. This is not a promise that the array might grow;
-it is four `i32` slots. The initializer `{}` asks for zeroed storage.
+it is four `i32` slots. The initializer `{}` asks for zeroed storage, so the file
+starts from a known state.
 
-The procedure in the same file accepts a pointer:
+The helper procedure accepts a pointer:
 
 ```i
 increment: proc(value: *i32)->void = {
@@ -22,15 +26,20 @@ increment: proc(value: *i32)->void = {
 }
 ```
 
-The caller passes the address of existing storage:
+The caller creates that pointer from an existing array element:
 
 ```i
 first: *i32 = values[0].&;
 increment(first);
 ```
 
-That is the core pointer idea in I: if a procedure should mutate something the
-caller already owns, pass a pointer to that storage.
+Read `values[0].&` as "the address of the first slot." Inside `increment`,
+`value[0]` means "the storage this pointer points at." The procedure does not
+receive a copy of the integer; it receives access to the caller's slot.
+
+After it runs, the first element has changed and the others keep the values from
+the loop. That is the point of the lesson: if a procedure should mutate something
+the caller already owns, pass a pointer to that storage.
 
 Try this:
 
@@ -40,7 +49,10 @@ Try this:
 
 ## Lesson 04 - Structs And Enums
 
-`src/lessons/04_structs_and_enums.i` combines named fields and named states:
+`src/lessons/04_structs_and_enums.i` asks how to give names to related fields and
+states.
+
+The file starts with two small shapes:
 
 ```i
 Point: struct = {
@@ -55,7 +67,11 @@ SpriteKind: enum = {
 }
 ```
 
-`Sprite` then nests those ideas:
+`Point` groups two coordinates. `SpriteKind` gives names to the states a sprite
+can be in. Neither shape does anything by itself; they are vocabulary for the
+next declaration.
+
+`Sprite` nests both ideas:
 
 ```i
 Sprite: struct = {
@@ -64,9 +80,13 @@ Sprite: struct = {
 }
 ```
 
-The lesson is worth reading slowly because it shows how I keeps composition
-plain. A sprite has a kind and a position. A position has two fields. Assignment
-uses the same path you would use to read the value: `s.pos.x`.
+Then `main` initializes one sprite by assigning through field paths such as
+`s.kind`, `s.pos.x`, and `s.pos.y`. Those paths are intentionally boring. The way
+you write into a nested value is the same way you later read from it.
+
+After it runs, you have seen the basic data-modeling move in I: name a few small
+shapes, compose them into a bigger shape, then use field paths to work with the
+result.
 
 Try this:
 
@@ -76,15 +96,19 @@ Try this:
 
 ## Lesson 05 - Procedures And Callbacks
 
-`src/lessons/05_procs_and_callbacks.i` shows that procedure types can be named:
+`src/lessons/05_procs_and_callbacks.i` asks how behavior can be stored in data.
+
+The file first gives a procedure pointer type a short name:
 
 ```i
 Op: alias = *proc(a: i32, b: i32)->i32;
 ```
 
 `Op` is a pointer to a procedure that takes two `i32` values and returns an
-`i32`. The lesson stores those procedure pointers in an array and inside a
-struct:
+`i32`. Once that shape has a name, the rest of the file can use it like any other
+type.
+
+The lesson stores operations in an array:
 
 ```i
 table: [2]Op = {};
@@ -92,8 +116,17 @@ table[0] = add;
 table[1] = mul;
 ```
 
-This is the callback pattern in its smallest useful form. The data structure does
-not need to know which operation it will call until you put a procedure into it.
+It also stores one operation in a struct:
+
+```i
+Adder: struct = {
+    call: Op;
+}
+```
+
+After it runs, the three calls demonstrate the same idea from different angles:
+one operation is called through the first table slot, one through the second table
+slot, and one through a field on a struct value. The data chooses the behavior.
 
 Try this:
 
@@ -104,3 +137,4 @@ Try this:
 These lessons are where I starts feeling like a practical systems language:
 storage is explicit, names describe shape, and procedures can travel through
 data just like other values.
+

@@ -20,7 +20,10 @@ The script compiles every file in `src/lessons` and writes lowered output under
 Read `book/00-how-to-read.md` first, then walk through the chapters in numeric
 order.
 
-The book is intentionally I-first:
+The book is intentionally I-first. Each lesson section is wrapped in prose before
+and after the code idea: what the lesson is asking, what to notice in the source,
+what should feel different after it runs, and one or two small experiments to try
+next.
 
 - `01-the-shape-of-i.md` covers tiny programs, declarations, expressions, and
   control flow.

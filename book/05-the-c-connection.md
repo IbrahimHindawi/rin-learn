@@ -25,7 +25,11 @@ a separate table by hand.
 
 ## Lesson 06 - The C Surface
 
-`src/lessons/06_c_surface.i` is the smallest explicit boundary lesson:
+`src/lessons/06_c_surface.i` asks how I source talks to declarations and symbols
+owned outside the I file.
+
+Before this lesson, the book avoided the boundary so the I shape could stand on
+its own. Now the boundary is the subject:
 
 ```i
 cinclude "stdio.h"
@@ -37,6 +41,17 @@ puts: proc(text: *const char)->i32 = { external; }
 `cinclude` says the generated translation unit needs a foreign header. The
 `external` body says the symbol exists elsewhere, so I should type-check calls to
 it but should not emit a new definition for it.
+
+The body then uses both pieces:
+
+```i
+puts("this call is checked by I and provided by C");
+printf("bonus=%d\n", I_LEARN_BONUS);
+```
+
+After it runs, the lesson has shown a precise boundary: I can check the call
+shape, carry through a macro, and still leave ownership of the external symbol to
+the platform side.
 
 That gives you a practical rule:
 
