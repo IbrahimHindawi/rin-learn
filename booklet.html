@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>I Learn - Companion Booklet</title>
+  <style>
+    :root {
+      --paper: #fbf7ef;
+      --paper-soft: #fffdf8;
+      --ink: #23201c;
+      --muted: #6d645a;
+      --rule: #d8c7ae;
+      --accent: #2f7d76;
+      --accent-soft: #dbeeea;
+      --rose: #b85f6a;
+      --code: #f3eadc;
+      --shadow: rgba(57, 42, 25, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(80, 56, 28, 0.08), transparent 18%, transparent 82%, rgba(80, 56, 28, 0.08)),
+        var(--paper);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    .book {
+      width: min(920px, calc(100% - 32px));
+      margin: 32px auto;
+      background: var(--paper-soft);
+      border: 1px solid var(--rule);
+      box-shadow: 0 18px 60px var(--shadow);
+    }
+
+    .page {
+      min-height: 780px;
+      padding: 56px clamp(28px, 7vw, 76px);
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+    }
+
+    .page:last-child {
+      border-bottom: 0;
+    }
+
+    .cover {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(47, 125, 118, 0.13), transparent 30%),
+        linear-gradient(180deg, #fffaf0, var(--paper-soft));
+    }
+
+    .cover-inner {
+      width: min(640px, 100%);
+      border: 2px solid var(--ink);
+      padding: 52px 42px;
+      outline: 1px solid var(--rule);
+      outline-offset: 10px;
+      background: rgba(255, 253, 248, 0.75);
+    }
+
+    .kicker {
+      margin: 0 0 16px;
+      color: var(--rose);
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.14;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(44px, 9vw, 86px);
+      font-weight: 700;
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: clamp(30px, 5vw, 46px);
+    }
+
+    h3 {
+      margin: 28px 0 8px;
+      font-size: 21px;
+    }
+
+    p {
+      margin: 0 0 16px;
+    }
+
+    .subtitle {
+      margin: 20px auto 0;
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 20px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .rule {
+      width: 96px;
+      height: 2px;
+      margin: 28px auto;
+      background: var(--accent);
+    }
+
+    .toc {
+      display: grid;
+      gap: 10px;
+      margin-top: 28px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .toc a {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px dotted var(--rule);
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .toc span {
+      color: var(--muted);
+    }
+
+    .note {
+      margin: 24px 0;
+      padding: 18px 20px;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 15px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin: 22px 0;
+    }
+
+    .card {
+      min-height: 132px;
+      padding: 18px;
+      border: 1px solid var(--rule);
+      background: #fffaf1;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    .lesson-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .lesson {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .lesson-num {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-weight: 700;
+    }
+
+    .lesson h3 {
+      margin: 0 0 4px;
+    }
+
+    .lesson p {
+      margin-bottom: 6px;
+    }
+
+    code,
+    pre {
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    code {
+      padding: 1px 5px;
+      background: var(--code);
+    }
+
+    pre {
+      overflow-x: auto;
+      margin: 18px 0;
+      padding: 18px;
+      border: 1px solid var(--rule);
+      background: var(--code);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .footer-mark {
+      position: absolute;
+      right: clamp(28px, 7vw, 76px);
+      bottom: 22px;
+      color: var(--muted);
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .book {
+        width: 100%;
+        margin: 0;
+        border: 0;
+        box-shadow: none;
+      }
+
+      .page {
+        min-height: auto;
+        page-break-after: always;
+        border-bottom: 0;
+      }
+
+      a {
+        color: var(--ink);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="book">
+    <section class="page cover" id="cover">
+      <div class="cover-inner">
+        <p class="kicker">A small companion for the I lessons</p>
+        <h1>I Learn</h1>
+        <div class="rule"></div>
+        <p class="subtitle">A gentle walk from C's machine-shaped ideas into I's declarations, generics, and reflection.</p>
+        <p class="small">Open beside the lessons in <code>src/lessons</code>. Print it when you want paper margins.</p>
+      </div>
+      <div class="footer-mark">C-shaped, I-flavored</div>
+    </section>
+
+    <section class="page" id="contents">
+      <p class="kicker">Contents</p>
+      <h2>The Path</h2>
+      <p>This booklet is a map, not the full manual. The real book is the set of tiny programs you can compile and inspect.</p>
+      <ol class="toc">
+        <li><a href="#idea"><strong>1. The Core Idea</strong><span>what C gives us</span></a></li>
+        <li><a href="#read"><strong>2. How To Read A Lesson</strong><span>compile, inspect, repeat</span></a></li>
+        <li><a href="#lessons"><strong>3. The Lesson Trail</strong><span>fourteen little programs</span></a></li>
+        <li><a href="#meta"><strong>4. Where I Starts To Be I</strong><span>generics and reflection</span></a></li>
+        <li><a href="#ritual"><strong>5. The Check Ritual</strong><span>one command</span></a></li>
+      </ol>
+      <div class="note">The examples use the packaged compiler from <code>C:\devel\i-windows-x64</code>, the same way a separate user project should.</div>
+      <div class="footer-mark">contents</div>
+    </section>
+
+    <section class="page" id="idea">
+      <p class="kicker">Chapter 1</p>
+      <h2>The Core Idea</h2>
+      <p>C is not C because of punctuation. C is C because it keeps the physical program visible: memory, addresses, contiguous arrays, structs as layout, enums as named integers, and procedures as callable symbols.</p>
+      <p>I keeps that model. It does not try to hide the machine. It tries to make the shape of the program easier to write, easier to check, and easier for tools to understand.</p>
+
+      <div class="grid">
+        <article class="card">
+          <h3>Memory</h3>
+          <p>Values live in storage. Pointers name storage. Arrays put values next to each other.</p>
+        </article>
+        <article class="card">
+          <h3>Layout</h3>
+          <p>A struct is a promise about fields and offsets. That promise matters when talking to C.</p>
+        </article>
+        <article class="card">
+          <h3>Compilation</h3>
+          <p>I lowers to C. The generated C is useful evidence, not a secret.</p>
+        </article>
+      </div>
+
+      <pre><code>Point: struct = {
+    x: f32;
+    y: f32;
+}</code></pre>
+      <div class="footer-mark">the core idea</div>
+    </section>
+
+    <section class="page" id="read">
+      <p class="kicker">Chapter 2</p>
+      <h2>How To Read A Lesson</h2>
+      <p>Each lesson is a full program. Read the comments, compile it, and then look at the generated C when the lowering is interesting.</p>
+      <p>The rule of thumb is small and reliable:</p>
+      <pre><code>read the I
+compile the I
+inspect the C
+change one thing
+compile again</code></pre>
+      <p>That loop teaches more than a big reference page. It makes every feature answer a practical question.</p>
+      <div class="note">The lesson files are intentionally short. When a file grows too much, it stops being a lesson and becomes a project.</div>
+      <div class="footer-mark">reading lessons</div>
+    </section>
+
+    <section class="page" id="lessons">
+      <p class="kicker">Chapter 3</p>
+      <h2>The Lesson Trail</h2>
+      <div class="lesson-list">
+        <article class="lesson">
+          <div class="lesson-num">00</div>
+          <div><h3><a href="src/lessons/00_hello_world.i">Hello World</a></h3><p>The smallest complete I program.</p></div>
+        </article>
+        <article class="lesson">
+          <div class="lesson-num">01</div>
+          <div><h3><a href="src/lessons/01_values_and_expressions.i">Values And Expressions</a></h3><p>Numbers, casts, operators, and output.</p></div>
+        </article>
+        <article class="lesson">
+          <div class="lesson-num">02</div>
+          <div><h3><a href="src/lessons/02_control_flow.i">Control Flow</a></h3><p>Loops, conditionals, switch cases, and scoped case blocks.</p></div>
+        </article>
+        <article class="lesson">
+          <div class="lesson-num">03</div>
+          <div><h3><a href="src/lessons/03_arrays_and_pointers.i">Arrays And Pointers</a></h3><p>Contiguous storage, addresses, and mutation through a pointer.</p></div>
+        </article>
+        <article class="lesson">
+          <div class="lesson-num">04</div>
+          <div><h3><a href="src/lessons/04_structs_and_enums.i">Structs And Enums</a></h3><p>Named layouts and named integer states.</p></div>
+        </article>
+        <article class="lesson">
+          <div class="lesson-num">05</div>
+          <div><h3><a href="src/lessons/05_procs_and_callbacks.i">Procedures And Callbacks</a></h3><p>Proc pointers in arrays and structs.</p></div>
+        </article>
+        <article class="lesson">
+          <div class="lesson-num">06</div>
+          <div><h3><a href="src/lessons/06_c_surface.i">The C Surface</a></h3><p><code>cinclude</code>, <code>external</code>, and checked calls into C.</p></div>
+        </article>
+        <article class="lesson">
+          <div class="lesson-num">07</div>
+          <div><h3><a href="src/lessons/07_std_print.i">Standard Print</a></h3><p>Imports from <code>std</code> beside the installed compiler.</p></div>
+        </article>
+        <article class="lesson">
+          <div class="lesson-num">08</div>
+          <div><h3><a href="src/lessons/08_arenas_and_array.i">Arenas And Array</a></h3><p>Explicit allocation and a generic standard container.</p></div>
+        </article>
+        <article class="lesson">
+          <div class="lesson-num">09</div>
+          <div><h3><a href="src/lessons/09_generics_box.i">Generic Box</a></h3><p>A tiny generic struct and owner-qualified generic procedures.</p></div>
+        </article>
+        <article class="lesson">
+          <div class="lesson-num">10</div>
+          <div><h3><a href="src/lessons/10_enum_sized_tables.i">Enum-Sized Tables</a></h3><p>Tables sized by <code>Enum&lt;&gt;.value_count</code>.</p></div>
+        </article>
+        <article class="lesson">
+          <div class="lesson-num">11</div>
+          <div><h3><a href="src/lessons/11_reflection_metadata.i">Reflection Metadata</a></h3><p>Names, sizes, field counts, and pointer depth.</p></div>
+        </article>
+        <article class="lesson">
+          <div class="lesson-num">12</div>
+          <div><h3><a href="src/lessons/12_reflection_fields.i">Reflection Fields</a></h3><p>Walking reflected fields and reading attributes.</p></div>
+        </article>
+        <article class="lesson">
+          <div class="lesson-num">13</div>
+          <div><h3><a href="src/lessons/13_metaprogramming_shape.i">Metaprogramming Shape</a></h3><p>Generic instantiations and their reflected concrete names.</p></div>
+        </article>
+      </div>
+      <div class="footer-mark">lesson trail</div>
+    </section>
+
+    <section class="page" id="meta">
+      <p class="kicker">Chapter 4</p>
+      <h2>Where I Starts To Be I</h2>
+      <p>The first lessons are mostly C ideas in I syntax. The later lessons show why the syntax is worth having.</p>
+      <p>Generics let one source definition become concrete code:</p>
+      <pre><code>Box: struct&lt;T&gt; = {
+    value: T;
+}
+
+Box&lt;T&gt;make: proc&lt;T&gt;(value: T)-&gt;Box&lt;T&gt; = {
+    box: Box&lt;T&gt; = {};
+    box.value = value;
+    return box;
+}</code></pre>
+      <p>Reflection gives generated metadata for the data you already wrote:</p>
+      <pre><code>printf("%s %llu\n", Payload&lt;&gt;.name, Payload&lt;&gt;.field_count);</code></pre>
+      <p>The spirit is concrete metaprogramming: less handwritten boilerplate, more checkable generated shape.</p>
+      <div class="footer-mark">metaprogramming</div>
+    </section>
+
+    <section class="page" id="ritual">
+      <p class="kicker">Chapter 5</p>
+      <h2>The Check Ritual</h2>
+      <p>Use the check script whenever you change a lesson:</p>
+      <pre><code>powershell -ExecutionPolicy Bypass -File scripts/check_all.ps1</code></pre>
+      <p>It finds <code>I.exe</code> through <code>I_HOME</code>, then <code>PATH</code>, then <code>C:\devel\i-windows-x64\I.exe</code>. It compiles every lesson into <code>build/gen</code>.</p>
+      <p>If all is well, it ends with:</p>
+      <pre><code>ok 14 lessons</code></pre>
+      <div class="note">A learning repo should keep this ritual boring. The interesting part is the source, not the build ceremony.</div>
+      <p class="small">Related notes: <a href="book/00-how-to-read.md">how to read</a>, <a href="book/01-what-c-teaches.md">what C teaches</a>, and <a href="book/04-generics-and-reflection.md">generics and reflection</a>.</p>
+      <div class="footer-mark">check ritual</div>
+    </section>
+  </main>
+</body>
+</html>
