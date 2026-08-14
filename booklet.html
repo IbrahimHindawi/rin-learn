@@ -276,152 +276,91 @@
         <p class="kicker">A small companion for the I lessons</p>
         <h1>I Learn</h1>
         <div class="rule"></div>
-        <p class="subtitle">A gentle walk from C's machine-shaped ideas into I's declarations, generics, and reflection.</p>
+        <p class="subtitle">A tiny I-first path through declarations, data, generics, and reflection.</p>
         <p class="small">Open beside the lessons in <code>src/lessons</code>. Print it when you want paper margins.</p>
       </div>
-      <div class="footer-mark">C-shaped, I-flavored</div>
+      <div class="footer-mark">I-first, tiny by design</div>
     </section>
 
     <section class="page" id="contents">
       <p class="kicker">Contents</p>
       <h2>The Path</h2>
-      <p>This booklet is a map, not the full manual. The real book is the set of tiny programs you can compile and inspect.</p>
+      <p>This booklet is a map, not the full manual. The real book is the set of tiny programs you can compile, edit, and run again.</p>
       <ol class="toc">
-        <li><a href="#idea"><strong>1. The Core Idea</strong><span>what C gives us</span></a></li>
-        <li><a href="#read"><strong>2. How To Read A Lesson</strong><span>compile, inspect, repeat</span></a></li>
-        <li><a href="#lessons"><strong>3. The Lesson Trail</strong><span>fourteen little programs</span></a></li>
-        <li><a href="#meta"><strong>4. Where I Starts To Be I</strong><span>generics and reflection</span></a></li>
+        <li><a href="#read"><strong>1. How To Read A Lesson</strong><span>short loops, real files</span></a></li>
+        <li><a href="#first"><strong>2. First Shapes</strong><span>lessons 00-02</span></a></li>
+        <li><a href="#data"><strong>3. Data And Callbacks</strong><span>lessons 03-05</span></a></li>
+        <li><a href="#library"><strong>4. Libraries And Reflection</strong><span>lessons 07-13</span></a></li>
         <li><a href="#ritual"><strong>5. The Check Ritual</strong><span>one command</span></a></li>
+        <li><a href="#c-end"><strong>6. The Last Connection</strong><span>lesson 06, saved for last</span></a></li>
       </ol>
-      <div class="note">The examples use the packaged compiler from <code>C:\devel\i-windows-x64</code>, the same way a separate user project should.</div>
+      <div class="note">The examples use the packaged compiler from <code>i-windows-x64</code>, the same way a separate user project should.</div>
       <div class="footer-mark">contents</div>
     </section>
 
-    <section class="page" id="idea">
-      <p class="kicker">Chapter 1</p>
-      <h2>The Core Idea</h2>
-      <p>C is not C because of punctuation. C is C because it keeps the physical program visible: memory, addresses, contiguous arrays, structs as layout, enums as named integers, and procedures as callable symbols.</p>
-      <p>I keeps that model. It does not try to hide the machine. It tries to make the shape of the program easier to write, easier to check, and easier for tools to understand.</p>
-
-      <div class="grid">
-        <article class="card">
-          <h3>Memory</h3>
-          <p>Values live in storage. Pointers name storage. Arrays put values next to each other.</p>
-        </article>
-        <article class="card">
-          <h3>Layout</h3>
-          <p>A struct is a promise about fields and offsets. That promise matters when talking to C.</p>
-        </article>
-        <article class="card">
-          <h3>Compilation</h3>
-          <p>I lowers to C. The generated C is useful evidence, not a secret.</p>
-        </article>
-      </div>
-
-      <pre><code>Point: struct = {
-    x: f32;
-    y: f32;
-}</code></pre>
-      <div class="footer-mark">the core idea</div>
-    </section>
-
     <section class="page" id="read">
-      <p class="kicker">Chapter 2</p>
+      <p class="kicker">Chapter 1</p>
       <h2>How To Read A Lesson</h2>
-      <p>Each lesson is a full program. Read the comments, compile it, and then look at the generated C when the lowering is interesting.</p>
-      <p>The rule of thumb is small and reliable:</p>
+      <p>Each lesson is a complete program. Read it once without changing anything, then compile it. After that, make one small change and compile again.</p>
+      <p>The loop is deliberately plain:</p>
       <pre><code>read the I
 compile the I
-inspect the C
 change one thing
-compile again</code></pre>
-      <p>That loop teaches more than a big reference page. It makes every feature answer a practical question.</p>
-      <div class="note">The lesson files are intentionally short. When a file grows too much, it stops being a lesson and becomes a project.</div>
+compile again
+keep the diff tiny</code></pre>
+      <p>A small loop makes the compiler feel like a conversation. If the error message is surprising, the lesson just found the next thing to learn.</p>
+      <div class="grid">
+        <article class="card"><h3>Read</h3><p>Start with names, types, and blocks. Ask what storage exists and who owns it.</p></article>
+        <article class="card"><h3>Change</h3><p>Make one edit at a time: a type, a count, a field, a branch, or a generic argument.</p></article>
+        <article class="card"><h3>Check</h3><p>Compile the lesson and keep the generated output available for later inspection.</p></article>
+      </div>
       <div class="footer-mark">reading lessons</div>
     </section>
 
-    <section class="page" id="lessons">
-      <p class="kicker">Chapter 3</p>
-      <h2>The Lesson Trail</h2>
+    <section class="page" id="first">
+      <p class="kicker">Chapter 2</p>
+      <h2>First Shapes</h2>
       <div class="lesson-list">
-        <article class="lesson">
-          <div class="lesson-num">00</div>
-          <div><h3><a href="src/lessons/00_hello_world.i">Hello World</a></h3><p>The smallest complete I program.</p></div>
-        </article>
-        <article class="lesson">
-          <div class="lesson-num">01</div>
-          <div><h3><a href="src/lessons/01_values_and_expressions.i">Values And Expressions</a></h3><p>Numbers, casts, operators, and output.</p></div>
-        </article>
-        <article class="lesson">
-          <div class="lesson-num">02</div>
-          <div><h3><a href="src/lessons/02_control_flow.i">Control Flow</a></h3><p>Loops, conditionals, switch cases, and scoped case blocks.</p></div>
-        </article>
-        <article class="lesson">
-          <div class="lesson-num">03</div>
-          <div><h3><a href="src/lessons/03_arrays_and_pointers.i">Arrays And Pointers</a></h3><p>Contiguous storage, addresses, and mutation through a pointer.</p></div>
-        </article>
-        <article class="lesson">
-          <div class="lesson-num">04</div>
-          <div><h3><a href="src/lessons/04_structs_and_enums.i">Structs And Enums</a></h3><p>Named layouts and named integer states.</p></div>
-        </article>
-        <article class="lesson">
-          <div class="lesson-num">05</div>
-          <div><h3><a href="src/lessons/05_procs_and_callbacks.i">Procedures And Callbacks</a></h3><p>Proc pointers in arrays and structs.</p></div>
-        </article>
-        <article class="lesson">
-          <div class="lesson-num">06</div>
-          <div><h3><a href="src/lessons/06_c_surface.i">The C Surface</a></h3><p><code>cinclude</code>, <code>external</code>, and checked calls into C.</p></div>
-        </article>
-        <article class="lesson">
-          <div class="lesson-num">07</div>
-          <div><h3><a href="src/lessons/07_std_print.i">Standard Print</a></h3><p>Imports from <code>std</code> beside the installed compiler.</p></div>
-        </article>
-        <article class="lesson">
-          <div class="lesson-num">08</div>
-          <div><h3><a href="src/lessons/08_arenas_and_array.i">Arenas And Array</a></h3><p>Explicit allocation and a generic standard container.</p></div>
-        </article>
-        <article class="lesson">
-          <div class="lesson-num">09</div>
-          <div><h3><a href="src/lessons/09_generics_box.i">Generic Box</a></h3><p>A tiny generic struct and owner-qualified generic procedures.</p></div>
-        </article>
-        <article class="lesson">
-          <div class="lesson-num">10</div>
-          <div><h3><a href="src/lessons/10_enum_sized_tables.i">Enum-Sized Tables</a></h3><p>Tables sized by <code>Enum&lt;&gt;.value_count</code>.</p></div>
-        </article>
-        <article class="lesson">
-          <div class="lesson-num">11</div>
-          <div><h3><a href="src/lessons/11_reflection_metadata.i">Reflection Metadata</a></h3><p>Names, sizes, field counts, and pointer depth.</p></div>
-        </article>
-        <article class="lesson">
-          <div class="lesson-num">12</div>
-          <div><h3><a href="src/lessons/12_reflection_fields.i">Reflection Fields</a></h3><p>Walking reflected fields and reading attributes.</p></div>
-        </article>
-        <article class="lesson">
-          <div class="lesson-num">13</div>
-          <div><h3><a href="src/lessons/13_metaprogramming_shape.i">Metaprogramming Shape</a></h3><p>Generic instantiations and their reflected concrete names.</p></div>
-        </article>
+        <article class="lesson"><div class="lesson-num">00</div><div><h3><a href="src/lessons/00_hello_world.i">Hello World</a></h3><p>A complete program is just a declaration named <code>main</code> with a procedure type and a block body.</p></div></article>
+        <article class="lesson"><div class="lesson-num">01</div><div><h3><a href="src/lessons/01_values_and_expressions.i">Values And Expressions</a></h3><p>Typed locals, numeric suffixes, arithmetic, and explicit <code>cast</code> calls keep storage and conversion visible.</p></div></article>
+        <article class="lesson"><div class="lesson-num">02</div><div><h3><a href="src/lessons/02_control_flow.i">Control Flow</a></h3><p><code>for</code>, <code>if</code>, <code>continue</code>, enum-qualified values, and block-scoped <code>switch</code> cases.</p></div></article>
       </div>
-      <div class="footer-mark">lesson trail</div>
+      <div class="note">Try changing one return value, one expression, and one enum case. Predict the result before compiling.</div>
+      <pre><code>name: Type = value;
+name: proc(arg: Type)-&gt;Return = { ... }
+Name: struct = { field: Type; }</code></pre>
+      <div class="footer-mark">first shapes</div>
     </section>
 
-    <section class="page" id="meta">
-      <p class="kicker">Chapter 4</p>
-      <h2>Where I Starts To Be I</h2>
-      <p>The first lessons are mostly C ideas in I syntax. The later lessons show why the syntax is worth having.</p>
-      <p>Generics let one source definition become concrete code:</p>
-      <pre><code>Box: struct&lt;T&gt; = {
-    value: T;
-}
+    <section class="page" id="data">
+      <p class="kicker">Chapter 3</p>
+      <h2>Data And Callbacks</h2>
+      <div class="lesson-list">
+        <article class="lesson"><div class="lesson-num">03</div><div><h3><a href="src/lessons/03_arrays_and_pointers.i">Arrays And Pointers</a></h3><p>Fixed arrays make count part of the type. Pointers let procedures mutate storage the caller already owns.</p></div></article>
+        <article class="lesson"><div class="lesson-num">04</div><div><h3><a href="src/lessons/04_structs_and_enums.i">Structs And Enums</a></h3><p>Structs group fields. Enums name states. Nested field access keeps composition readable.</p></div></article>
+        <article class="lesson"><div class="lesson-num">05</div><div><h3><a href="src/lessons/05_procs_and_callbacks.i">Procedures And Callbacks</a></h3><p>Procedure pointer aliases can live in arrays and structs, giving data a callable behavior slot.</p></div></article>
+      </div>
+      <div class="grid">
+        <article class="card"><h3>Storage</h3><p><code>[4]i32</code> means exactly four slots. The type carries the count.</p></article>
+        <article class="card"><h3>Address</h3><p><code>value.&</code> hands a procedure access to existing storage.</p></article>
+        <article class="card"><h3>Behavior</h3><p><code>*proc(...)</code> lets a data structure hold a callable operation.</p></article>
+      </div>
+      <div class="footer-mark">data and callbacks</div>
+    </section>
 
-Box&lt;T&gt;make: proc&lt;T&gt;(value: T)-&gt;Box&lt;T&gt; = {
-    box: Box&lt;T&gt; = {};
-    box.value = value;
-    return box;
-}</code></pre>
-      <p>Reflection gives generated metadata for the data you already wrote:</p>
-      <pre><code>printf("%s %llu\n", Payload&lt;&gt;.name, Payload&lt;&gt;.field_count);</code></pre>
-      <p>The spirit is concrete metaprogramming: less handwritten boilerplate, more checkable generated shape.</p>
-      <div class="footer-mark">metaprogramming</div>
+    <section class="page" id="library">
+      <p class="kicker">Chapter 4</p>
+      <h2>Libraries, Generics, Reflection</h2>
+      <div class="lesson-list">
+        <article class="lesson"><div class="lesson-num">07</div><div><h3><a href="src/lessons/07_std_print.i">Standard Print</a></h3><p><code>import "std/Print.i"</code> pulls code from the packaged standard library.</p></div></article>
+        <article class="lesson"><div class="lesson-num">08</div><div><h3><a href="src/lessons/08_arenas_and_array.i">Arenas And Array</a></h3><p>An arena owns allocation. <code>Array&lt;i32&gt;</code> carries length and backing data.</p></div></article>
+        <article class="lesson"><div class="lesson-num">09</div><div><h3><a href="src/lessons/09_generics_box.i">Generic Box</a></h3><p><code>Box&lt;T&gt;</code> becomes concrete as <code>Box&lt;i32&gt;</code>, <code>Box&lt;f32&gt;</code>, or another type.</p></div></article>
+        <article class="lesson"><div class="lesson-num">10</div><div><h3><a href="src/lessons/10_enum_sized_tables.i">Enum-Sized Tables</a></h3><p><code>Enum&lt;&gt;.value_count</code> keeps a table sized to the enum declaration.</p></div></article>
+        <article class="lesson"><div class="lesson-num">11</div><div><h3><a href="src/lessons/11_reflection_metadata.i">Reflection Metadata</a></h3><p><code>Payload&lt;&gt;.name</code>, <code>field_count</code>, <code>size</code>, and <code>fields</code> are generated metadata.</p></div></article>
+        <article class="lesson"><div class="lesson-num">12</div><div><h3><a href="src/lessons/12_reflection_fields.i">Reflection Fields</a></h3><p>Walk fields in a loop and read names, types, sizes, pointer depth, and attributes.</p></div></article>
+        <article class="lesson"><div class="lesson-num">13</div><div><h3><a href="src/lessons/13_metaprogramming_shape.i">Metaprogramming Shape</a></h3><p>Generic instantiations produce concrete reflected names such as <code>Slot_i32_reflect</code>.</p></div></article>
+      </div>
+      <div class="footer-mark">libraries and reflection</div>
     </section>
 
     <section class="page" id="ritual">
@@ -429,13 +368,31 @@ Box&lt;T&gt;make: proc&lt;T&gt;(value: T)-&gt;Box&lt;T&gt; = {
       <h2>The Check Ritual</h2>
       <p>Use the check script whenever you change a lesson:</p>
       <pre><code>powershell -ExecutionPolicy Bypass -File scripts/check_all.ps1</code></pre>
-      <p>It finds <code>I.exe</code> through <code>I_HOME</code>, then <code>PATH</code>, then <code>C:\devel\i-windows-x64\I.exe</code>. It compiles every lesson into <code>build/gen</code>.</p>
+      <p>It finds <code>I.exe</code> through <code>I_HOME</code>, then <code>PATH</code>, then the packaged compiler folder. It compiles every lesson into <code>build/gen</code>.</p>
       <p>If all is well, it ends with:</p>
       <pre><code>ok 14 lessons</code></pre>
       <div class="note">A learning repo should keep this ritual boring. The interesting part is the source, not the build ceremony.</div>
-      <p class="small">Related notes: <a href="book/00-how-to-read.md">how to read</a>, <a href="book/01-what-c-teaches.md">what C teaches</a>, and <a href="book/04-generics-and-reflection.md">generics and reflection</a>.</p>
+      <p class="small">Related notes: <a href="book/00-how-to-read.md">how to read</a>, <a href="book/01-the-shape-of-i.md">the shape of I</a>, and <a href="book/04-reflection-and-metaprogramming.md">reflection and metaprogramming</a>.</p>
       <div class="footer-mark">check ritual</div>
+    </section>
+
+    <section class="page" id="c-end">
+      <p class="kicker">Chapter 6</p>
+      <h2>The C Connection</h2>
+      <p>Only after the I shape is clear do we name the older neighbor. C is C because it exposes storage, addresses, contiguous arrays, structs as layout, enum states, callable symbols, headers, object files, and platform linkage.</p>
+      <p>I keeps that physical model visible while making declarations more regular and giving tools generated metadata to work with.</p>
+      <pre><code>cinclude "stdio.h"
+#define I_LEARN_BONUS 7
+
+puts: proc(text: *const char)-&gt;i32 = { external; }</code></pre>
+      <p>Lesson 06 shows the boundary: <code>cinclude</code> brings in a header, <code>external</code> declares a symbol owned elsewhere, and the generated C under <code>build/gen</code> shows the platform-facing result.</p>
+      <div class="note">Start with I source. Inspect generated C after the shapes make sense.</div>
+      <p class="small">Related note: <a href="book/05-the-c-connection.md">the C connection</a>.</p>
+      <div class="footer-mark">the C connection</div>
     </section>
   </main>
 </body>
 </html>
+
+
+
