@@ -1,4 +1,4 @@
-cinclude "stdio.h"
+import "std/Print.i"
 
 main: proc()->i32 = {
     count: i32 = 6;
@@ -6,7 +6,7 @@ main: proc()->i32 = {
     total: i32 = count * 3 + 1;
     ratio: f32 = cast(total, f32) / scale;
 
-    printf("count=%d total=%d ratio=%f\n", count, total, cast(ratio, f64));
+    printfmt("count={} total={} ratio={}\n", count, total, ratio);
     return 0;
 }
 

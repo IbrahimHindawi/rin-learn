@@ -1,0 +1,68 @@
+import "std/Print.i"
+import "std/reflect.i"
+
+// Three different kinds of type, described by one record apiece.
+Point: struct = {
+    x: f32;
+    y: f32;
+}
+
+Word: union = {
+    as_int: i32;
+    as_float: f32;
+}
+
+Slot: enum = {
+    Empty = -1,
+    Filled = 0,
+}
+
+// A walker does not need to know what it was handed. `kind` tells it, and the
+// checked accessors hand back the payload only when it matches -- so this one
+// procedure describes all three types without a cast in sight.
+describe: proc(meta: *const reflect)->void = {
+    fields: *const reflect_field = reflect_fields(meta);
+    values: *const reflect_value = reflect_values(meta);
+
+    printfmt("{}: kind={} members={} size={}\n",
+        meta[0].name, reflect_kind_name(meta[0].kind), meta[0].count, meta[0].size);
+
+    if (fields != null) {
+        for (i: u64 = 0; i < meta[0].count; i += 1) {
+            printfmt("    {}: {} at offset {}\n", fields[i].name, fields[i].type, fields[i].offset);
+        }
+    }
+    if (values != null) {
+        for (i: u64 = 0; i < meta[0].count; i += 1) {
+            printfmt("    {} = {}\n", values[i].name, values[i].value);
+        }
+    }
+}
+
+main: proc()->i32 = {
+    describe(Point<>.&);
+    describe(Word<>.&);
+    describe(Slot<>.&);
+
+    // A union's members all start at offset zero -- they share storage. That is
+    // why a union is its own kind rather than a struct with a flag: a walker
+    // that only knew structs would lay these out as if they were adjacent and
+    // write nonsense.
+    printfmt("union overlap: {} and {} both at offset {}\n",
+        Word<>.variant.fields[0].name,
+        Word<>.variant.fields[1].name,
+        Word<>.variant.fields[1].offset);
+
+    // Asking for the wrong arm is caught at compile time wherever the kind is
+    // known. Uncomment this and rebuild to see the diagnostic:
+    //
+    //     printfmt("{}\n", Point<>.variant.values[0].name);
+    //
+    // Where the kind is only known at run time -- a `*const reflect` that was
+    // passed in, as in describe() above -- reflect_fields and reflect_values are
+    // the guard: they return null rather than reinterpreting the pointer.
+    if (reflect_values(Point<>.&) == null) {
+        printfmt("asking a struct for enum values yields null, not garbage\n");
+    }
+    return 0;
+}

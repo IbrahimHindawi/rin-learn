@@ -1,4 +1,4 @@
-cinclude "stdio.h"
+import "std/Print.i"
 
 increment: proc(value: *i32)->void = {
     value[0] += 1;
@@ -13,7 +13,7 @@ main: proc()->i32 = {
     first: *i32 = values[0].&;
     increment(first);
 
-    printf("%d %d %d %d\n", values[0], values[1], values[2], values[3]);
+    printfmt("{} {} {} {}\n", values[0], values[1], values[2], values[3]);
     return 0;
 }
 

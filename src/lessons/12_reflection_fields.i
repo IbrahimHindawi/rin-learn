@@ -1,20 +1,41 @@
-cinclude "stdio.h"
+import "std/Print.i"
+import "std/reflect.i"
+
+Inner: struct = {
+    x: f32;
+    y: f32;
+}
 
 Thing: struct = {
     id: i32 @ "save,editor";
     name: *const char;
     scores: [3]i32;
+    origin: Inner;
 }
 
 main: proc()->i32 = {
-    printf("%s has %llu reflected fields\n", Thing<>.name, Thing<>.field_count);
-    for (i: u64 = 0; i < Thing<>.field_count; i += 1) {
-        printf("  %s : %s size=%llu attrs=%s\n",
-            Thing<>.fields[i].name,
-            Thing<>.fields[i].type,
-            Thing<>.fields[i].size,
-            Thing<>.fields[i].attrs);
+    printfmt("{} has {} reflected fields\n", Thing<>.name, Thing<>.count);
+    for (i: u64 = 0; i < Thing<>.count; i += 1) {
+        field: *const reflect_field = Thing<>.variant.fields[i].&;
+        printfmt("  {} : {} size={} attrs={}\n",
+            field[0].name,
+            field[0].type,
+            field[0].size,
+            field[0].attrs);
+    }
+
+    // `type` is only a name. `info` is the link: the record for the field's own
+    // type, so a walk can descend instead of stopping at a string. It is null
+    // for anything without a table of its own -- a builtin, a pointer to C.
+    printfmt("nested:\n");
+    for (i: u64 = 0; i < Thing<>.count; i += 1) {
+        field: *const reflect_field = Thing<>.variant.fields[i].&;
+        if (field[0].info != null) {
+            printfmt("  {} -> {} ({} fields)\n",
+                field[0].name, field[0].info[0].name, field[0].info[0].count);
+        } else {
+            printfmt("  {} -> (builtin, no record)\n", field[0].name);
+        }
     }
     return 0;
 }
-

@@ -22,10 +22,14 @@ shape. The program is one top-level name with one procedure type:
 
 ```i
 main: proc()->i32 = {
-    printf("hello from I\n");
+    printfmt("hello from I\n");
     return 0;
 }
 ```
+
+`printfmt` is I's own output call, from `std/Print.i`. Lesson 07 covers it
+properly; for now read it as "print this". C's `printf` is still reachable and
+lesson 06 uses it deliberately, but it is not what I code reaches for.
 
 Read it as a declaration named `main`. Its type is a procedure taking no
 arguments and returning `i32`. Its value is the block after `=`. The block is not

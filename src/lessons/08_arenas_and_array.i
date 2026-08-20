@@ -1,7 +1,7 @@
+import "std/Print.i"
+
 import "std/Array.i"
 import "std/memops.i"
-cinclude "stdio.h"
-
 main: proc()->i32 = {
     arena: memops_arena = {};
     memops_arena_initialize(arena.&);
@@ -11,7 +11,7 @@ main: proc()->i32 = {
         values.data[i] = cast(i * i, i32);
     }
 
-    printf("%d %d %d\n", values.data[0], values.data[2], values.data[4]);
+    printfmt("{} {} {}\n", values.data[0], values.data[2], values.data[4]);
     return 0;
 }
 

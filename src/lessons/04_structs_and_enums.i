@@ -1,4 +1,4 @@
-cinclude "stdio.h"
+import "std/Print.i"
 
 Point: struct = {
     x: f32;
@@ -22,7 +22,7 @@ main: proc()->i32 = {
     s.pos.x = 3.0f;
     s.pos.y = 4.0f;
 
-    printf("sprite kind=%d pos=(%f,%f)\n", cast(s.kind, i32), cast(s.pos.x, f64), cast(s.pos.y, f64));
+    printfmt("sprite kind={} pos=({},{})\n", cast(s.kind, i32), s.pos.x, s.pos.y);
     return 0;
 }
 

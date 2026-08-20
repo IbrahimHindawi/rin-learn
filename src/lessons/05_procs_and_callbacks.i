@@ -1,4 +1,4 @@
-cinclude "stdio.h"
+import "std/Print.i"
 
 Op: alias = *proc(a: i32, b: i32)->i32;
 
@@ -22,7 +22,7 @@ main: proc()->i32 = {
     adder: Adder = {};
     adder.call = add;
 
-    printf("%d %d %d\n", table[0](2, 3), table[1](2, 3), adder.call(10, 5));
+    printfmt("{} {} {}\n", table[0](2, 3), table[1](2, 3), adder.call(10, 5));
     return 0;
 }
 

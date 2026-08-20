@@ -1,4 +1,4 @@
-cinclude "stdio.h"
+import "std/Print.i"
 
 Box: struct<T> = {
     value: T;
@@ -18,7 +18,7 @@ main: proc()->i32 = {
     a: Box<i32> = Box<i32>make(12);
     b: Box<f32> = Box<f32>make(3.5f);
 
-    printf("%d %f\n", Box<i32>unwrap(a), cast(Box<f32>unwrap(b), f64));
+    printfmt("{} {}\n", Box<i32>unwrap(a), Box<f32>unwrap(b));
     return 0;
 }
 

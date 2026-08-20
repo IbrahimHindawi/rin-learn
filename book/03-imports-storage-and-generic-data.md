@@ -28,18 +28,42 @@ print<*const char>("\n");
 ```
 
 The type argument inside `<...>` chooses the concrete print shape for that call.
-This is deliberately explicit in the lesson so the generic relationship stays
-visible.
+This is deliberately explicit here so the generic relationship stays visible.
 
-After it runs, the important thing is not that text appeared. The important thing
-is that the source file used an installed library and called a generic procedure
-with concrete type arguments.
+Then the lesson shows the short form:
+
+```i
+printfmt("{} says {} and {}\n", name, count, ratio);
+```
+
+Each `{}` takes the next argument and prints it using the `print<T>` for that
+argument's type. There is no format letter to choose and none to get wrong, and
+no cast: a C `printf` needs `cast(ratio, f64)` for an `f32` because varargs hide
+the type, while `printfmt` already knows it.
+
+That extends to your own types. The lesson defines `print<Color>` and then writes
+`printfmt("color is {}\n", Color.Green)` without printfmt knowing anything about
+`Color`.
+
+The part worth understanding is that **none of this exists at run time.** The
+compiler splits the format string, works out each argument's type, and emits the
+calls itself. Where every argument has a matching C conversion it emits a single
+`printf`; where one does not {D} your `Color`, or a `b32`, which prints as
+`true`/`false` rather than a number {D} it falls back to a call per piece for
+that line. Open `build/gen/07_std_print.c` and you can see both outcomes side by
+side.
+
+So the convenient spelling is also the fast one. That is the intended shape for I
+library code: the compiler knows the types, so it should be the thing doing the
+formatting work, not a runtime parser reading `%d` out of a string.
 
 Try this:
 
 - print another integer
 - print two strings with a number between them
-- change the import path and confirm the compiler reports it
+- add a `print<T>` for a struct of your own and use it from `printfmt`
+- compare the generated C for a line of numbers against a line containing your
+  struct
 
 ## Lesson 08 - Arenas And Array
 
@@ -143,13 +167,13 @@ Stat: enum = {
 The array size comes from the enum metadata:
 
 ```i
-values: [Stat<>.value_count]i32 = {};
+values: [Stat<>.count]i32 = {};
 values[Stat.Health] = 100;
 values[Stat.Stamina] = 50;
 values[Stat.Focus] = 25;
 ```
 
-Read `Stat<>.value_count` as "the number of values declared by `Stat`." The table
+Read `Stat<>.count` as "the number of members declared by `Stat`." The table
 size follows the enum, and the assignments use enum names instead of raw indexes.
 
 After it runs, the output proves the table and enum stayed aligned. If you add a

@@ -32,7 +32,8 @@ next.
 - `03-imports-storage-and-generic-data.md` covers imports, standard-library
   storage, generic containers, and enum-sized tables.
 - `04-reflection-and-metaprogramming.md` covers generated metadata, reflected
-  fields, attributes, and generic instantiation shape.
+  fields, attributes, nested type links, generic instantiation shape, and the
+  single kind-tagged record that describes structs, unions and enums alike.
 - `05-the-c-connection.md` saves the outside-language comparison for the end,
   including lesson 06 and the generated output under `build/gen`.
 

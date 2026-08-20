@@ -1,4 +1,4 @@
-cinclude "stdio.h"
+import "std/Print.i"
 
 Mode: enum = {
     Idle,
@@ -29,7 +29,7 @@ main: proc()->i32 = {
         }
     }
 
-    printf("sum=%d\n", sum);
+    printfmt("sum={}\n", sum);
     return 0;
 }
 

@@ -1,4 +1,5 @@
-cinclude "stdio.h"
+import "std/Print.i"
+import "std/reflect.i"
 
 Payload: struct = {
     id: i32;
@@ -6,10 +7,27 @@ Payload: struct = {
     label: *const char;
 }
 
-main: proc()->i32 = {
-    printf("type=%s fields=%llu size=%llu\n", Payload<>.name, Payload<>.field_count, Payload<>.size);
-    printf("field0=%s:%s\n", Payload<>.fields[0].name, Payload<>.fields[0].type);
-    printf("field2=%s ptr_depth=%llu\n", Payload<>.fields[2].name, Payload<>.fields[2].pointer_depth);
-    return 0;
+Mode: enum = {
+    Idle,
+    Busy,
 }
 
+main: proc()->i32 = {
+    // `Type<>` hands back one `reflect` record whatever the type is: struct,
+    // union or enum. `kind` is what tells them apart, and `count` means fields
+    // for a struct and members for an enum.
+    printfmt("type={} kind={} fields={} size={}\n",
+        Payload<>.name, reflect_kind_name(Payload<>.kind), Payload<>.count, Payload<>.size);
+    printfmt("type={} kind={} members={}\n",
+        Mode<>.name, reflect_kind_name(Mode<>.kind), Mode<>.count);
+
+    // The payload that only one kind has lives behind `variant`: a struct's
+    // fields, an enum's values. Asking for the wrong arm is a compile error
+    // wherever the compiler can see which kind you have -- try changing this to
+    // `Payload<>.variant.values` and rebuilding.
+    printfmt("field0={}:{}\n", Payload<>.variant.fields[0].name, Payload<>.variant.fields[0].type);
+    printfmt("field2={} ptr_depth={}\n",
+        Payload<>.variant.fields[2].name, Payload<>.variant.fields[2].pointer_depth);
+    printfmt("mode0={}={}\n", Mode<>.variant.values[0].name, Mode<>.variant.values[0].value);
+    return 0;
+}
