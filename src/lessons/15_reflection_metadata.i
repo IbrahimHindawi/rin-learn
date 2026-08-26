@@ -12,7 +12,7 @@ Mode: enum = {
     Busy,
 }
 
-main: proc()->i32 = {
+main: proc() -> i32 = {
     // `Type<>` hands back one `reflect` record whatever the type is: struct,
     // union or enum. `kind` is what tells them apart, and `count` means fields
     // for a struct and members for an enum.

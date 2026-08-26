@@ -1,6 +1,6 @@
 # i-learn
 
-Small, runnable lessons for the I programming language.
+Small, runnable lessons for the ilang programming language.
 
 This repository is deliberately separate from the compiler repo. It should feel
 like a user project: it uses the packaged compiler from `i-windows-x64` or from
@@ -17,25 +17,32 @@ The script compiles every file in `src/lessons` and writes lowered output under
 
 ## Reading Order
 
-Read `book/00-how-to-read.md` first, then walk through the chapters in numeric
-order.
+Read `book/00-how-to-read.md` first, then the chapters in order. The order is
+the argument: each lesson needs the one before it.
 
-The book is intentionally I-first. Each lesson section is wrapped in prose before
-and after the code idea: what the lesson is asking, what to notice in the source,
-what should feel different after it runs, and one or two small experiments to try
-next.
+This is a course in **low-level programming** that happens to use ilang. The
+subject is the machine -- how much space a value takes, where it lives, how long
+it lasts -- because everything else in a systems language follows from that. So
+memory comes first rather than last.
 
-- `01-the-shape-of-i.md` covers tiny programs, declarations, expressions, and
-  control flow.
-- `02-data-pointers-and-shape.md` covers arrays, pointers, structs, enums, and
-  callback-shaped data.
-- `03-imports-storage-and-generic-data.md` covers imports, standard-library
-  storage, generic containers, and enum-sized tables.
-- `04-reflection-and-metaprogramming.md` covers generated metadata, reflected
-  fields, attributes, nested type links, generic instantiation shape, and the
-  single kind-tagged record that describes structs, unions and enums alike.
-- `05-the-c-connection.md` saves the outside-language comparison for the end,
-  including lesson 06 and the generated output under `build/gen`.
+- `01-values-memory-and-shape.md` -- what a program is, what a value costs in
+  bytes, and why a variable is a place with an address. Lessons 00-02.
+- `02-expressions-and-control.md` -- arithmetic, visible conversions, loops, and
+  a `switch` that does not fall through. Lessons 03-04.
+- `03-arrays-structs-and-layout.md` -- arrays as runs of bytes, structs as named
+  offsets, and where padding comes from. Lessons 05-07.
+- `04-procedures-and-storage.md` -- parameters are copies, code has addresses,
+  and the difference between static, automatic and manual storage. Lessons
+  08-09.
+- `05-managing-memory.md` -- arenas, generics as stamped-out copies, and letting
+  the compiler size a table. Lessons 10-12.
+- `06-the-c-boundary.md` -- how printing works, and what it means to call
+  something this compiler did not compile. Lessons 13-14.
+- `07-reflection.md` -- the compiler's own knowledge about your types, available
+  at runtime. Lessons 15-18.
+
+The three lessons carrying the most weight are 01 (sizes), 02 (addresses) and
+07 (layout and padding). If you read three, read those.
 
 The point is not to cover the whole language. The point is to build a working
 mental model one small program at a time.

@@ -6,7 +6,7 @@ Mode: enum = {
     Run,
 }
 
-main: proc()->i32 = {
+main: proc() -> i32 = {
     sum: i32 = 0;
 
     for (i: i32 = 0; i < 5; i += 1) {

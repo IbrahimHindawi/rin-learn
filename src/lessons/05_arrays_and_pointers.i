@@ -1,0 +1,66 @@
+import "std/Print.i"
+
+// An array is not a collection. It is a run of bytes, one element after
+// another, with nothing in between. That single fact explains indexing,
+// explains why arrays are fast, and explains why running off the end is
+// dangerous rather than impossible.
+
+increment: proc(value: *i32) -> void = {
+    value[0] += 1;
+}
+
+main: proc() -> i32 = {
+    values: [4]i32 = {};
+    for (i: i32 = 0; i < 4; i += 1) {
+        values[i] = i * 10;
+    }
+
+    printfmt("{} {} {} {}\n", values[0], values[1], values[2], values[3]);
+
+    // The whole array is one object, and its size is the element size times
+    // the count. No header, no length field, no bookkeeping.
+    printfmt("the array is {} bytes, an element is {}\n",
+             sizeof(values), sizeof(i32));
+
+    // Where the elements actually sit. Each one starts exactly sizeof(i32)
+    // bytes after the last.
+    base: uintptr = cast(values[0].&, uintptr);
+    for (i: i32 = 0; i < 4; i += 1) {
+        printfmt("  values[{}] at +{}\n", i, cast(values[i].&, uintptr) - base);
+    }
+
+    // So `values[i]` is not a lookup. It is arithmetic:
+    //     address of element i  =  base + i * sizeof(element)
+    // The compiler knows the element size from the type, which is the only
+    // reason it can do the multiplication for you.
+
+    // A pointer to the first element is a pointer to the array's first bytes.
+    first: *i32 = values[0].&;
+    increment(first);
+    printfmt("after increment through a pointer: {}\n", values[0]);
+
+    return 0;
+}
+
+// What to notice
+//
+// 1. The offsets are 0, 4, 8, 12. Nothing separates the elements. That is what
+//    "contiguous" means, and it is why walking an array is the fastest thing a
+//    processor does -- the next element is already in cache.
+//
+// 2. `sizeof(values)` is 16, not 8. The array is not a pointer. It is the
+//    bytes themselves, sitting in this stack frame.
+//
+// 3. Nothing checks the index. `values[7]` computes base + 28 and reads
+//    whatever is there -- another variable, a return address, anything. It
+//    will often appear to work, which is what makes it dangerous. The count
+//    is in the type, so the compiler *could* check a constant index; this
+//    language deliberately does not, and there is no runtime check either.
+//
+// Try this
+//
+// - print `values[7]` and run it a few times; then put another array after
+//   `values` and see whether the number changes
+// - change `[4]i32` to `[4]i64` and watch the offsets become 0, 8, 16, 24
+// - open build/gen/05_arrays_and_pointers.c and find the loop; the indexing
+//   you wrote is still indexing in C, because C does the same arithmetic

@@ -13,7 +13,7 @@ Thing: struct = {
     origin: Inner;
 }
 
-main: proc()->i32 = {
+main: proc() -> i32 = {
     printfmt("{} has {} reflected fields\n", Thing<>.name, Thing<>.count);
     for (i: u64 = 0; i < Thing<>.count; i += 1) {
         field: *const reflect_field = Thing<>.variant.fields[i].&;

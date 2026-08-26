@@ -6,7 +6,7 @@ Stat: enum = {
     Focus,
 }
 
-main: proc()->i32 = {
+main: proc() -> i32 = {
     // `Stat<>` is the enum's reflection record, and `.count` is how many members
     // it declares. The compiler knows that number once the enum is parsed, so it
     // can size an array with it -- there is no hand-written STAT_COUNT to drift

@@ -1,20 +1,20 @@
 import "std/Print.i"
 
-Op: alias = *proc(a: i32, b: i32)->i32;
+Op: alias = *proc(a: i32, b: i32) -> i32;
 
 Adder: struct = {
     call: Op;
 }
 
-add: proc(a: i32, b: i32)->i32 = {
+add: proc(a: i32, b: i32) -> i32 = {
     return a + b;
 }
 
-mul: proc(a: i32, b: i32)->i32 = {
+mul: proc(a: i32, b: i32) -> i32 = {
     return a * b;
 }
 
-main: proc()->i32 = {
+main: proc() -> i32 = {
     table: [2]Op = {};
     table[0] = add;
     table[1] = mul;

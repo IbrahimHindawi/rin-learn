@@ -1,0 +1,75 @@
+import "std/Print.i"
+
+// A variable is a name for a place. The place has a number, and that number is
+// what a pointer holds.
+//
+// Two operators do all the work:
+//
+//   value.&    the address of `value`
+//   place[0]   the value at `place`
+//
+// They are exact opposites. `x.&[0]` is `x` again.
+
+set_to_seven: proc(place: *i32) -> void = {
+    // `place` is an address. Writing through it changes the caller's variable,
+    // because there is only one place and both names refer to it.
+    place[0] = 7;
+}
+
+main: proc() -> i32 = {
+    a: i32 = 1;
+    b: i32 = 2;
+
+    printfmt("a = {} and lives at {}\n", a, cast(a.&, uintptr));
+    printfmt("b = {} and lives at {}\n", b, cast(b.&, uintptr));
+
+    // Two different variables, two different places. Close together, because
+    // both are on the stack -- but never equal, and not necessarily in the
+    // order you declared them. Nothing promises that `a` comes before `b`.
+    if (cast(a.&, uintptr) < cast(b.&, uintptr)) {
+        printfmt("a sits {} bytes below b\n",
+                 cast(b.&, uintptr) - cast(a.&, uintptr));
+    } else {
+        printfmt("b sits {} bytes below a\n",
+                 cast(a.&, uintptr) - cast(b.&, uintptr));
+    }
+
+    // A pointer is an ordinary value. It has a size, it can be copied, and it
+    // can be stored -- it just happens to mean "the thing over there".
+    p: *i32 = a.&;
+    printfmt("p holds {}, and p[0] is {}\n", cast(p, uintptr), p[0]);
+
+    set_to_seven(p);
+    printfmt("after set_to_seven, a = {}\n", a);
+
+    // Point it somewhere else. Nothing about `a` or `b` changed; only what the
+    // pointer refers to.
+    p = b.&;
+    printfmt("now p[0] is {}\n", p[0]);
+
+    return 0;
+}
+
+// What to notice
+//
+// 1. `a` was changed by a procedure that never saw `a`. It saw a number, went
+//    to that place, and wrote there. That is the whole of what a pointer does.
+//
+// 2. The addresses are large and look arbitrary. They are -- they depend on
+//    where the operating system put your stack today. Run it twice and they
+//    will differ. The *distance* between them will not.
+//
+// 3. `p = b.&` did not move any i32. It changed 8 bytes of pointer.
+//
+// Try this
+//
+// - print `cast(p.&, uintptr)`: the pointer is itself a variable, so it has an
+//   address of its own
+// - call `set_to_seven(b.&)` and confirm you can pass an address directly
+//   without naming a pointer variable first
+// - delete the `if` above and always subtract a's address from b's. If the
+//   compiler put b lower, you will get something like 18446744073709551612
+//   rather than a small number or a negative one. uintptr is unsigned, so
+//   subtracting past zero wraps to the top of its range instead of going
+//   negative. This is the same bargain as the i8 in lesson 01: the machine
+//   does exactly what you asked and says nothing.

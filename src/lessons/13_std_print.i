@@ -7,7 +7,7 @@ Color: enum = {
 
 // `print<T>` is one overload per type, and you can add your own. printfmt finds
 // this the same way it finds the built-in ones.
-print: proc<Color>(c: Color)->void = {
+print: proc<Color>(c: Color) -> void = {
     if (c == Color.Red) {
         print_cstr("red");
     } else {
@@ -15,7 +15,7 @@ print: proc<Color>(c: Color)->void = {
     }
 }
 
-main: proc()->i32 = {
+main: proc() -> i32 = {
     count: i32 = 42;
     ratio: f32 = 0.5f;
     name: *const char = "std print";

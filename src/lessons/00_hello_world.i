@@ -1,9 +1,9 @@
 import "std/Print.i"
 
-// A complete I program looks like a small C program, but declarations use
+// A complete ilang program looks like a small C program, but declarations use
 // `name: Type = value` order.
-main: proc()->i32 = {
-    printfmt("hello from I\n");
+main: proc() -> i32 = {
+    printfmt("hello from ilang\n");
     return 0;
 }
 

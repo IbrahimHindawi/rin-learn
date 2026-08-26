@@ -1,0 +1,82 @@
+import "std/Print.i"
+
+// A struct is not a bag of fields. It is a block of bytes with your fields
+// placed at fixed offsets inside it, and the placement follows rules you can
+// predict once you know them.
+//
+// These two structs hold exactly the same three values. Only the order of the
+// declarations differs.
+
+Loose: struct = {
+    flag:  u8;      // 1 byte
+    value: i32;     // 4 bytes
+    small: u8;      // 1 byte
+}
+
+Tight: struct = {
+    value: i32;     // 4 bytes
+    flag:  u8;      // 1 byte
+    small: u8;      // 1 byte
+}
+
+// The same fields again, with the compiler told to pack them.
+Packed: struct[packed] = {
+    flag:  u8;
+    value: i32;
+    small: u8;
+}
+
+main: proc() -> i32 = {
+    printfmt("Loose  is {} bytes, aligned to {}\n", sizeof(Loose), alignof(Loose));
+    printfmt("Tight  is {} bytes, aligned to {}\n", sizeof(Tight), alignof(Tight));
+    printfmt("Packed is {} bytes, aligned to {}\n", sizeof(Packed), alignof(Packed));
+    printfmt("the three fields themselves are {} bytes\n",
+             sizeof(u8) + sizeof(i32) + sizeof(u8));
+
+    // Where each field actually sits. Subtracting the struct's own address
+    // from a field's address gives you that field's offset.
+    l: Loose = {};
+    t: Tight = {};
+    base_l: uintptr = cast(l.&, uintptr);
+    base_t: uintptr = cast(t.&, uintptr);
+
+    printfmt("Loose: flag at +{}, value at +{}, small at +{}\n",
+             cast(l.flag.&, uintptr) - base_l,
+             cast(l.value.&, uintptr) - base_l,
+             cast(l.small.&, uintptr) - base_l);
+    printfmt("Tight: value at +{}, flag at +{}, small at +{}\n",
+             cast(t.value.&, uintptr) - base_t,
+             cast(t.flag.&, uintptr) - base_t,
+             cast(t.small.&, uintptr) - base_t);
+    return 0;
+}
+
+// What to notice
+//
+// 1. Loose and Tight hold the same data and are not the same size. Nothing was
+//    added to Loose except emptiness.
+//
+// 2. Look at where `value` sits in Loose: offset 4, not offset 1. An i32 wants
+//    to start at an address divisible by 4 -- that is what "aligned to 4"
+//    means -- so the compiler left three unused bytes after `flag` to get
+//    there. Those three bytes are padding. You paid for them and cannot use
+//    them.
+//
+// 3. Tight has no hole in the middle, because putting the 4-byte field first
+//    means the two 1-byte fields land where they already fit. There is still
+//    padding at the *end*: the struct's own size has to be a multiple of its
+//    alignment, so that an array of them keeps every element aligned.
+//
+// 4. Packed has no padding at all -- and its alignment dropped to 1. That is
+//    the trade. Reading `value` now costs more on most machines, and on some
+//    it is not even allowed. Use `packed` when a layout is dictated by
+//    something outside your program: a file format, a network packet, a
+//    hardware register. Not to save memory.
+//
+// Try this
+//
+// - add a fourth field `other: u8;` to Tight and watch the size stay the same,
+//   because it fits in padding that was already being paid for
+// - make `value` an i64 in Loose and watch the padding grow to 8-byte steps
+// - print `sizeof(Loose) * 1000` against `sizeof(Tight) * 1000` to see what
+//   field order costs in an array you might actually allocate

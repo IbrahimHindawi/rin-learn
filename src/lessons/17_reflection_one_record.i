@@ -20,7 +20,7 @@ Slot: enum = {
 // A walker does not need to know what it was handed. `kind` tells it, and the
 // checked accessors hand back the payload only when it matches -- so this one
 // procedure describes all three types without a cast in sight.
-describe: proc(meta: *const reflect)->void = {
+describe: proc(meta: *const reflect) -> void = {
     fields: *const reflect_field = reflect_fields(meta);
     values: *const reflect_value = reflect_values(meta);
 
@@ -39,7 +39,7 @@ describe: proc(meta: *const reflect)->void = {
     }
 }
 
-main: proc()->i32 = {
+main: proc() -> i32 = {
     describe(Point<>.&);
     describe(Word<>.&);
     describe(Slot<>.&);

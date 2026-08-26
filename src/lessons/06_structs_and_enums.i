@@ -16,7 +16,7 @@ Sprite: struct = {
     pos: Point;
 }
 
-main: proc()->i32 = {
+main: proc() -> i32 = {
     s: Sprite = {};
     s.kind = SpriteKind.Player;
     s.pos.x = 3.0f;

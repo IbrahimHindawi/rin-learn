@@ -1,0 +1,90 @@
+import "std/Print.i"
+
+// Every value lives somewhere, and where it lives decides how long it lasts.
+// There are three answers in this language and you pick one every time you
+// declare something. This lesson is about telling them apart by looking.
+
+// Static storage. One copy, created before main runs, alive until the program
+// exits. `static` here means "not visible outside this file", the same as C.
+g_counter: static i32 = 0;
+
+// Also static storage, but visible to other translation units.
+g_shared: i32 = 100;
+
+bump: proc() -> i32 = {
+    // Automatic storage. Created when `bump` is entered, gone when it returns.
+    // A fresh one every call -- which is why this always prints 1.
+    local: i32 = 0;
+    local += 1;
+
+    // The static lives across calls, because it was never destroyed.
+    g_counter += 1;
+
+    printfmt("  local = {}   g_counter = {}\n", local, g_counter);
+    return local;
+}
+
+// This is the mistake the lesson exists to name.
+leak_a_local: proc() -> *i32 = {
+    doomed: i32 = 42;
+    // `doomed` stops existing the moment this returns. The address stays a
+    // number, and the number stays valid-looking, and reading through it is
+    // undefined behaviour. Nothing here will tell you.
+    return doomed.&;
+}
+
+main: proc() -> i32 = {
+    printfmt("static lives at   {}\n", cast(g_shared.&, uintptr));
+
+    on_the_stack: i32 = 1;
+    printfmt("automatic lives at {}\n", cast(on_the_stack.&, uintptr));
+
+    printfmt("calling bump three times:\n");
+    bump();
+    bump();
+    bump();
+
+    // The two addresses above are far apart, and that distance is the point:
+    // statics live in the executable's own data, the stack is somewhere else
+    // entirely, and the operating system moved it when the program started.
+
+    return 0;
+}
+
+// What to notice
+//
+// 1. `local` printed 1 every time and `g_counter` counted up. Same syntax,
+//    same type, entirely different lifetime -- decided by where it was
+//    declared, not by how it was written.
+//
+// 2. The static address and the stack address are nowhere near each other.
+//    They come from different regions of the process. Run it again and the
+//    static address barely moves while the stack one jumps around.
+//
+// 3. `leak_a_local` compiles. It is never called here, because calling it and
+//    reading the result is a real bug -- the kind that works on your machine
+//    for a year. There is no garbage collector to save you and no borrow
+//    checker to stop you. Knowing which storage you are in *is* the skill.
+//
+//    Build it and the C compiler does say something:
+//
+//      warning: address of stack memory associated with local variable
+//               'doomed' returned
+//
+//    Worth knowing why that happened. ilang hands its output to a C compiler,
+//    so you get that compiler's analysis for free -- and this is one of the
+//    few lifetime mistakes it can see, because the return is right there. Hide
+//    the same address in a struct field and store it somewhere, and nothing
+//    warns. Do not learn "the compiler will tell me".
+//
+// The third answer -- memory you ask for and manage yourself -- is the next
+// lesson. It exists because automatic storage dies too soon and static storage
+// has to be sized before the program runs, and real programs need neither.
+//
+// Try this
+//
+// - call `leak_a_local` and print the result through the pointer. It will
+//   probably print 42. That is the worst possible outcome, because it teaches
+//   you the wrong lesson; call another procedure first and print it again.
+// - move `local` out of `bump` to file scope and watch the output change
+// - add a second static to `bump` and confirm both persist independently

@@ -2,7 +2,7 @@ import "std/Print.i"
 
 import "std/Array.i"
 import "std/memops.i"
-main: proc()->i32 = {
+main: proc() -> i32 = {
     arena: memops_arena = {};
     memops_arena_initialize(arena.&);
 

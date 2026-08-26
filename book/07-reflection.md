@@ -1,13 +1,13 @@
-# 04 - Reflection And Metaprogramming
+# 07 - Reflection And Metaprogramming
 
-I's metaprogramming starts with concrete declarations, not runtime magic. The
+ilang's metaprogramming starts with concrete declarations, not runtime magic. The
 compiler already knows the names, fields, sizes, enum values, and generic
 instantiations in your program. Reflection makes a useful slice of that knowledge
 available as ordinary data.
 
-## Lesson 11 - Reflection Metadata
+## Lesson 15 - Reflection Metadata
 
-`src/lessons/11_reflection_metadata.i` asks what information the compiler can
+`src/lessons/15_reflection_metadata.i` asks what information the compiler can
 produce about a type you already wrote.
 
 The data shape is ordinary:
@@ -58,9 +58,9 @@ Try this:
 - inspect the new field's reflected name and type
 - try `Payload<>.variant.values[0]` and read the error you get
 
-## Lesson 12 - Reflection Fields
+## Lesson 16 - Reflection Fields
 
-`src/lessons/12_reflection_fields.i` asks how reflection becomes useful when you
+`src/lessons/16_reflection_fields.i` asks how reflection becomes useful when you
 walk across fields instead of inspecting one fixed field.
 
 The struct includes an attribute on one field:
@@ -112,9 +112,9 @@ Try this:
 - print `size` for each field and compare the results
 - nest another struct inside `Inner` and follow `info` two levels down
 
-## Lesson 13 - Metaprogramming Shape
+## Lesson 18 - Metaprogramming Shape
 
-`src/lessons/13_metaprogramming_shape.i` asks what happens when generics and
+`src/lessons/18_metaprogramming_shape.i` asks what happens when generics and
 reflection meet.
 
 The generic type is a tiny optional-slot shape:
@@ -157,9 +157,9 @@ Try this:
 - print its reflected name
 - add another field to `Slot<T>` and confirm every reflected field count changes
 
-## Lesson 14 - One Record For Every Kind
+## Lesson 17 - One Record For Every Kind
 
-`src/lessons/14_reflection_one_record.i` asks what you can write once that works
+`src/lessons/17_reflection_one_record.i` asks what you can write once that works
 for a struct, a union and an enum alike.
 
 The answer is a single procedure that takes the record and never asks what it was
@@ -180,7 +180,7 @@ wrong type. Inside `describe` the kind is not known until run time -- that is
 exactly the case these exist for.
 
 They are also worth reading. Open `std/reflect.i` beside the compiler: every one
-of these helpers is written in I, in a few lines each, over the same records the
+of these helpers is written in ilang, in a few lines each, over the same records the
 lesson has been printing. Nothing about reflection is hidden in the runtime.
 
 Watch the union in the output. Both of its members report offset zero, because
@@ -205,5 +205,5 @@ Reflection should remove duplicated bookkeeping. If you find yourself writing a
 manual table that repeats a struct's field names, stop and ask whether the type's
 metadata already knows the answer.
 
-That is the I style this book is aiming for: direct data, explicit storage,
+That is the ilang style this book is aiming for: direct data, explicit storage,
 generic reuse, and reflection where repetition would otherwise creep in.
