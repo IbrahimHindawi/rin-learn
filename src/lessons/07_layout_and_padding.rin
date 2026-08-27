@@ -1,4 +1,4 @@
-import "std/Print.i"
+import "std/Print.rin"
 
 // A struct is not a bag of fields. It is a block of bytes with your fields
 // placed at fixed offsets inside it, and the placement follows rules you can

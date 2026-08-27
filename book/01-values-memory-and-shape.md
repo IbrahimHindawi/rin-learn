@@ -7,11 +7,11 @@ program? How much space does a value take? Where does it live?
 
 ## Lesson 00 - What a program is
 
-`src/lessons/00_hello_world.i`
+`src/lessons/00_hello_world.rin`
 
 ```i
 main: proc() -> i32 = {
-    printfmt("hello from ilang\n");
+    printfmt("hello from rin\n");
     return 0;
 }
 ```
@@ -41,7 +41,7 @@ recognisable. That relationship holds for the whole course.
 
 ## Lesson 01 - A value costs bytes
 
-`src/lessons/01_sizes.i`
+`src/lessons/01_sizes.rin`
 
 Run it first. The output is the lesson.
 
@@ -57,7 +57,7 @@ usize 8 bytes
 **The size is in the name.** `i32` is a 32-bit signed integer: 4 bytes, always,
 on every target this compiler supports. C's `int` is not like this -- its size
 is up to the implementation, which is why portable C code is full of `int32_t`.
-ilang starts where careful C ends up.
+rin starts where careful C ends up.
 
 **Every pointer is the same size**, whatever it points at, because a pointer
 holds an address and an address is a fixed-width number on a given machine. 8
@@ -80,7 +80,7 @@ asking you to be careful rather than promising to be careful for you.
 
 ## Lesson 02 - A variable is a place
 
-`src/lessons/02_addresses.i`
+`src/lessons/02_addresses.rin`
 
 Two operators do all of it:
 

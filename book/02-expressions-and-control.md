@@ -8,7 +8,7 @@ rules here only make sense once you know a value has a width.
 
 ## Lesson 03 - Conversions are visible
 
-`src/lessons/03_values_and_expressions.i`
+`src/lessons/03_values_and_expressions.rin`
 
 ```i
 count: i32 = 6;
@@ -37,7 +37,7 @@ and assigning that to an `f32` is another narrowing.
 
 ## Lesson 04 - Loops, branches, and a switch that does not fall through
 
-`src/lessons/04_control_flow.i`
+`src/lessons/04_control_flow.rin`
 
 `for`, `if`, `continue` and `break` behave as you expect. Two things do not.
 

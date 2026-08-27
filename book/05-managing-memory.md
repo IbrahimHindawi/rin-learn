@@ -4,7 +4,7 @@ Lessons 10 through 12.
 
 ## Lesson 10 - Memory you are responsible for
 
-`src/lessons/10_arenas_and_array.i`
+`src/lessons/10_arenas_and_array.rin`
 
 ```i
 arena: memops_arena = {};
@@ -40,7 +40,7 @@ not own the memory and does not free anything.
 
 ## Lesson 11 - A generic is a stamp
 
-`src/lessons/11_generics_box.i`
+`src/lessons/11_generics_box.rin`
 
 ```i
 Box: struct<T> = {
@@ -81,7 +81,7 @@ the fastest route to C++-shaped complexity.
 
 ## Lesson 12 - Letting the compiler size a table
 
-`src/lessons/12_enum_sized_tables.i`
+`src/lessons/12_enum_sized_tables.rin`
 
 ```i
 values: [Stat<>.count]i32 = {};

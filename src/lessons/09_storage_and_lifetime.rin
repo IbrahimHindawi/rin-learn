@@ -1,4 +1,4 @@
-import "std/Print.i"
+import "std/Print.rin"
 
 // Every value lives somewhere, and where it lives decides how long it lasts.
 // There are three answers in this language and you pick one every time you
@@ -71,7 +71,7 @@ main: proc() -> i32 = {
 //      warning: address of stack memory associated with local variable
 //               'doomed' returned
 //
-//    Worth knowing why that happened. ilang hands its output to a C compiler,
+//    Worth knowing why that happened. rin hands its output to a C compiler,
 //    so you get that compiler's analysis for free -- and this is one of the
 //    few lifetime mistakes it can see, because the return is right there. Hide
 //    the same address in a struct field and store it somewhere, and nothing

@@ -1,4 +1,4 @@
-import "std/Print.i"
+import "std/Print.rin"
 
 // Every value your program holds occupies a fixed number of bytes, and you
 // choose how many. That choice is the first low-level decision there is.

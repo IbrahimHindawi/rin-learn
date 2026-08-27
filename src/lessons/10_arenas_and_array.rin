@@ -1,7 +1,7 @@
-import "std/Print.i"
+import "std/Print.rin"
 
-import "std/Array.i"
-import "std/memops.i"
+import "std/Array.rin"
+import "std/memops.rin"
 main: proc() -> i32 = {
     arena: memops_arena = {};
     memops_arena_initialize(arena.&);

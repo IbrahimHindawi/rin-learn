@@ -2,15 +2,15 @@
 
 Lessons 13 and 14.
 
-Everything so far stayed inside ilang. These two lessons are about the edge: how
+Everything so far stayed inside rin. These two lessons are about the edge: how
 output actually happens, and what it means to call something this compiler did
 not compile.
 
 ## Lesson 13 - Printing is ordinary code
 
-`src/lessons/13_std_print.i`
+`src/lessons/13_std_print.rin`
 
-`printfmt` is not built into the language. It is a procedure in `std/Print.i`,
+`printfmt` is not built into the language. It is a procedure in `std/Print.rin`,
 and the `{}` placeholders are resolved at compile time by matching each argument
 against a `print<T>` overload.
 
@@ -37,7 +37,7 @@ to get wrong.
 
 ## What C is doing in this story
 
-Now that the ilang lessons have their own shape, it is useful to say what C is
+Now that the rin lessons have their own shape, it is useful to say what C is
 doing here.
 
 C is C because it keeps a small, sharp contract with the machine and the linker:
@@ -54,7 +54,7 @@ C is C because it keeps a small, sharp contract with the machine and the linker:
 That list matters more than C's punctuation. The durable lesson is not where the
 asterisk goes. The durable lesson is that a program has physical shape.
 
-ilang keeps that shape visible, but asks the source to be more regular. Declarations
+rin keeps that shape visible, but asks the source to be more regular. Declarations
 use `name: Type = value`. Procedures, structs, aliases, generic types, and local
 variables all follow the same left-to-right rhythm. Reflection metadata is also
 generated from the declarations you already wrote, instead of being maintained in
@@ -62,10 +62,10 @@ a separate table by hand.
 
 ## Lesson 14 - The C Surface
 
-`src/lessons/14_c_surface.i` asks how ilang source talks to declarations and symbols
-owned outside the ilang file.
+`src/lessons/14_c_surface.rin` asks how rin source talks to declarations and symbols
+owned outside the rin file.
 
-Before this lesson, the book avoided the boundary so the ilang shape could stand on
+Before this lesson, the book avoided the boundary so the rin shape could stand on
 its own. Now the boundary is the subject:
 
 ```i
@@ -76,34 +76,34 @@ puts: proc(text: *const char)->i32 = { external; }
 ```
 
 `cinclude` says the generated translation unit needs a foreign header. The
-`external` body says the symbol exists elsewhere, so ilang should type-check calls to
+`external` body says the symbol exists elsewhere, so rin should type-check calls to
 it but should not emit a new definition for it.
 
 The body then uses both pieces:
 
 ```i
-puts("this call is checked by ilang and provided by C");
+puts("this call is checked by rin and provided by C");
 printf("bonus=%d\n", I_LEARN_BONUS);
 ```
 
-After it runs, the lesson has shown a precise boundary: ilang can check the call
+After it runs, the lesson has shown a precise boundary: rin can check the call
 shape, carry through a macro, and still leave ownership of the external symbol to
 the platform side.
 
 That gives you a practical rule:
 
-- write normal ilang declarations for the things ilang owns
-- use `external` for declarations owned outside ilang
+- write normal rin declarations for the things rin owns
+- use `external` for declarations owned outside rin
 - use `cinclude` when the generated unit needs a header or macro
 - inspect `build/gen` when you want to see the boundary precisely
 
 ## Generated Output
 
 The check script writes lowered C and header files under `build/gen`. Those files
-are useful evidence. They show how a regular ilang declaration turns into something
+are useful evidence. They show how a regular rin declaration turns into something
 the platform toolchain can compile and link.
 
-Do not start the book by staring at that output. Start with ilang source. Once the ilang
+Do not start the book by staring at that output. Start with rin source. Once the rin
 shape feels clear, the generated C becomes a teaching aid instead of a distraction.
 
 ## What To Try
@@ -116,6 +116,6 @@ shape feels clear, the generated C becomes a teaching aid instead of a distracti
 - add a `print<T>` overload for one of your own structs and use it in a
   `printfmt`
 
-The point of the C connection is not nostalgia. It is leverage: ilang source stays
+The point of the C connection is not nostalgia. It is leverage: rin source stays
 small and regular while still landing in a world of debuggers, linkers, headers,
 and platform libraries.

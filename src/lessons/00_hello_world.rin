@@ -1,0 +1,9 @@
+import "std/Print.rin"
+
+// A complete rin program looks like a small C program, but declarations use
+// `name: Type = value` order.
+main: proc() -> i32 = {
+    printfmt("hello from rin\n");
+    return 0;
+}
+

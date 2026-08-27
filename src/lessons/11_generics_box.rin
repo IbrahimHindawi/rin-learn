@@ -1,4 +1,4 @@
-import "std/Print.i"
+import "std/Print.rin"
 
 Box: struct<T> = {
     value: T;

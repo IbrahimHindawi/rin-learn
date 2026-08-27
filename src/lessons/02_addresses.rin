@@ -1,4 +1,4 @@
-import "std/Print.i"
+import "std/Print.rin"
 
 // A variable is a name for a place. The place has a number, and that number is
 // what a pointer holds.

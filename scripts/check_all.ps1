@@ -13,33 +13,33 @@ $OutDir = Join-Path $Root "build\gen"
 New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
 
 $IExe = $null
-if ($env:I_HOME) {
-    $candidate = Join-Path $env:I_HOME "I.exe"
+if ($env:RIN_HOME) {
+    $candidate = Join-Path $env:RIN_HOME "rin.exe"
     if (Test-Path $candidate) {
         $IExe = $candidate
     }
 }
 
 if (-not $IExe) {
-    $cmd = Get-Command I.exe -ErrorAction SilentlyContinue
+    $cmd = Get-Command rin.exe -ErrorAction SilentlyContinue
     if ($cmd) {
         $IExe = $cmd.Source
     }
 }
 
 if (-not $IExe) {
-    $candidate = "C:\devel\i-windows-x64\I.exe"
+    $candidate = "C:\devel\rin-windows-x64\rin.exe"
     if (Test-Path $candidate) {
         $IExe = $candidate
     }
 }
 
 if (-not $IExe) {
-    throw "Could not find I.exe. Set I_HOME or put I.exe on PATH."
+    throw "Could not find rin.exe. Set RIN_HOME or put rin.exe on PATH."
 }
 
-$IHome = Split-Path -Parent $IExe
-$StdDir = Join-Path $IHome "std"
+$RinHome = Split-Path -Parent $IExe
+$StdDir = Join-Path $RinHome "std"
 
 # A C compiler is optional. Without one the lessons are still checked for
 # compiling, which is what this script used to do on its own.
@@ -56,7 +56,7 @@ if ($CC) {
     Write-Host "C backend: none found, lessons will be compiled but not run"
 }
 
-$Lessons = Get-ChildItem -Path (Join-Path $Root "src\lessons") -Filter "*.i" | Sort-Object Name
+$Lessons = Get-ChildItem -Path (Join-Path $Root "src\lessons") -Filter "*.rin" | Sort-Object Name
 $Ran = 0
 $Failures = @()
 
@@ -67,7 +67,7 @@ foreach ($lesson in $Lessons) {
     Write-Host "compile $($lesson.Name)"
     & $IExe compile $lesson.FullName -o $outC --header $outH
     if ($LASTEXITCODE -ne 0) {
-        $Failures += "$($lesson.Name): ilang rejected it"
+        $Failures += "$($lesson.Name): rin rejected it"
         continue
     }
 
@@ -80,9 +80,9 @@ foreach ($lesson in $Lessons) {
     $previous = $ErrorActionPreference
     $ErrorActionPreference = "Continue"
     if ($CC -like "*cl.exe") {
-        & $CC /nologo /I $IHome /I $StdDir $outC "/Fe:$exe" "/Fo:$OutDir\$base.obj" | Out-Null
+        & $CC /nologo /I $RinHome /I $StdDir $outC "/Fe:$exe" "/Fo:$OutDir\$base.obj" | Out-Null
     } else {
-        & $CC $outC -I $IHome -I $StdDir -o $exe | Out-Null
+        & $CC $outC -I $RinHome -I $StdDir -o $exe | Out-Null
     }
     $ErrorActionPreference = $previous
     if ($LASTEXITCODE -ne 0) {

@@ -1,10 +1,10 @@
-# i-learn
+# rin-learn
 
-Small, runnable lessons for the ilang programming language.
+Small, runnable lessons for the rin programming language.
 
 This repository is deliberately separate from the compiler repo. It should feel
-like a user project: it uses the packaged compiler from `i-windows-x64` or from
-`I_HOME` / `PATH`, and it imports `std` from beside that compiler.
+like a user project: it uses the packaged compiler from `rin-windows-x64` or from
+`RIN_HOME` / `PATH`, and it imports `std` from beside that compiler.
 
 ## Quick Check
 
@@ -20,7 +20,7 @@ The script compiles every file in `src/lessons` and writes lowered output under
 Read `book/00-how-to-read.md` first, then the chapters in order. The order is
 the argument: each lesson needs the one before it.
 
-This is a course in **low-level programming** that happens to use ilang. The
+This is a course in **low-level programming** that happens to use rin. The
 subject is the machine -- how much space a value takes, where it lives, how long
 it lasts -- because everything else in a systems language follows from that. So
 memory comes first rather than last.

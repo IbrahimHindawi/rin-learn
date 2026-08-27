@@ -1,4 +1,4 @@
-import "std/Print.i"
+import "std/Print.rin"
 
 // An array is not a collection. It is a run of bytes, one element after
 // another, with nothing in between. That single fact explains indexing,

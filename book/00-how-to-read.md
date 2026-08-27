@@ -1,6 +1,6 @@
 # 00 - How To Read This
 
-This is a course in low-level programming. ilang is the language it uses, but
+This is a course in low-level programming. rin is the language it uses, but
 the subject is the machine: how much space a value takes, where it lives, how
 long it lasts, and what the computer actually does with it.
 
@@ -43,11 +43,11 @@ build and exit 0.
 
 ## The thing this language lets you see
 
-ilang compiles to C that a person can read. That is unusual, and it is the best
+rin compiles to C that a person can read. That is unusual, and it is the best
 teaching tool here: after any lesson, open the matching file under `build/gen`
 and look at what your code became.
 
-    src/lessons/07_layout_and_padding.i   ->   build/gen/07_layout_and_padding.c
+    src/lessons/07_layout_and_padding.rin   ->   build/gen/07_layout_and_padding.c
 
 You will see your struct as a C struct, your generic as a stamped-out copy with
 a mangled name, and your reflection data as a plain table of bytes. Nothing is

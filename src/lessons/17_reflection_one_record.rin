@@ -1,5 +1,5 @@
-import "std/Print.i"
-import "std/reflect.i"
+import "std/Print.rin"
+import "std/reflect.rin"
 
 // Three different kinds of type, described by one record apiece.
 Point: struct = {

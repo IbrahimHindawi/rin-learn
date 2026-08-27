@@ -1,4 +1,4 @@
-import "std/Print.i"
+import "std/Print.rin"
 
 Slot: struct<T> = {
     value: T;

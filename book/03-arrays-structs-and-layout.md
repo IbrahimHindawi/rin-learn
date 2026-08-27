@@ -7,7 +7,7 @@ what happens when you put more than one thing in a place.
 
 ## Lesson 05 - An array is a run of bytes
 
-`src/lessons/05_arrays_and_pointers.i`
+`src/lessons/05_arrays_and_pointers.rin`
 
 The output that matters:
 
@@ -47,7 +47,7 @@ too: the array is the bytes, not a pointer to them.
 
 ## Lesson 06 - A struct names offsets
 
-`src/lessons/06_structs_and_enums.i`
+`src/lessons/06_structs_and_enums.rin`
 
 A struct groups values that belong together and gives each one a name. At the
 machine level, the names are the interesting part: `s.pos.x` is not a lookup,
@@ -60,7 +60,7 @@ compile-time-sized table.
 
 ## Lesson 07 - Layout is not free
 
-`src/lessons/07_layout_and_padding.i`
+`src/lessons/07_layout_and_padding.rin`
 
 This is the one to slow down on. Two structs, identical fields, different
 declaration order:

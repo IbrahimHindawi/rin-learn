@@ -8,7 +8,7 @@ afterwards.
 
 ## Lesson 08 - Calls, copies, and code with addresses
 
-`src/lessons/08_procs_and_callbacks.i`
+`src/lessons/08_procs_and_callbacks.rin`
 
 **A parameter is a copy.** Passing an `i32` copies four bytes onto the call. The
 procedure gets its own, and writing to it changes nothing the caller can see.
@@ -47,7 +47,7 @@ is, assembled by hand so you can see the parts.
 
 ## Lesson 09 - Where memory comes from, and when it stops
 
-`src/lessons/09_storage_and_lifetime.i`
+`src/lessons/09_storage_and_lifetime.rin`
 
 Three kinds of storage, and you choose every time you declare something.
 

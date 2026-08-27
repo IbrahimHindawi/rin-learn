@@ -294,7 +294,7 @@
         <li><a href="#ritual"><strong>5. The Check Ritual</strong><span>one command</span></a></li>
         <li><a href="#c-end"><strong>6. The Last Connection</strong><span>lesson 06, saved for last</span></a></li>
       </ol>
-      <div class="note">The examples use the packaged compiler from <code>i-windows-x64</code>, the same way a separate user project should.</div>
+      <div class="note">The examples use the packaged compiler from <code>rin-windows-x64</code>, the same way a separate user project should.</div>
       <div class="footer-mark">contents</div>
     </section>
 
@@ -321,9 +321,9 @@ keep the diff tiny</code></pre>
       <p class="kicker">Chapter 2</p>
       <h2>First Shapes</h2>
       <div class="lesson-list">
-        <article class="lesson"><div class="lesson-num">00</div><div><h3><a href="src/lessons/00_hello_world.i">Hello World</a></h3><p>A complete program is just a declaration named <code>main</code> with a procedure type and a block body.</p></div></article>
-        <article class="lesson"><div class="lesson-num">01</div><div><h3><a href="src/lessons/01_values_and_expressions.i">Values And Expressions</a></h3><p>Typed locals, numeric suffixes, arithmetic, and explicit <code>cast</code> calls keep storage and conversion visible.</p></div></article>
-        <article class="lesson"><div class="lesson-num">02</div><div><h3><a href="src/lessons/02_control_flow.i">Control Flow</a></h3><p><code>for</code>, <code>if</code>, <code>continue</code>, enum-qualified values, and block-scoped <code>switch</code> cases.</p></div></article>
+        <article class="lesson"><div class="lesson-num">00</div><div><h3><a href="src/lessons/00_hello_world.rin">Hello World</a></h3><p>A complete program is just a declaration named <code>main</code> with a procedure type and a block body.</p></div></article>
+        <article class="lesson"><div class="lesson-num">01</div><div><h3><a href="src/lessons/01_values_and_expressions.rin">Values And Expressions</a></h3><p>Typed locals, numeric suffixes, arithmetic, and explicit <code>cast</code> calls keep storage and conversion visible.</p></div></article>
+        <article class="lesson"><div class="lesson-num">02</div><div><h3><a href="src/lessons/02_control_flow.rin">Control Flow</a></h3><p><code>for</code>, <code>if</code>, <code>continue</code>, enum-qualified values, and block-scoped <code>switch</code> cases.</p></div></article>
       </div>
       <div class="note">Try changing one return value, one expression, and one enum case. Predict the result before compiling.</div>
       <pre><code>name: Type = value;
@@ -336,9 +336,9 @@ Name: struct = { field: Type; }</code></pre>
       <p class="kicker">Chapter 3</p>
       <h2>Data And Callbacks</h2>
       <div class="lesson-list">
-        <article class="lesson"><div class="lesson-num">03</div><div><h3><a href="src/lessons/03_arrays_and_pointers.i">Arrays And Pointers</a></h3><p>Fixed arrays make count part of the type. Pointers let procedures mutate storage the caller already owns.</p></div></article>
-        <article class="lesson"><div class="lesson-num">04</div><div><h3><a href="src/lessons/04_structs_and_enums.i">Structs And Enums</a></h3><p>Structs group fields. Enums name states. Nested field access keeps composition readable.</p></div></article>
-        <article class="lesson"><div class="lesson-num">05</div><div><h3><a href="src/lessons/05_procs_and_callbacks.i">Procedures And Callbacks</a></h3><p>Procedure pointer aliases can live in arrays and structs, giving data a callable behavior slot.</p></div></article>
+        <article class="lesson"><div class="lesson-num">03</div><div><h3><a href="src/lessons/03_arrays_and_pointers.rin">Arrays And Pointers</a></h3><p>Fixed arrays make count part of the type. Pointers let procedures mutate storage the caller already owns.</p></div></article>
+        <article class="lesson"><div class="lesson-num">04</div><div><h3><a href="src/lessons/04_structs_and_enums.rin">Structs And Enums</a></h3><p>Structs group fields. Enums name states. Nested field access keeps composition readable.</p></div></article>
+        <article class="lesson"><div class="lesson-num">05</div><div><h3><a href="src/lessons/05_procs_and_callbacks.rin">Procedures And Callbacks</a></h3><p>Procedure pointer aliases can live in arrays and structs, giving data a callable behavior slot.</p></div></article>
       </div>
       <div class="grid">
         <article class="card"><h3>Storage</h3><p><code>[4]i32</code> means exactly four slots. The type carries the count.</p></article>
@@ -352,13 +352,13 @@ Name: struct = { field: Type; }</code></pre>
       <p class="kicker">Chapter 4</p>
       <h2>Libraries, Generics, Reflection</h2>
       <div class="lesson-list">
-        <article class="lesson"><div class="lesson-num">07</div><div><h3><a href="src/lessons/07_std_print.i">Standard Print</a></h3><p><code>import "std/Print.i"</code> pulls code from the packaged standard library.</p></div></article>
-        <article class="lesson"><div class="lesson-num">08</div><div><h3><a href="src/lessons/08_arenas_and_array.i">Arenas And Array</a></h3><p>An arena owns allocation. <code>Array&lt;i32&gt;</code> carries length and backing data.</p></div></article>
-        <article class="lesson"><div class="lesson-num">09</div><div><h3><a href="src/lessons/09_generics_box.i">Generic Box</a></h3><p><code>Box&lt;T&gt;</code> becomes concrete as <code>Box&lt;i32&gt;</code>, <code>Box&lt;f32&gt;</code>, or another type.</p></div></article>
-        <article class="lesson"><div class="lesson-num">10</div><div><h3><a href="src/lessons/10_enum_sized_tables.i">Enum-Sized Tables</a></h3><p><code>Enum&lt;&gt;.value_count</code> keeps a table sized to the enum declaration.</p></div></article>
-        <article class="lesson"><div class="lesson-num">11</div><div><h3><a href="src/lessons/11_reflection_metadata.i">Reflection Metadata</a></h3><p><code>Payload&lt;&gt;.name</code>, <code>field_count</code>, <code>size</code>, and <code>fields</code> are generated metadata.</p></div></article>
-        <article class="lesson"><div class="lesson-num">12</div><div><h3><a href="src/lessons/12_reflection_fields.i">Reflection Fields</a></h3><p>Walk fields in a loop and read names, types, sizes, pointer depth, and attributes.</p></div></article>
-        <article class="lesson"><div class="lesson-num">13</div><div><h3><a href="src/lessons/13_metaprogramming_shape.i">Metaprogramming Shape</a></h3><p>Generic instantiations produce concrete reflected names such as <code>Slot_i32_reflect</code>.</p></div></article>
+        <article class="lesson"><div class="lesson-num">07</div><div><h3><a href="src/lessons/07_std_print.rin">Standard Print</a></h3><p><code>import "std/Print.rin"</code> pulls code from the packaged standard library.</p></div></article>
+        <article class="lesson"><div class="lesson-num">08</div><div><h3><a href="src/lessons/08_arenas_and_array.rin">Arenas And Array</a></h3><p>An arena owns allocation. <code>Array&lt;i32&gt;</code> carries length and backing data.</p></div></article>
+        <article class="lesson"><div class="lesson-num">09</div><div><h3><a href="src/lessons/09_generics_box.rin">Generic Box</a></h3><p><code>Box&lt;T&gt;</code> becomes concrete as <code>Box&lt;i32&gt;</code>, <code>Box&lt;f32&gt;</code>, or another type.</p></div></article>
+        <article class="lesson"><div class="lesson-num">10</div><div><h3><a href="src/lessons/10_enum_sized_tables.rin">Enum-Sized Tables</a></h3><p><code>Enum&lt;&gt;.value_count</code> keeps a table sized to the enum declaration.</p></div></article>
+        <article class="lesson"><div class="lesson-num">11</div><div><h3><a href="src/lessons/11_reflection_metadata.rin">Reflection Metadata</a></h3><p><code>Payload&lt;&gt;.name</code>, <code>field_count</code>, <code>size</code>, and <code>fields</code> are generated metadata.</p></div></article>
+        <article class="lesson"><div class="lesson-num">12</div><div><h3><a href="src/lessons/12_reflection_fields.rin">Reflection Fields</a></h3><p>Walk fields in a loop and read names, types, sizes, pointer depth, and attributes.</p></div></article>
+        <article class="lesson"><div class="lesson-num">13</div><div><h3><a href="src/lessons/13_metaprogramming_shape.rin">Metaprogramming Shape</a></h3><p>Generic instantiations produce concrete reflected names such as <code>Slot_i32_reflect</code>.</p></div></article>
       </div>
       <div class="footer-mark">libraries and reflection</div>
     </section>
@@ -368,7 +368,7 @@ Name: struct = { field: Type; }</code></pre>
       <h2>The Check Ritual</h2>
       <p>Use the check script whenever you change a lesson:</p>
       <pre><code>powershell -ExecutionPolicy Bypass -File scripts/check_all.ps1</code></pre>
-      <p>It finds <code>I.exe</code> through <code>I_HOME</code>, then <code>PATH</code>, then the packaged compiler folder. It compiles every lesson into <code>build/gen</code>.</p>
+      <p>It finds <code>rin.exe</code> through <code>RIN_HOME</code>, then <code>PATH</code>, then the packaged compiler folder. It compiles every lesson into <code>build/gen</code>.</p>
       <p>If all is well, it ends with:</p>
       <pre><code>ok 14 lessons</code></pre>
       <div class="note">A learning repo should keep this ritual boring. The interesting part is the source, not the build ceremony.</div>
