@@ -1,4 +1,4 @@
-# 04 — Control flow
+# 03 — Control flow
 
 > `if`, `for`, `switch`, and enums as the thing you switch on.
 
@@ -30,6 +30,6 @@ You can say when the exhaustiveness check fires and how to opt out of it.
 
 ---
 
-*Source: [`src/lessons/04_control_flow.rin`](../../src/lessons/04_control_flow.rin). The file itself
+*Source: [`src/lessons/03_control_flow.rin`](../../src/lessons/03_control_flow.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

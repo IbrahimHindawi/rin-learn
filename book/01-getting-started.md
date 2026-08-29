@@ -1,11 +1,11 @@
-# 01 - Values, Memory, And Shape
+# 01 - Getting Started
 
 Lessons 00 through 02.
 
-Three questions come before everything else in a low-level language. What is a
-program? How much space does a value take? Where does it live?
+What a program is, what a value costs, and how much space you chose.
 
 ## Lesson 00 - What a program is
+
 
 `src/lessons/00_hello_world.rin`
 
@@ -39,9 +39,40 @@ value bound to `n` in `n: i32 = 1;`.
 Now open `build/gen/00_hello_world.c` and find your `main`. It is there, in C,
 recognisable. That relationship holds for the whole course.
 
-## Lesson 01 - A value costs bytes
+## Lesson 01 - Conversions are visible
 
-`src/lessons/01_sizes.rin`
+
+`src/lessons/01_values_and_expressions.rin`
+
+```i
+count: i32 = 6;
+scale: f32 = 2.5f;
+total: i32 = count * 3 + 1;
+ratio: f32 = cast(total, f32) / scale;
+```
+
+The arithmetic holds no surprises. The `cast` is the lesson.
+
+Dividing an `i32` by an `f32` requires one of them to change representation --
+an integer and a float are different bit patterns, not different amounts of the
+same thing. Turning `19` into `19.0f` is real work, and it can lose information
+going the other way.
+
+So it is written down. `cast(total, f32)` is visible at the point it happens,
+and a reader can see where a conversion occurred without knowing the promotion
+rules by heart.
+
+Be aware of what `cast` does *not* do: it will not stop you losing data. Casting
+an `i64` to an `i8` discards the top bits exactly as lesson 01 did, silently.
+The value of writing it down is that it is written down.
+
+The `f` in `2.5f` marks a 32-bit float literal. Without it you have an `f64`,
+and assigning that to an `f32` is another narrowing.
+
+## Lesson 02 - A value costs bytes
+
+
+`src/lessons/02_sizes.rin`
 
 Run it first. The output is the lesson.
 
@@ -77,53 +108,3 @@ That is the bargain this language makes, and it is C's bargain. The compiler
 will not stop you; it assumes you meant it. Your protection is that you wrote
 `i8` yourself, knowing what it holds. This is the first place the course is
 asking you to be careful rather than promising to be careful for you.
-
-## Lesson 02 - A variable is a place
-
-`src/lessons/02_addresses.rin`
-
-Two operators do all of it:
-
-    value.&      the address of `value`
-    place[0]     the value at `place`
-
-They are exact inverses. `x.&[0]` is `x`.
-
-The lesson prints where `a` and `b` live, then passes `a`'s address to a
-procedure that never sees `a`:
-
-```i
-set_to_seven: proc(place: *i32) -> void = {
-    place[0] = 7;
-}
-```
-
-After the call, `a` is 7. That is the entire idea of a pointer: the procedure
-received a number, went to that place, and wrote there. Nothing was returned and
-nothing was copied back.
-
-Three things to notice in the output.
-
-**The addresses are huge and look arbitrary.** They are. The operating system
-decides where your stack goes, and it moves between runs -- partly as a security
-measure. Run the lesson twice and the numbers change. The *distance* between the
-two variables will not.
-
-**The order is not yours to choose.** The lesson prints which of `a` and `b`
-sits lower, because the compiler decides, and it is free to decide differently.
-Declaring `a` first does not put it first.
-
-**A pointer is an ordinary value.** It has a size, you can copy it, you can
-store it in a struct, and it has an address of its own. `p = b.&` moved no
-integers -- it changed 8 bytes of pointer.
-
-The exercise at the bottom of that lesson is worth doing. Subtract the two
-addresses in the wrong order and you get 18446744073709551612 rather than -4,
-because `uintptr` is unsigned and subtracting past zero wraps around to the top
-of its range. Same bargain as the `i8`, in a different costume.
-
-## Where this leaves you
-
-After three lessons you know that a program has one entry and one exit code,
-that every value has a size you chose, and that every variable is a place with a
-number. Everything from here is built on those.

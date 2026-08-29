@@ -1,4 +1,4 @@
-# 11 — Generics
+# 12 — Generics
 
 > One definition, many types, resolved at compile time.
 
@@ -33,6 +33,6 @@ You can write a generic type with two parameters and instantiate it.
 
 ---
 
-*Source: [`src/lessons/11_generics_box.rin`](../../src/lessons/11_generics_box.rin). The file itself
+*Source: [`src/lessons/12_generics_box.rin`](../../src/lessons/12_generics_box.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

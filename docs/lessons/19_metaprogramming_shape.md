@@ -1,4 +1,4 @@
-# 18 — Where this leads
+# 19 — Where this leads
 
 > Generics and reflection together: code shaped by types.
 
@@ -32,6 +32,6 @@ You can describe what you would build with these two together.
 
 ---
 
-*Source: [`src/lessons/18_metaprogramming_shape.rin`](../../src/lessons/18_metaprogramming_shape.rin). The file itself
+*Source: [`src/lessons/19_metaprogramming_shape.rin`](../../src/lessons/19_metaprogramming_shape.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

@@ -47,7 +47,7 @@ rin compiles to C that a person can read. That is unusual, and it is the best
 teaching tool here: after any lesson, open the matching file under `build/gen`
 and look at what your code became.
 
-    src/lessons/07_layout_and_padding.rin   ->   build/gen/07_layout_and_padding.c
+    src/lessons/08_layout_and_padding.rin   ->   build/gen/07_layout_and_padding.c
 
 You will see your struct as a C struct, your generic as a stamped-out copy with
 a mangled name, and your reflection data as a plain table of bytes. Nothing is
@@ -57,8 +57,8 @@ machine does", you can go and check.
 ## What the lessons will not do
 
 They will not protect you. This language keeps C's bargain: no bounds checking,
-no overflow trapping, no lifetime enforcement. Lesson 01 puts 200 into an 8-bit
-integer and reads back -56, and nothing complains. Lesson 09 shows a procedure
+no overflow trapping, no lifetime enforcement. Lesson 02 puts 200 into an 8-bit
+integer and reads back -56, and nothing complains. Lesson 10 shows a procedure
 returning the address of a dead local.
 
 Those are in the course on purpose. The protection in a language like this comes

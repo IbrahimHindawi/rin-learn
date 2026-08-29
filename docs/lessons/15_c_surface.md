@@ -1,4 +1,4 @@
-# 14 — The C boundary
+# 15 — The C boundary
 
 > `cinclude` sends a header to C; `external` declares a name to rin.
 
@@ -35,6 +35,6 @@ You can declare and call a C function that is not in this lesson.
 
 ---
 
-*Source: [`src/lessons/14_c_surface.rin`](../../src/lessons/14_c_surface.rin). The file itself
+*Source: [`src/lessons/15_c_surface.rin`](../../src/lessons/15_c_surface.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

@@ -1,4 +1,4 @@
-# 12 — Enum-sized tables
+# 14 — Enum-sized tables
 
 > An array whose length is an enum's member count, checked by the compiler.
 
@@ -30,6 +30,6 @@ You can add a fourth `Stat` member and predict what changes.
 
 ---
 
-*Source: [`src/lessons/12_enum_sized_tables.rin`](../../src/lessons/12_enum_sized_tables.rin). The file itself
+*Source: [`src/lessons/14_enum_sized_tables.rin`](../../src/lessons/14_enum_sized_tables.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

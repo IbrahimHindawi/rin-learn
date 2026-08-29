@@ -1,13 +1,13 @@
-# 07 - Reflection And Metaprogramming
+# 08 - Reflection
 
-rin's metaprogramming starts with concrete declarations, not runtime magic. The
-compiler already knows the names, fields, sizes, enum values, and generic
-instantiations in your program. Reflection makes a useful slice of that knowledge
-available as ordinary data.
+Lessons 16 through 19.
 
-## Lesson 15 - Reflection Metadata
+The records the compiler emits about your types, and what you can build once you can read them.
 
-`src/lessons/15_reflection_metadata.rin` asks what information the compiler can
+## Lesson 16 - Reflection Metadata
+
+
+`src/lessons/16_reflection_metadata.rin` asks what information the compiler can
 produce about a type you already wrote.
 
 The data shape is ordinary:
@@ -58,9 +58,10 @@ Try this:
 - inspect the new field's reflected name and type
 - try `Payload<>.variant.values[0]` and read the error you get
 
-## Lesson 16 - Reflection Fields
+## Lesson 17 - Reflection Fields
 
-`src/lessons/16_reflection_fields.rin` asks how reflection becomes useful when you
+
+`src/lessons/17_reflection_fields.rin` asks how reflection becomes useful when you
 walk across fields instead of inspecting one fixed field.
 
 The struct includes an attribute on one field:
@@ -112,54 +113,10 @@ Try this:
 - print `size` for each field and compare the results
 - nest another struct inside `Inner` and follow `info` two levels down
 
-## Lesson 18 - Metaprogramming Shape
+## Lesson 18 - One Record For Every Kind
 
-`src/lessons/18_metaprogramming_shape.rin` asks what happens when generics and
-reflection meet.
 
-The generic type is a tiny optional-slot shape:
-
-```i
-Slot: struct<T> = {
-    value: T;
-    occupied: bool;
-}
-```
-
-The helper procedures construct either a filled slot or an empty one:
-
-```i
-Slot<T>some: proc<T>(value: T)->Slot<T> = { ... }
-Slot<T>none: proc<T>()->Slot<T> = { ... }
-```
-
-Using `Slot<i32>` and `Slot<f32>` creates concrete instantiations. The lesson then
-prints their reflected concrete names and field counts:
-
-```i
-Slot_i32_reflect.name
-Slot_i32_reflect.count
-Slot_f32_reflect.name
-Slot_f32_reflect.count
-```
-
-`Type<>` and the generated `Type_reflect` global are the same thing spelled two
-ways, and both are checked the same way: a field name the record does not have is
-an error either way.
-
-After it runs, you should see the practical metaprogramming shape: one generic
-source definition produced multiple concrete shapes, and those concrete shapes
-have metadata of their own.
-
-Try this:
-
-- create a `Slot<bool>`
-- print its reflected name
-- add another field to `Slot<T>` and confirm every reflected field count changes
-
-## Lesson 17 - One Record For Every Kind
-
-`src/lessons/17_reflection_one_record.rin` asks what you can write once that works
+`src/lessons/18_reflection_one_record.rin` asks what you can write once that works
 for a struct, a union and an enum alike.
 
 The answer is a single procedure that takes the record and never asks what it was
@@ -207,3 +164,49 @@ metadata already knows the answer.
 
 That is the rin style this book is aiming for: direct data, explicit storage,
 generic reuse, and reflection where repetition would otherwise creep in.
+
+## Lesson 19 - Metaprogramming Shape
+
+
+`src/lessons/19_metaprogramming_shape.rin` asks what happens when generics and
+reflection meet.
+
+The generic type is a tiny optional-slot shape:
+
+```i
+Slot: struct<T> = {
+    value: T;
+    occupied: bool;
+}
+```
+
+The helper procedures construct either a filled slot or an empty one:
+
+```i
+Slot<T>some: proc<T>(value: T)->Slot<T> = { ... }
+Slot<T>none: proc<T>()->Slot<T> = { ... }
+```
+
+Using `Slot<i32>` and `Slot<f32>` creates concrete instantiations. The lesson then
+prints their reflected concrete names and field counts:
+
+```i
+Slot_i32_reflect.name
+Slot_i32_reflect.count
+Slot_f32_reflect.name
+Slot_f32_reflect.count
+```
+
+`Type<>` and the generated `Type_reflect` global are the same thing spelled two
+ways, and both are checked the same way: a field name the record does not have is
+an error either way.
+
+After it runs, you should see the practical metaprogramming shape: one generic
+source definition produced multiple concrete shapes, and those concrete shapes
+have metadata of their own.
+
+Try this:
+
+- create a `Slot<bool>`
+- print its reflected name
+- add another field to `Slot<T>` and confirm every reflected field count changes

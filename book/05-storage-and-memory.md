@@ -1,53 +1,13 @@
-# 04 - Procedures And Storage
+# 05 - Storage And Memory
 
-Lessons 08 and 09.
+Lessons 10 through 11.
 
-You now know what a value costs and where it sits. These two lessons are about
-what happens when a value crosses into a procedure, and how long it survives
-afterwards.
+Where a value lives decides how long it lasts, and an arena is the answer this language gives to the third kind.
 
-## Lesson 08 - Calls, copies, and code with addresses
+## Lesson 10 - Where memory comes from, and when it stops
 
-`src/lessons/08_procs_and_callbacks.rin`
 
-**A parameter is a copy.** Passing an `i32` copies four bytes onto the call. The
-procedure gets its own, and writing to it changes nothing the caller can see.
-That is why lesson 02 had to pass an *address* to change `a` -- copying the
-address is still a copy, but both copies name the same place.
-
-This matters more as values get bigger. Passing a 64-byte struct by value copies
-64 bytes on every call. Passing `*Struct` copies 8. The language will not choose
-for you.
-
-**Code has an address too.** This lesson's real subject:
-
-```i
-Op: alias = *proc(a: i32, b: i32) -> i32;
-
-table: [2]Op = {};
-table[0] = add;
-table[1] = mul;
-```
-
-`add` is a procedure, and `*proc(a: i32, b: i32) -> i32` is a pointer to one.
-Your compiled procedures live in memory like everything else, at addresses, and
-you can store those addresses in a variable, an array, or a struct field.
-
-Note the `*`. There is no such thing as a variable holding a procedure *by
-value* -- you cannot copy code into a local the way you copy an `i32`. You hold
-its address. C has the same rule, for the same reason.
-
-That array of two `Op`s is a dispatch table: `table[i](2, 3)` picks a procedure
-by index and calls it. Every virtual method system, every plugin interface and
-every callback in any language is this, with more syntax on top.
-
-`Adder` shows the other half -- a struct with a procedure pointer field. A
-struct holding data and the code that works on it is the whole of what an object
-is, assembled by hand so you can see the parts.
-
-## Lesson 09 - Where memory comes from, and when it stops
-
-`src/lessons/09_storage_and_lifetime.rin`
+`src/lessons/10_storage_and_lifetime.rin`
 
 Three kinds of storage, and you choose every time you declare something.
 
@@ -99,3 +59,40 @@ teaches you the code works. Call another procedure first and print again.
 Automatic storage dies too soon for most data. Static storage has to be sized
 before the program runs. Real programs need something in between, and that is
 what the next chapter is about.
+
+## Lesson 11 - Memory you are responsible for
+
+
+`src/lessons/11_arenas_and_array.rin`
+
+```i
+arena: memops_arena = {};
+memops_arena_initialize(arena.&);
+
+values: Array<i32> = Array<i32>reserve(arena.&, 5);
+```
+
+An arena is a large block of memory obtained once, handed out in pieces, and
+released all at once. Asking for a piece is a pointer bump: return the current
+position, then move it forward. That is the whole allocator.
+
+It is worth understanding why this shape is common in systems code rather than
+the `malloc`/`free` pair you may expect.
+
+**Allocation is nearly free.** A bump is an addition. `malloc` has to search a
+structure of free blocks, and may take a lock.
+
+**There is no individual free.** You do not release one `Array`; you release the
+arena and everything in it goes at once. That sounds like a limitation and is
+usually the point -- most programs have natural moments where a whole batch of
+work is finished. A frame ends. A request completes. A file finishes parsing.
+
+**It removes a class of bug by removing the decision.** You cannot free
+something twice, or free it and keep using it, if there is no per-object free.
+What you can still do is keep a pointer past the arena's own lifetime, which is
+lesson 09's mistake wearing different clothes.
+
+**Everything in it is contiguous**, so it inherits lesson 05's cache behaviour.
+
+`Array<i32>` here is a pointer plus a length, pointing into the arena. It does
+not own the memory and does not free anything.

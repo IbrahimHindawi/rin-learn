@@ -1,0 +1,105 @@
+import "std/Print.rin"
+
+// A proc is a piece of work with a name. You have been calling one since the
+// first lesson -- `main` is a proc -- and the lessons before this one quietly
+// used a few more. This is the lesson that explains them.
+//
+// The declaration follows the same shape as everything else:
+//
+//   name : proc (parameters) -> ReturnType = { body }
+//
+// Read it left to right: `double_it` is a proc, it takes an i32 called `n`, it
+// gives back an i32, and here is how.
+
+double_it: proc(n: i32) -> i32 = {
+    return n * 2;
+}
+
+// Parameters are copies. `n` above is this proc's own variable, initialised
+// from whatever the caller passed. Writing to it changes nothing outside.
+spend: proc(budget: i32) -> i32 = {
+    budget = 0;      // only this copy
+    return budget;
+}
+
+// Several parameters, separated by commas. Each needs its own type; there is
+// no "and another one of those" shorthand.
+clamp: proc(value: i32, low: i32, high: i32) -> i32 = {
+    if (value < low) {
+        return low;
+    }
+    if (value > high) {
+        return high;
+    }
+    return value;
+}
+
+// A proc that returns nothing says so with `void`, and just ends.
+announce: proc(label: *const char, value: i32) -> void = {
+    printfmt("{} = {}\n", label, value);
+}
+
+// A proc may call itself. Each call gets its own parameters and its own locals,
+// stacked on top of the last, and they unwind as each one returns.
+factorial: proc(n: i32) -> i32 = {
+    if (n <= 1) {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+// Procs may be declared in any order. `helper` is used above by nothing, but it
+// could be -- rin resolves names across the whole file, so there is no need to
+// declare something before the thing that calls it. C makes you write a
+// prototype for this; rin does not.
+helper: proc() -> i32 = {
+    return 42;
+}
+
+main: proc() -> i32 = {
+    printfmt("double_it(21)     = {}\n", double_it(21));
+
+    budget: i32 = 100;
+    printfmt("spend(budget)     = {}\n", spend(budget));
+    printfmt("budget afterwards = {}\n", budget);
+
+    printfmt("clamp(15, 0, 10)  = {}\n", clamp(15, 0, 10));
+    printfmt("clamp(-4, 0, 10)  = {}\n", clamp(-4, 0, 10));
+    printfmt("clamp(7,  0, 10)  = {}\n", clamp(7, 0, 10));
+
+    announce("helper()", helper());
+
+    printfmt("factorial(5)      = {}\n", factorial(5));
+
+    // A call is an expression, so it can go anywhere a value can.
+    printfmt("nested            = {}\n", double_it(clamp(99, 0, 10)));
+
+    return 0;
+}
+
+// What to notice
+//
+// 1. `budget` did not change. `spend` received a copy and set the copy to zero.
+//    Every parameter in this lesson works that way, and it is the reason the
+//    next lesson exists: to change a caller's variable you must pass its
+//    address, not its value.
+//
+// 2. `factorial` calls itself five times before any of them return. Five sets
+//    of `n` exist at once, each in its own frame on the stack. That storage is
+//    handed back automatically as the calls unwind -- which is lesson 09.
+//
+// 3. `helper` is declared after everything that could call it and nothing
+//    complains. Order does not matter at file scope.
+//
+// 4. `announce` returns `void` and its last statement is not a `return`. A proc
+//    with nothing to give back simply reaches the end of its body.
+//
+// Try this
+//
+// - add `printfmt` inside `factorial` before the recursive call, and again
+//   after it, to watch the calls stack up and then unwind
+// - give `clamp` a fourth parameter and see the compiler reject every existing
+//   call site; arity is checked, unlike C's older declaration style
+// - write a proc that returns `f32` and call it from `main`
+// - call `factorial(-1)` and reason about why it stops rather than recursing
+//   forever

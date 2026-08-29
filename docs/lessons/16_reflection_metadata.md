@@ -1,4 +1,4 @@
-# 15 — Reflection: the record
+# 16 — Reflection: the record
 
 > `T<>` is a record the compiler emits describing the type.
 
@@ -29,6 +29,6 @@ You can print the size of a type two ways and get the same number.
 
 ---
 
-*Source: [`src/lessons/15_reflection_metadata.rin`](../../src/lessons/15_reflection_metadata.rin). The file itself
+*Source: [`src/lessons/16_reflection_metadata.rin`](../../src/lessons/16_reflection_metadata.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

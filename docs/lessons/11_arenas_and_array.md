@@ -1,4 +1,4 @@
-# 10 — Arenas and Array
+# 11 — Arenas and Array
 
 > Ask once for a lot of memory, hand out pieces, throw the lot away.
 
@@ -36,6 +36,6 @@ You can say what happens to an `Array` when its arena resets.
 
 ---
 
-*Source: [`src/lessons/10_arenas_and_array.rin`](../../src/lessons/10_arenas_and_array.rin). The file itself
+*Source: [`src/lessons/11_arenas_and_array.rin`](../../src/lessons/11_arenas_and_array.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

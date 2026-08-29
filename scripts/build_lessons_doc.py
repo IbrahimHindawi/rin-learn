@@ -237,6 +237,12 @@ body {
 .rail a.ch.on { color: var(--ink); background: #1b1615; }
 .rail a.ch.on .n { color: var(--accent); }
 .rail a.ch:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.rail a.ch.front .n { color: var(--accent-d); }
+.rail li.sep { margin: .9rem .65rem .3rem; padding-top: .7rem;
+               border-top: 1px solid var(--rule); }
+.rail li.sep span { font-family: var(--mono); font-size: .6rem; letter-spacing: .24em;
+                    text-transform: uppercase; color: var(--dim); }
+section.lesson.front > h1 { border-bottom-color: var(--accent-d); }
 
 /* Reading column --------------------------------------------------------- */
 .page { margin-left: var(--railw); }
@@ -366,6 +372,20 @@ def main() -> int:
         return 1
 
     rail, body, missing = [], [], []
+
+    # Front matter: what the language is, and how to install it. These come
+    # before the numbered lessons and carry no source of their own.
+    for stem, label in (("intro", "What rin is"), ("install", "Installing")):
+        front = ROOT / "docs" / (stem + ".md")
+        if not front.exists():
+            continue
+        rail.append('<li><a class="ch front" href="#%s"><span class="n">·</span>'
+                    '<span>%s</span></a></li>' % (stem, html.escape(label)))
+        body.append('<section class="lesson front" id="%s">%s</section>'
+                    % (stem, render(front.read_text(encoding="utf-8"))))
+    if body:
+        rail.append('<li class="sep"><span>The lessons</span></li>')
+
     for f in files:
         text = f.read_text(encoding="utf-8")
         m = re.match(r"^# (\S+) \u2014 (.*)$", text.split("\n")[0])

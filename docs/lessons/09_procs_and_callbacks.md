@@ -1,4 +1,4 @@
-# 08 — Procs and callbacks
+# 09 — Procs and callbacks
 
 > A proc has an address too, so it can be stored and passed.
 
@@ -30,6 +30,6 @@ You can add a third operation and swap it in without touching the struct.
 
 ---
 
-*Source: [`src/lessons/08_procs_and_callbacks.rin`](../../src/lessons/08_procs_and_callbacks.rin). The file itself
+*Source: [`src/lessons/09_procs_and_callbacks.rin`](../../src/lessons/09_procs_and_callbacks.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

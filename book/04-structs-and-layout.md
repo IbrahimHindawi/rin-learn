@@ -1,53 +1,13 @@
-# 03 - Arrays, Structs, And Layout
+# 04 - Structs And Layout
 
-Lessons 05 through 07.
+Lessons 07 through 09.
 
-Lesson 02 established that a variable is a place. These three lessons are about
-what happens when you put more than one thing in a place.
+Grouping values, where the compiler actually puts them, and what happens when a struct holds something callable.
 
-## Lesson 05 - An array is a run of bytes
+## Lesson 07 - A struct names offsets
 
-`src/lessons/05_arrays_and_pointers.rin`
 
-The output that matters:
-
-```
-the array is 16 bytes, an element is 4
-  values[0] at +0
-  values[1] at +4
-  values[2] at +8
-  values[3] at +12
-```
-
-Nothing sits between the elements. No length field, no header, no bookkeeping.
-`[4]i32` is sixteen bytes and that is all it is.
-
-Which turns indexing into arithmetic:
-
-    address of element i  =  base + i * sizeof(element)
-
-The compiler can do the multiplication only because the element size is in the
-type. That is the same fact from lesson 01 doing real work: `i32` is 4 bytes, so
-element 3 is at +12, and the compiler knows it without asking anything at
-runtime.
-
-Two consequences follow, and they are the same consequence.
-
-**Walking an array is the fastest thing a processor does.** The next element is
-adjacent, so it is already in cache by the time you ask for it. This is why
-array-of-struct versus struct-of-array is a real performance question and not a
-style preference.
-
-**`values[7]` is not an error.** It computes `base + 28` and reads whatever is
-there. Often it appears to work, which is precisely what makes it dangerous --
-you get a plausible number and no indication that it came from somewhere else.
-The count is in the type, so the compiler *could* reject a constant index out of
-range. It does not. `sizeof(values)` being 16 rather than 8 is worth pausing on
-too: the array is the bytes, not a pointer to them.
-
-## Lesson 06 - A struct names offsets
-
-`src/lessons/06_structs_and_enums.rin`
+`src/lessons/07_structs_and_enums.rin`
 
 A struct groups values that belong together and gives each one a name. At the
 machine level, the names are the interesting part: `s.pos.x` is not a lookup,
@@ -58,9 +18,10 @@ worth knowing rather than guessing, because it decides what an enum costs and
 how it can be stored -- and lesson 12 turns exactly that fact into a
 compile-time-sized table.
 
-## Lesson 07 - Layout is not free
+## Lesson 08 - Layout is not free
 
-`src/lessons/07_layout_and_padding.rin`
+
+`src/lessons/08_layout_and_padding.rin`
 
 This is the one to slow down on. Two structs, identical fields, different
 declaration order:
@@ -108,3 +69,43 @@ offsets are decided at compile time, by rules about alignment you can predict.
 Once you can see that, questions like "why is my struct bigger than its fields"
 and "why is iterating this array so much faster than that one" stop being
 mysteries and become arithmetic.
+
+## Lesson 09 - Calls, copies, and code with addresses
+
+
+`src/lessons/09_procs_and_callbacks.rin`
+
+**A parameter is a copy.** Passing an `i32` copies four bytes onto the call. The
+procedure gets its own, and writing to it changes nothing the caller can see.
+That is why lesson 02 had to pass an *address* to change `a` -- copying the
+address is still a copy, but both copies name the same place.
+
+This matters more as values get bigger. Passing a 64-byte struct by value copies
+64 bytes on every call. Passing `*Struct` copies 8. The language will not choose
+for you.
+
+**Code has an address too.** This lesson's real subject:
+
+```i
+Op: alias = *proc(a: i32, b: i32) -> i32;
+
+table: [2]Op = {};
+table[0] = add;
+table[1] = mul;
+```
+
+`add` is a procedure, and `*proc(a: i32, b: i32) -> i32` is a pointer to one.
+Your compiled procedures live in memory like everything else, at addresses, and
+you can store those addresses in a variable, an array, or a struct field.
+
+Note the `*`. There is no such thing as a variable holding a procedure *by
+value* -- you cannot copy code into a local the way you copy an `i32`. You hold
+its address. C has the same rule, for the same reason.
+
+That array of two `Op`s is a dispatch table: `table[i](2, 3)` picks a procedure
+by index and calls it. Every virtual method system, every plugin interface and
+every callback in any language is this, with more syntax on top.
+
+`Adder` shows the other half -- a struct with a procedure pointer field. A
+struct holding data and the code that works on it is the whole of what an object
+is, assembled by hand so you can see the parts.

@@ -1,4 +1,4 @@
-# 01 — Sizes
+# 02 — Sizes
 
 > Every value occupies a fixed number of bytes, and you choose how many.
 
@@ -33,6 +33,6 @@ You can predict `sizeof` for any scalar without running the program.
 
 ---
 
-*Source: [`src/lessons/01_sizes.rin`](../../src/lessons/01_sizes.rin). The file itself
+*Source: [`src/lessons/02_sizes.rin`](../../src/lessons/02_sizes.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

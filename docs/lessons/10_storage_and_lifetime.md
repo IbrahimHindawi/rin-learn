@@ -1,4 +1,4 @@
-# 09 — Storage and lifetime
+# 10 — Storage and lifetime
 
 > Where a value lives decides how long it lasts. There are three answers.
 
@@ -34,6 +34,6 @@ For any declaration you can say which of the three it is and why.
 
 ---
 
-*Source: [`src/lessons/09_storage_and_lifetime.rin`](../../src/lessons/09_storage_and_lifetime.rin). The file itself
+*Source: [`src/lessons/10_storage_and_lifetime.rin`](../../src/lessons/10_storage_and_lifetime.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

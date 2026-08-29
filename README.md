@@ -22,27 +22,36 @@ the argument: each lesson needs the one before it.
 
 This is a course in **low-level programming** that happens to use rin. The
 subject is the machine -- how much space a value takes, where it lives, how long
-it lasts -- because everything else in a systems language follows from that. So
-memory comes first rather than last.
+it lasts -- because everything else in a systems language follows from that.
 
-- `01-values-memory-and-shape.md` -- what a program is, what a value costs in
-  bytes, and why a variable is a place with an address. Lessons 00-02.
-- `02-expressions-and-control.md` -- arithmetic, visible conversions, loops, and
-  a `switch` that does not fall through. Lessons 03-04.
-- `03-arrays-structs-and-layout.md` -- arrays as runs of bytes, structs as named
-  offsets, and where padding comes from. Lessons 05-07.
-- `04-procedures-and-storage.md` -- parameters are copies, code has addresses,
-  and the difference between static, automatic and manual storage. Lessons
-  08-09.
-- `05-managing-memory.md` -- arenas, generics as stamped-out copies, and letting
-  the compiler size a table. Lessons 10-12.
-- `06-the-c-boundary.md` -- how printing works, and what it means to call
-  something this compiler did not compile. Lessons 13-14.
-- `07-reflection.md` -- the compiler's own knowledge about your types, available
-  at runtime. Lessons 15-18.
+The order follows the one K&R uses, for the reason that ordering exists: write a
+whole program, then types and sizes, then control flow, then procs, and only
+then pointers. You cannot see why an address is worth passing until you have
+watched a copy fail to come back.
 
-The three lessons carrying the most weight are 01 (sizes), 02 (addresses) and
-07 (layout and padding). If you read three, read those.
+- `01-getting-started.md` -- what a program is, arithmetic with visible
+  conversions, and what a value costs in bytes. Lessons 00 through 02.
+- `02-control-and-procedures.md` -- branching, looping, a `switch` that does not
+  fall through, and giving a piece of work a name. Lessons 03 through 04.
+- `03-pointers-and-arrays.md` -- a variable is a place, an array is a run of
+  bytes. Lessons 05 through 06.
+- `04-structs-and-layout.md` -- structs as named offsets, where padding comes
+  from, and a struct that holds something callable. Lessons 07 through 09.
+- `05-storage-and-memory.md` -- static, automatic and manual storage, and the
+  arena. Lessons 10 through 11.
+- `06-generics-and-printing.md` -- generics as stamped-out copies, printing as
+  ordinary code, and letting the compiler size a table. Lessons 12 through 14.
+- `07-the-c-boundary.md` -- calling something this compiler did not compile.
+  Lesson 15.
+- `08-reflection.md` -- the compiler's own knowledge about your types, readable
+  at runtime. Lessons 16 through 19.
+
+There is also a single-page version with every lesson's source inline:
+`docs/lessons.html`, and the same as a PDF. It opens with what the language is
+and how to install it.
+
+The three lessons carrying the most weight are 02 (sizes), 05 (addresses) and
+08 (layout and padding). If you read three, read those.
 
 The point is not to cover the whole language. The point is to build a working
 mental model one small program at a time.

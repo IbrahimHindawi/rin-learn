@@ -1,4 +1,4 @@
-# 05 — Arrays and pointers
+# 06 — Arrays and pointers
 
 > An array is a run of bytes, not a collection.
 
@@ -33,6 +33,6 @@ You can compute the byte offset of `values[3]` without running anything.
 
 ---
 
-*Source: [`src/lessons/05_arrays_and_pointers.rin`](../../src/lessons/05_arrays_and_pointers.rin). The file itself
+*Source: [`src/lessons/06_arrays_and_pointers.rin`](../../src/lessons/06_arrays_and_pointers.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*
