@@ -1,0 +1,32 @@
+// How the lessons are built. Read by `rin build`, not executed.
+//
+// Each lesson is an independent program, so each becomes its own executable
+// named after its file. There is no shared library and nothing links between
+// them -- that is the point of a lesson.
+build_name:      *const char = "rin-learn";
+build_dir:       *const char = "build";
+build_generator: *const char = "Ninja";
+build_compiler:  *const char = "clang-cl";
+build_type:      *const char = "Debug";
+
+build_entries: [19]*const char = {
+    "src/lessons/00_hello_world.rin",
+    "src/lessons/01_sizes.rin",
+    "src/lessons/02_addresses.rin",
+    "src/lessons/03_values_and_expressions.rin",
+    "src/lessons/04_control_flow.rin",
+    "src/lessons/05_arrays_and_pointers.rin",
+    "src/lessons/06_structs_and_enums.rin",
+    "src/lessons/07_layout_and_padding.rin",
+    "src/lessons/08_procs_and_callbacks.rin",
+    "src/lessons/09_storage_and_lifetime.rin",
+    "src/lessons/10_arenas_and_array.rin",
+    "src/lessons/11_generics_box.rin",
+    "src/lessons/12_enum_sized_tables.rin",
+    "src/lessons/13_std_print.rin",
+    "src/lessons/14_c_surface.rin",
+    "src/lessons/15_reflection_metadata.rin",
+    "src/lessons/16_reflection_fields.rin",
+    "src/lessons/17_reflection_one_record.rin",
+    "src/lessons/18_metaprogramming_shape.rin",
+};
