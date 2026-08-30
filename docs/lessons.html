@@ -124,6 +124,26 @@ section.lesson em { color: var(--muted); font-size: .92rem; font-style: normal; 
   .page { margin-left: 0; }
   .col { padding: 2.5rem 1.25rem 5rem; }
 }
+
+/* Phones. A code block scrolls inside its own box, but prose must not: an
+   unbreakable token -- a path, a URL, `import "std/Print.rin"` -- is otherwise
+   wider than the screen and takes the whole page sideways with it. */
+@media (max-width: 34rem) {
+  .col { padding: 1.75rem 1rem 4rem; }
+  .rail ol { grid-template-columns: 1fr; }
+  body { font-size: .97rem; }
+  h1 { font-size: 1.7rem; }
+  h2 { font-size: 1.28rem; }
+  p, li, blockquote { overflow-wrap: break-word; }
+  code { overflow-wrap: anywhere; }
+  pre { padding: .8rem .85rem; }
+  pre code { font-size: .76rem; }
+  /* The source header is a two-up row; stacked, it stops pushing the page. */
+  .source .bar { flex-wrap: wrap; gap: .2rem .75rem; }
+  .source .path { min-width: 0; overflow-wrap: anywhere; }
+  .source .lines { flex: 0 0 auto; }
+  table { display: block; overflow-x: auto; }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { animation: none !important; transition: none !important; }
@@ -174,7 +194,7 @@ section.lesson em { color: var(--muted); font-size: .92rem; font-style: normal; 
 <li><a class="ch" href="#16_reflection_metadata"><span class="n">16</span><span>Reflection: the record</span></a></li>
 <li><a class="ch" href="#17_reflection_fields"><span class="n">17</span><span>Reflection: fields</span></a></li>
 <li><a class="ch" href="#18_reflection_one_record"><span class="n">18</span><span>One record, three kinds</span></a></li>
-<li><a class="ch" href="#19_metaprogramming_shape"><span class="n">19</span><span>Where this leads</span></a></li></ol></nav><div class="page"><div class="col" id="top"><header class="cover"><h1>rin</h1><p class="sub">Nineteen programs, read in order. Each one is short, runs, and teaches exactly one thing about how the machine actually works.</p></header><section class="lesson front" id="intro"><h1>What rin is</h1>
+<li><a class="ch" href="#19_metaprogramming_shape"><span class="n">19</span><span>Where this leads</span></a></li></ol></nav><div class="page"><div class="col" id="top"><header class="cover"><h1>rin</h1><p class="sub">Twenty programs, read in order. Each one is short, runs, and teaches exactly one thing about how the machine actually works.</p></header><section class="lesson front" id="intro"><h1>What rin is</h1>
 <blockquote>A small systems language that compiles to C, for people who want to know what the machine is doing.</blockquote>
 <h2>The shape of it</h2>
 <p>rin is a language in the C family with the parts of C that hurt taken out and almost nothing added. It compiles to readable C, which your existing C compiler then turns into a binary — so it runs everywhere C runs, links against any C library, and needs no runtime of its own.</p>

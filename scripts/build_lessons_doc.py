@@ -4,7 +4,7 @@ Layout follows the Rust book: a narrow fixed chapter list on the left, a single
 readable column on the right. Each lesson carries its own .rin source inline,
 syntax-highlighted, because the code is the lesson -- the prose only frames it.
 
-There is no markdown library here and adding one for nineteen files of known
+There is no markdown library here and adding one for twenty files of known
 shape is not worth a dependency, so this handles exactly the subset those files
 use: headings, blockquotes, fenced and indented code, bullet lists, and inline
 `code`, **bold**, *italic* and [links](...).
@@ -311,6 +311,26 @@ section.lesson em { color: var(--muted); font-size: .92rem; font-style: normal; 
   .page { margin-left: 0; }
   .col { padding: 2.5rem 1.25rem 5rem; }
 }
+
+/* Phones. A code block scrolls inside its own box, but prose must not: an
+   unbreakable token -- a path, a URL, `import "std/Print.rin"` -- is otherwise
+   wider than the screen and takes the whole page sideways with it. */
+@media (max-width: 34rem) {
+  .col { padding: 1.75rem 1rem 4rem; }
+  .rail ol { grid-template-columns: 1fr; }
+  body { font-size: .97rem; }
+  h1 { font-size: 1.7rem; }
+  h2 { font-size: 1.28rem; }
+  p, li, blockquote { overflow-wrap: break-word; }
+  code { overflow-wrap: anywhere; }
+  pre { padding: .8rem .85rem; }
+  pre code { font-size: .76rem; }
+  /* The source header is a two-up row; stacked, it stops pushing the page. */
+  .source .bar { flex-wrap: wrap; gap: .2rem .75rem; }
+  .source .path { min-width: 0; overflow-wrap: anywhere; }
+  .source .lines { flex: 0 0 auto; }
+  table { display: block; overflow-x: auto; }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { animation: none !important; transition: none !important; }
@@ -420,7 +440,7 @@ def main() -> int:
         '<ol>%s</ol></nav>'
         '<div class="page"><div class="col" id="top">'
         '<header class="cover"><h1>rin</h1>'
-        '<p class="sub">Nineteen programs, read in order. Each one is short, runs, '
+        '<p class="sub">Twenty programs, read in order. Each one is short, runs, '
         'and teaches exactly one thing about how the machine actually works.</p>'
         '</header>%s</div></div><script>%s</script></body></html>'
     ) % (CSS, "\n".join(rail), "\n".join(body), JS)
