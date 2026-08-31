@@ -30,6 +30,6 @@ You can add a fourth `Stat` member and predict what changes.
 
 ---
 
-*Source: [`src/lessons/14_enum_sized_tables.rin`](../../src/lessons/14_enum_sized_tables.rin). The file itself
+*Source: [`src/lessons/14_enum_sized_tables.rin`](https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/14_enum_sized_tables.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

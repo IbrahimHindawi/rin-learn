@@ -37,6 +37,6 @@ You can explain why `a.&[0] = 5` and `a = 5` do the same thing.
 
 ---
 
-*Source: [`src/lessons/05_addresses.rin`](../../src/lessons/05_addresses.rin). The file itself
+*Source: [`src/lessons/05_addresses.rin`](https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/05_addresses.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

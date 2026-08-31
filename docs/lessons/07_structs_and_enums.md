@@ -29,6 +29,6 @@ You can nest a struct in a struct and reach a leaf field.
 
 ---
 
-*Source: [`src/lessons/07_structs_and_enums.rin`](../../src/lessons/07_structs_and_enums.rin). The file itself
+*Source: [`src/lessons/07_structs_and_enums.rin`](https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/07_structs_and_enums.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

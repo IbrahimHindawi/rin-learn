@@ -30,6 +30,6 @@ You can say what each part of `main: proc() -> i32 = {}` means, out loud.
 
 ---
 
-*Source: [`src/lessons/00_hello_world.rin`](../../src/lessons/00_hello_world.rin). The file itself
+*Source: [`src/lessons/00_hello_world.rin`](https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/00_hello_world.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

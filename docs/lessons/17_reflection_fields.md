@@ -32,6 +32,6 @@ You can find a field by name and print its offset.
 
 ---
 
-*Source: [`src/lessons/17_reflection_fields.rin`](../../src/lessons/17_reflection_fields.rin). The file itself
+*Source: [`src/lessons/17_reflection_fields.rin`](https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/17_reflection_fields.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

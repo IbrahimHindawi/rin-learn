@@ -29,6 +29,6 @@ You know why `cast` is required here and what it would mean to leave it out.
 
 ---
 
-*Source: [`src/lessons/01_values_and_expressions.rin`](../../src/lessons/01_values_and_expressions.rin). The file itself
+*Source: [`src/lessons/01_values_and_expressions.rin`](https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/01_values_and_expressions.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

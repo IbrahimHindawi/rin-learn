@@ -30,6 +30,6 @@ You can write one proc that prints any type's members, whatever its kind.
 
 ---
 
-*Source: [`src/lessons/18_reflection_one_record.rin`](../../src/lessons/18_reflection_one_record.rin). The file itself
+*Source: [`src/lessons/18_reflection_one_record.rin`](https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/18_reflection_one_record.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

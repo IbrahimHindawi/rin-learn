@@ -30,6 +30,6 @@ You can say when the exhaustiveness check fires and how to opt out of it.
 
 ---
 
-*Source: [`src/lessons/03_control_flow.rin`](../../src/lessons/03_control_flow.rin). The file itself
+*Source: [`src/lessons/03_control_flow.rin`](https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/03_control_flow.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

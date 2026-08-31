@@ -30,6 +30,6 @@ You can reorder a struct to shrink it, and say by how much before compiling.
 
 ---
 
-*Source: [`src/lessons/08_layout_and_padding.rin`](../../src/lessons/08_layout_and_padding.rin). The file itself
+*Source: [`src/lessons/08_layout_and_padding.rin`](https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/08_layout_and_padding.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

@@ -35,6 +35,6 @@ You can declare and call a C function that is not in this lesson.
 
 ---
 
-*Source: [`src/lessons/15_c_surface.rin`](../../src/lessons/15_c_surface.rin). The file itself
+*Source: [`src/lessons/15_c_surface.rin`](https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/15_c_surface.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*

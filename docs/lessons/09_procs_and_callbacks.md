@@ -30,6 +30,6 @@ You can add a third operation and swap it in without touching the struct.
 
 ---
 
-*Source: [`src/lessons/09_procs_and_callbacks.rin`](../../src/lessons/09_procs_and_callbacks.rin). The file itself
+*Source: [`src/lessons/09_procs_and_callbacks.rin`](https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/09_procs_and_callbacks.rin). The file itself
 carries "What to notice" and "Try this" sections — read the code first, then come
 back here.*
