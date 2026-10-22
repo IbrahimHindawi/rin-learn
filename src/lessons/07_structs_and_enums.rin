@@ -19,8 +19,8 @@ Sprite: struct = {
 main: proc() -> i32 = {
     s: Sprite = {};
     s.kind = SpriteKind.Player;
-    s.pos.x = 3.0f;
-    s.pos.y = 4.0f;
+    s.pos.x = 3.0;
+    s.pos.y = 4.0;
 
     printfmt("sprite kind={} pos=({},{})\n", cast(s.kind, i32), s.pos.x, s.pos.y);
     return 0;

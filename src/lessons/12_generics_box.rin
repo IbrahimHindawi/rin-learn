@@ -16,7 +16,7 @@ Box<T>unwrap: proc<T>(box: Box<T>) -> T = {
 
 main: proc() -> i32 = {
     a: Box<i32> = Box<i32>make(12);
-    b: Box<f32> = Box<f32>make(3.5f);
+    b: Box<f32> = Box<f32>make(3.5);
 
     printfmt("{} {}\n", Box<i32>unwrap(a), Box<f32>unwrap(b));
     return 0;

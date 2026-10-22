@@ -29,7 +29,27 @@ main: proc() -> i32 = {
         }
     }
 
+    // Logic is C's: && and || stop as soon as the answer is known, ! negates.
+    moving: b32 = mode == Mode.Walk || mode == Mode.Run;
+    if (moving && !(sum > 100)) {
+        sum += 1;
+    }
+
     printfmt("sum={}\n", sum);
     return 0;
 }
+
+// What to notice
+//
+// 1. The loop skips 3, so it adds 0 + 1 + 2 + 4. The switch takes `default`,
+//    and the last `if` adds one more: 38.
+//
+// 2. `||` never evaluates its right side once the left is true, and `&&` never
+//    does once the left is false. That is what makes `p != null && p[0] > 0`
+//    safe to write.
+//
+// Try this
+//
+// - delete `default:` and read which members the compiler says are missing
+// - add a member to Mode and see which switches it lands in
 

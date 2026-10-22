@@ -7,8 +7,8 @@ cinclude "stdio.h"
 // Every C function needs one of these before you can call it. `cinclude` sends
 // the header to the C compiler; it does not bring any name into rin. That is why
 // `printf` is declared here too, even though <stdio.h> is included above.
-puts: proc[external](text: *const char) -> i32 = {}
-printf: proc[external](fmt: *const char, ...) -> i32 = {}
+puts: proc[external](text: [*]const char) -> i32 = {}
+printf: proc[external](fmt: [*]const char, ...) -> i32 = {}
 
 main: proc() -> i32 = {
     puts("this call is checked by rin and provided by C");

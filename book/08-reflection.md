@@ -78,7 +78,7 @@ The loop is the heart of the lesson:
 
 ```i
 for (i: u64 = 0; i < Thing<>.count; i += 1) {
-    field: *const reflect_field = Thing<>.variant.fields[i].&;
+    field: *const reflect_field = Thing<>.variant.fields[i]&;
     printfmt("{} : {}\n", field[0].name, field[0].type);
 }
 ```
@@ -152,7 +152,7 @@ values are signed.
 Try this:
 
 - add a third member to `Word` and confirm it also sits at offset zero
-- pass `Slot<>.&` to something expecting fields and see what `reflect_fields`
+- pass `Slot<>&` to something expecting fields and see what `reflect_fields`
   returns
 - uncomment the wrong-arm line at the bottom and read the compile error
 

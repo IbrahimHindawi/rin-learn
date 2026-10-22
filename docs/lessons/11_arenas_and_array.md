@@ -1,4 +1,4 @@
-# 11 — Arenas and Array
+# 11 — Arenas and containers
 
 > Ask once for a lot of memory, hand out pieces, throw the lot away.
 
@@ -14,15 +14,22 @@ program has the same lifetime as some phase: a frame, a level load, a parse.
 When the phase ends the whole arena resets, and nothing can be leaked or freed
 twice because nothing was individually owned.
 
-`Array<T>` is the first container built on it: a pointer and a length, with its
-storage pushed from an arena you hand it.
+std's containers are all built on it, and all take the arena as their first
+argument:
+
+| container | what it is |
+|---|---|
+| `Array<T>` | a fixed length, set when it is reserved |
+| `Vec<T>` | grows on append, doubling its storage |
+| `Map<T>` | string keys to values |
+| `List<T>`, `Stack<T>`, `Queue<T>` | linked nodes, pushed from the arena |
 
 ## What the lesson shows
 
-- creating an arena and initialising it
-- `Array<i32>reserve` taking the arena as its first argument
-- `.data` and `.length` -- the array carries its count, unlike `[4]i32`
-- nothing is freed, because the arena will be reset
+- one arena feeding an `Array`, a `Vec` and a `Map`
+- `squares.data[0..squares.length]`: a container's storage as a checked slice
+- `Vec<f32>get` returning an `Option` instead of reading past the end
+- `memops_arena_clear` freeing every container at once
 
 ## Why this is here
 
@@ -32,7 +39,8 @@ made where it belongs: at the call site, by you.
 
 ## Before you move on
 
-You can say what happens to an `Array` when its arena resets.
+You can say what happens to an `Array`, a `Vec` and a `Map` when their arena is
+cleared, and why none of them has a destructor.
 
 ---
 

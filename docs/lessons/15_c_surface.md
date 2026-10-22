@@ -21,7 +21,13 @@ find, and the C compiler will usually find it.
 - `cinclude` and `proc[external]` used together, and why both are needed
 - `#define` passing straight through to the C preprocessor
 - a varargs C function declared with `...`
-- `*const char` as the C string type
+- `[*]const char` as the C string type
+
+Every pointer that crosses into C is a `[*]T`. A header cannot say whether
+`char *` means one character or a million, so rin does not guess: the pointer
+stays raw and unchecked, and your code turns it into a `*T` (`p[0]&`) or a
+slice (`p[0..n]`) once it knows which it is. A string literal is a
+`[*]const char` for the same reason.
 
 ## Why this is here
 

@@ -2,11 +2,44 @@ import "std/Print.rin"
 
 main: proc() -> i32 = {
     count: i32 = 6;
-    scale: f32 = 2.5f;
+    scale: f32 = 2.5;           // the literal takes its type from the target
     total: i32 = count * 3 + 1;
-    ratio: f32 = cast(total, f32) / scale;
+
+    // Widening never loses anything, so it needs no ceremony.
+    small: u8 = 200;
+    wide: u32 = small;
+    wider: i64 = wide;
+
+    // int -> float is allowed too: it can lose precision, never sign or size.
+    ratio: f32 = total / scale;
+
+    // Going the other way can lose bits, so you write it down.
+    back: u8 = cast(wider, u8);
+    truncated: i32 = cast(ratio, i32);
 
     printfmt("count={} total={} ratio={}\n", count, total, ratio);
+    printfmt("small={} wide={} wider={} back={} truncated={}\n", small, wide, wider, back, truncated);
+
+    // With no target, a literal is i32 or f64. A tick names the type instead.
+    printfmt("big={} single={}\n", 5000000000'i64, 0.1'f32);
     return 0;
 }
 
+// What to notice
+//
+// 1. Nothing here converts silently in a way that can change a number. u8 to
+//    u32 to i64 only widens, and an int becomes a float -- that can round a huge
+//    value, but never wrap it or flip its sign.
+//
+// 2. The two casts are the two places a value can actually change: 200 fits in
+//    a u8 today, but `cast` is you saying so; 7.6 becomes 7.
+//
+// 3. `2.5` needs no suffix. It is an f32 because `scale` is one. A literal only
+//    needs a tick when nothing around it says what it is, as in an argument to
+//    printfmt.
+//
+// Try this
+//
+// - remove `cast(wider, u8)` and read the error: i64 to u8 can lose bits
+// - write `c: u8 = 300;` -- a literal must fit its type
+// - write `n: u64 = count;` -- i32 to u64 changes sign, so it is an error too

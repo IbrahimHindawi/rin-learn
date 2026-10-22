@@ -21,8 +21,8 @@ Slot: enum = {
 // checked accessors hand back the payload only when it matches -- so this one
 // procedure describes all three types without a cast in sight.
 describe: proc(meta: *const reflect) -> void = {
-    fields: *const reflect_field = reflect_fields(meta);
-    values: *const reflect_value = reflect_values(meta);
+    fields: [*]const reflect_field = reflect_fields(meta);
+    values: [*]const reflect_value = reflect_values(meta);
 
     printfmt("{}: kind={} members={} size={}\n",
         meta[0].name, reflect_kind_name(meta[0].kind), meta[0].count, meta[0].size);
@@ -40,9 +40,9 @@ describe: proc(meta: *const reflect) -> void = {
 }
 
 main: proc() -> i32 = {
-    describe(Point<>.&);
-    describe(Word<>.&);
-    describe(Slot<>.&);
+    describe(Point<>&);
+    describe(Word<>&);
+    describe(Slot<>&);
 
     // A union's members all start at offset zero -- they share storage. That is
     // why a union is its own kind rather than a struct with a flag: a walker
@@ -61,7 +61,7 @@ main: proc() -> i32 = {
     // Where the kind is only known at run time -- a `*const reflect` that was
     // passed in, as in describe() above -- reflect_fields and reflect_values are
     // the guard: they return null rather than reinterpreting the pointer.
-    if (reflect_values(Point<>.&) == null) {
+    if (reflect_values(Point<>&) == null) {
         printfmt("asking a struct for enum values yields null, not garbage\n");
     }
     return 0;

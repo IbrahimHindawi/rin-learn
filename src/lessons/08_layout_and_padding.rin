@@ -37,17 +37,17 @@ main: proc() -> i32 = {
     // from a field's address gives you that field's offset.
     l: Loose = {};
     t: Tight = {};
-    base_l: uintptr = cast(l.&, uintptr);
-    base_t: uintptr = cast(t.&, uintptr);
+    base_l: uintptr = cast(l&, uintptr);
+    base_t: uintptr = cast(t&, uintptr);
 
     printfmt("Loose: flag at +{}, value at +{}, small at +{}\n",
-             cast(l.flag.&, uintptr) - base_l,
-             cast(l.value.&, uintptr) - base_l,
-             cast(l.small.&, uintptr) - base_l);
+             cast(l.flag&, uintptr) - base_l,
+             cast(l.value&, uintptr) - base_l,
+             cast(l.small&, uintptr) - base_l);
     printfmt("Tight: value at +{}, flag at +{}, small at +{}\n",
-             cast(t.value.&, uintptr) - base_t,
-             cast(t.flag.&, uintptr) - base_t,
-             cast(t.small.&, uintptr) - base_t);
+             cast(t.value&, uintptr) - base_t,
+             cast(t.flag&, uintptr) - base_t,
+             cast(t.small&, uintptr) - base_t);
     return 0;
 }
 

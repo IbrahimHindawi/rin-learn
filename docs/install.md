@@ -35,9 +35,9 @@ rin emits C, so something has to compile it. Any of these works:
 
 - **clang-cl** — the default, and what the lessons are tested against
 - **clang**
-- **MSVC `cl.exe`** — the whole lesson suite is tested against this too
+- **Microsoft C compiler `cl.exe`** — the whole lesson suite is tested against this too
 
-If you have Visual Studio Build Tools or LLVM installed, you already have one.
+If you have Visual Studio Build Tools or the Clang toolchain installed, you already have one.
 
 ## 3. Run a lesson
 
@@ -64,8 +64,8 @@ location, compiles every lesson, links it, runs it, and reports.
 For a project of your own, describe the build once in a `build.rin` and let the
 compiler drive cmake:
 
-    build_name:  *const char = "hello";
-    build_entry: *const char = "src/main.rin";
+    build_name:  [*]const char = "hello";
+    build_entry: [*]const char = "src/main.rin";
 
 Then:
 

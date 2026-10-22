@@ -33,7 +33,7 @@ main: proc() -> i32 = {
     // An exit code says whether the program succeeded, not what it computed.
     // Print the result and return 0; a shell reading `10` here would think
     // something went wrong.
-    if (health.occupied and !empty.occupied) {
+    if (health.occupied && !empty.occupied) {
         printfmt("health holds {}, empty holds nothing\n", health.value);
     }
     return 0;

@@ -35,7 +35,7 @@ clamp: proc(value: i32, low: i32, high: i32) -> i32 = {
 }
 
 // A proc that returns nothing says so with `void`, and just ends.
-announce: proc(label: *const char, value: i32) -> void = {
+announce: proc(label: [*]const char, value: i32) -> void = {
     printfmt("{} = {}\n", label, value);
 }
 

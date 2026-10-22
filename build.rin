@@ -3,13 +3,13 @@
 // Each lesson is an independent program, so each becomes its own executable
 // named after its file. There is no shared library and nothing links between
 // them -- that is the point of a lesson.
-build_name:      *const char = "rin-learn";
-build_dir:       *const char = "build";
-build_generator: *const char = "Ninja";
-build_compiler:  *const char = "clang-cl";
-build_type:      *const char = "Debug";
+build_name:      [*]const char = "rin-learn";
+build_dir:       [*]const char = "build";
+build_generator: [*]const char = "Ninja";
+build_compiler:  [*]const char = "clang-cl";
+build_type:      [*]const char = "Debug";
 
-build_entries: [20]*const char = {
+build_entries: [20][*]const char = {
     "src/lessons/00_hello_world.rin",
     "src/lessons/01_values_and_expressions.rin",
     "src/lessons/02_sizes.rin",

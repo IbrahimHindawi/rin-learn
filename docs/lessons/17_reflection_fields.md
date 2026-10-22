@@ -9,7 +9,7 @@ offset, size, and the attribute string you wrote after `@`.
 
 That last part is the interesting one. `id: i32 @ "save,editor"` attaches text to
 a field that the compiler carries into the reflection table, where your own code
-can read it. Serialisation, editor UI and diffing are all "walk the fields, look
+can read it. Serialisation, editor interfaces and diffing are all "walk the fields, look
 at the tags, do something" -- and none of it needs the compiler to know what
 "save" means.
 

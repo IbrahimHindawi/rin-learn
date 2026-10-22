@@ -11,10 +11,10 @@ A variable is a place, and a place has a number. This is the chapter K&R puts fi
 
 Two operators do all of it:
 
-    value.&      the address of `value`
+    value&      the address of `value`
     place[0]     the value at `place`
 
-They are exact inverses. `x.&[0]` is `x`.
+They are exact inverses. `x&[0]` is `x`.
 
 The lesson prints where `a` and `b` live, then passes `a`'s address to a
 procedure that never sees `a`:
@@ -41,7 +41,7 @@ sits lower, because the compiler decides, and it is free to decide differently.
 Declaring `a` first does not put it first.
 
 **A pointer is an ordinary value.** It has a size, you can copy it, you can
-store it in a struct, and it has an address of its own. `p = b.&` moved no
+store it in a struct, and it has an address of its own. `p = b&` moved no
 integers -- it changed 8 bytes of pointer.
 
 The exercise at the bottom of that lesson is worth doing. Subtract the two

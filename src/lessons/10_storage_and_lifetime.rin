@@ -30,14 +30,14 @@ leak_a_local: proc() -> *i32 = {
     // `doomed` stops existing the moment this returns. The address stays a
     // number, and the number stays valid-looking, and reading through it is
     // undefined behaviour. Nothing here will tell you.
-    return doomed.&;
+    return doomed&;
 }
 
 main: proc() -> i32 = {
-    printfmt("static lives at   {}\n", cast(g_shared.&, uintptr));
+    printfmt("static lives at   {}\n", cast(g_shared&, uintptr));
 
     on_the_stack: i32 = 1;
-    printfmt("automatic lives at {}\n", cast(on_the_stack.&, uintptr));
+    printfmt("automatic lives at {}\n", cast(on_the_stack&, uintptr));
 
     printfmt("calling bump three times:\n");
     bump();

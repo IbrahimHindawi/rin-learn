@@ -31,7 +31,7 @@ Then the part the lesson exists for:
 ```i
 leak_a_local: proc() -> *i32 = {
     doomed: i32 = 42;
-    return doomed.&;
+    return doomed&;
 }
 ```
 
@@ -67,9 +67,9 @@ what the next chapter is about.
 
 ```i
 arena: memops_arena = {};
-memops_arena_initialize(arena.&);
+memops_arena_initialize(arena&);
 
-values: Array<i32> = Array<i32>reserve(arena.&, 5);
+values: Array<i32> = Array<i32>reserve(arena&, 5);
 ```
 
 An arena is a large block of memory obtained once, handed out in pieces, and

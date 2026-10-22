@@ -17,6 +17,7 @@ omitting the default.
 - `for` with an init, a condition and a step, and `continue` inside it
 - an enum declared with three members and switched on
 - `default:` catching the rest
+- `&&`, `||` and `!`, which short-circuit exactly as in C
 
 ## Why this is here
 

@@ -6,10 +6,10 @@
 
 Two operators do all the work, and they are exact opposites:
 
-    value.&     the address of value
+    value&     the address of value
     place[0]    the value at place
 
-So `x.&[0]` is `x` again. A pointer is an ordinary value -- it has a size, it
+So `x&[0]` is `x` again. A pointer is an ordinary value -- it has a size, it
 can be copied, it can be stored in a struct. It just happens to mean "the thing
 over there".
 
@@ -24,6 +24,7 @@ from it.
 - nothing promises declaration order matches address order
 - a proc changes its caller's variable by writing through an address
 - repointing a pointer moves 8 bytes and no `i32` at all
+- a `*i32` is the address of one `i32`: `p[0]` compiles, `p[1]` does not
 
 ## Why this is here
 
@@ -33,7 +34,7 @@ like counting.
 
 ## Before you move on
 
-You can explain why `a.&[0] = 5` and `a = 5` do the same thing.
+You can explain why `a&[0] = 5` and `a = 5` do the same thing.
 
 ---
 

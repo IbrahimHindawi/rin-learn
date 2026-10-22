@@ -144,6 +144,19 @@ def render(md: str) -> str:
             i += 1
             continue
 
+        if line.startswith("|"):
+            # A pipe table: header row, a ---|--- separator, then body rows.
+            close_list()
+            rows = []
+            while i < len(lines) and lines[i].startswith("|"):
+                rows.append([c.strip() for c in lines[i].strip().strip("|").split("|")])
+                i += 1
+            head, body_rows = rows[0], [r for r in rows[1:] if not all(set(c) <= set("-: ") for c in r)]
+            cells = "".join("<th>%s</th>" % inline(c) for c in head)
+            body_html = "".join("<tr>%s</tr>" % "".join("<td>%s</td>" % inline(c) for c in r) for r in body_rows)
+            out.append("<table><thead><tr>%s</tr></thead><tbody>%s</tbody></table>" % (cells, body_html))
+            continue
+
         if line.startswith("> "):
             close_list()
             body = []
@@ -210,6 +223,11 @@ body {
   font: 16px/1.7 var(--text); -webkit-font-smoothing: antialiased;
 }
 
+code, pre, .path { text-transform: none; }
+table { border-collapse: collapse; margin: 1.1rem 0; font-size: .95rem; width: 100%; }
+th, td { text-align: left; padding: .35rem .7rem; border-bottom: 1px solid var(--rule, rgba(127,127,127,.25)); vertical-align: top; }
+th { font-weight: 600; }
+
 /* Chapter rail ----------------------------------------------------------- */
 .rail {
   position: fixed; inset: 0 auto 0 0; width: var(--railw);
@@ -221,7 +239,7 @@ body {
 .rail .brand .name { font-family: var(--mono); font-size: 1.5rem; font-weight: 600;
                      letter-spacing: -.03em; color: var(--ink); text-decoration: none; }
 .rail .brand .tag { font-family: var(--mono); font-size: .62rem; letter-spacing: .24em;
-                    text-transform: uppercase; color: var(--accent); }
+                    text-transform: none; color: var(--accent); }
 .rail ol { list-style: none; margin: 0; padding: 0 .6rem;
            display: flex; flex-direction: column; gap: 1px; }
 .rail a.ch {
@@ -241,7 +259,7 @@ body {
 .rail li.sep { margin: .9rem .65rem .3rem; padding-top: .7rem;
                border-top: 1px solid var(--rule); }
 .rail li.sep span { font-family: var(--mono); font-size: .6rem; letter-spacing: .24em;
-                    text-transform: uppercase; color: var(--dim); }
+                    text-transform: none; color: var(--dim); }
 section.lesson.front > h1 { border-bottom-color: var(--accent-d); }
 
 /* Reading column --------------------------------------------------------- */
@@ -263,7 +281,7 @@ section.lesson > h1 {
   border-bottom: 2px solid var(--accent); text-wrap: balance;
 }
 h2 { font-family: var(--mono); font-size: .68rem; letter-spacing: .22em;
-     text-transform: uppercase; color: var(--muted); font-weight: 500;
+     text-transform: none; color: var(--muted); font-weight: 500;
      margin: 2.3rem 0 .8rem; }
 p { margin: 0 0 1.1rem; }
 blockquote { margin: 0 0 1.8rem; padding: 0 0 0 1.1rem;
