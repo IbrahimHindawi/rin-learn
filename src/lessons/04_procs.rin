@@ -1,4 +1,4 @@
-import "std/Print.rin"
+import "std/print.rin"
 
 // A proc is a piece of work with a name. You have been calling one since the
 // first lesson -- `main` is a proc -- and the lessons before this one quietly

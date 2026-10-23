@@ -331,7 +331,7 @@ section.lesson em { color: var(--muted); font-size: .92rem; font-style: normal; 
 }
 
 /* Phones. A code block scrolls inside its own box, but prose must not: an
-   unbreakable token -- a path, a URL, `import "std/Print.rin"` -- is otherwise
+   unbreakable token -- a path, a URL, `import "std/print.rin"` -- is otherwise
    wider than the screen and takes the whole page sideways with it. */
 @media (max-width: 34rem) {
   .col { padding: 1.75rem 1rem 4rem; }

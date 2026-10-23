@@ -1,4 +1,4 @@
-import "std/Print.rin"
+import "std/print.rin"
 
 // Every value lives somewhere, and where it lives decides how long it lasts.
 // There are three answers in this language and you pick one every time you

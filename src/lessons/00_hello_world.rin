@@ -1,4 +1,4 @@
-import "std/Print.rin"
+import "std/print.rin"
 
 // A complete rin program looks like a small C program, but declarations use
 // `name: Type = value` order.

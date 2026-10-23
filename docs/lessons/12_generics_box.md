@@ -23,7 +23,7 @@ mention Box.
 
 ## Why this is here
 
-`Array<T>`, `Vec<T>`, `Option<T>`, `Map<K,V>` and `slice<T>` are all this. So is
+`array<T>`, `vec<T>`, `option<T>`, `map<K,V>` and `slice<T>` are all this. So is
 every container you will write. And because rin has no methods, generics plus
 proc pointers are the whole of its abstraction budget.
 

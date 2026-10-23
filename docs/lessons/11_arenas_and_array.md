@@ -19,16 +19,16 @@ argument:
 
 | container | what it is |
 |---|---|
-| `Array<T>` | a fixed length, set when it is reserved |
-| `Vec<T>` | grows on append, doubling its storage |
-| `Map<T>` | string keys to values |
-| `List<T>`, `Stack<T>`, `Queue<T>` | linked nodes, pushed from the arena |
+| `array<T>` | a fixed length, set when it is reserved |
+| `vec<T>` | grows on append, doubling its storage |
+| `map<T>` | string keys to values |
+| `list<T>`, `stack<T>`, `queue<T>` | linked nodes, pushed from the arena |
 
 ## What the lesson shows
 
-- one arena feeding an `Array`, a `Vec` and a `Map`
+- one arena feeding an `array`, a `vec` and a `map`
 - `squares.data[0..squares.length]`: a container's storage as a checked slice
-- `Vec<f32>get` returning an `Option` instead of reading past the end
+- `vec<f32>get` returning an `option` instead of reading past the end
 - `memops_arena_clear` freeing every container at once
 
 ## Why this is here
@@ -39,7 +39,7 @@ made where it belongs: at the call site, by you.
 
 ## Before you move on
 
-You can say what happens to an `Array`, a `Vec` and a `Map` when their arena is
+You can say what happens to an `array`, a `vec` and a `map` when their arena is
 cleared, and why none of them has a destructor.
 
 ---

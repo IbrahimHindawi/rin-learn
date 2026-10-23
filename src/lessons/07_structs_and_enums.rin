@@ -1,4 +1,4 @@
-import "std/Print.rin"
+import "std/print.rin"
 
 Point: struct = {
     x: f32;

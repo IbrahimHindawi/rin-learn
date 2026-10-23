@@ -1,4 +1,4 @@
-import "std/Print.rin"
+import "std/print.rin"
 
 // An array is not a collection. It is a run of bytes, one element after
 // another, with nothing in between. Rin gives that memory four shapes, all

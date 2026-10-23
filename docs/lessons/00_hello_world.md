@@ -16,7 +16,7 @@ rin puts the name first, always, and the rest follows.
 ## What the lesson shows
 
 - `main` returns `i32`, exactly like C -- 0 means success
-- `printfmt` comes from `std/Print.rin`, which has to be imported
+- `printfmt` comes from `std/print.rin`, which has to be imported
 - `import` is not `#include`: it brings rin declarations in, not text
 
 ## Why this is here

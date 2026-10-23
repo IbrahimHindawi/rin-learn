@@ -131,7 +131,7 @@ section.lesson em { color: var(--muted); font-size: .92rem; font-style: normal; 
 }
 
 /* Phones. A code block scrolls inside its own box, but prose must not: an
-   unbreakable token -- a path, a URL, `import "std/Print.rin"` -- is otherwise
+   unbreakable token -- a path, a URL, `import "std/print.rin"` -- is otherwise
    wider than the screen and takes the whole page sideways with it. */
 @media (max-width: 34rem) {
   .col { padding: 1.75rem 1rem 4rem; }
@@ -281,7 +281,7 @@ build_entry: [*]const char = &quot;src/main.rin&quot;;</code></pre>
 <h2>What the lesson shows</h2>
 <ul>
 <li><code>main</code> returns <code>i32</code>, exactly like C — 0 means success</li>
-<li><code>printfmt</code> comes from <code>std/Print.rin</code>, which has to be imported</li>
+<li><code>printfmt</code> comes from <code>std/print.rin</code>, which has to be imported</li>
 <li><code>import</code> is not <code>#include</code>: it brings rin declarations in, not text</li>
 </ul>
 <h2>Why this is here</h2>
@@ -289,7 +289,7 @@ build_entry: [*]const char = &quot;src/main.rin&quot;;</code></pre>
 <h2>Before you move on</h2>
 <p>You can say what each part of <code>main: proc() -&gt; i32 = {}</code> means, out loud.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/00_hello_world.rin"><code>src/lessons/00_hello_world.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/00_hello_world.rin</span><span class="lines">8 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/00_hello_world.rin"><code>src/lessons/00_hello_world.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/00_hello_world.rin</span><span class="lines">8 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 <span class="c">// A complete rin program looks like a small C program, but declarations use</span>
 <span class="c">// `name: Type = value` order.</span>
@@ -314,7 +314,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>Before you move on</h2>
 <p>You can say which of <code>u8 -&gt; u16</code>, <code>i32 -&gt; u32</code>, <code>i32 -&gt; f32</code> and <code>f32 -&gt; i32</code> compile without a <code>cast</code>, and why.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/01_values_and_expressions.rin"><code>src/lessons/01_values_and_expressions.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/01_values_and_expressions.rin</span><span class="lines">45 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/01_values_and_expressions.rin"><code>src/lessons/01_values_and_expressions.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/01_values_and_expressions.rin</span><span class="lines">45 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
     count: <span class="t">i32</span> = <span class="n">6</span>;
@@ -376,7 +376,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>Before you move on</h2>
 <p>You can predict <code>sizeof</code> for any scalar without running the program.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/02_sizes.rin"><code>src/lessons/02_sizes.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/02_sizes.rin</span><span class="lines">54 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/02_sizes.rin"><code>src/lessons/02_sizes.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/02_sizes.rin</span><span class="lines">54 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 <span class="c">// Every value your program holds occupies a fixed number of bytes, and you</span>
 <span class="c">// choose how many. That choice is the first low-level decision there is.</span>
@@ -447,7 +447,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>Before you move on</h2>
 <p>You can say when the exhaustiveness check fires and how to opt out of it.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/03_control_flow.rin"><code>src/lessons/03_control_flow.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/03_control_flow.rin</span><span class="lines">54 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/03_control_flow.rin"><code>src/lessons/03_control_flow.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/03_control_flow.rin</span><span class="lines">54 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 Mode: <span class="k">enum</span> = {
     Idle,
@@ -524,7 +524,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>Before you move on</h2>
 <p>You can say why <code>spend(budget)</code> left <code>budget</code> at 100, and what you would have to pass instead to change it.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/04_procs.rin"><code>src/lessons/04_procs.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/04_procs.rin</span><span class="lines">105 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/04_procs.rin"><code>src/lessons/04_procs.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/04_procs.rin</span><span class="lines">105 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 <span class="c">// A proc is a piece of work with a name. You have been calling one since the</span>
 <span class="c">// first lesson -- `main` is a proc -- and the lessons before this one quietly</span>
@@ -650,7 +650,7 @@ place[0]    the value at place</code></pre>
 <h2>Before you move on</h2>
 <p>You can explain why <code>a&amp;[0] = 5</code> and <code>a = 5</code> do the same thing.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/05_addresses.rin"><code>src/lessons/05_addresses.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/05_addresses.rin</span><span class="lines">79 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/05_addresses.rin"><code>src/lessons/05_addresses.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/05_addresses.rin</span><span class="lines">79 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 <span class="c">// A variable is a name for a place. The place has a number, and that number is</span>
 <span class="c">// what a pointer holds.</span>
@@ -750,7 +750,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>Before you move on</h2>
 <p>You can compute the byte offset of <code>values[3]</code> without running anything, and say which of the four types a C function&#x27;s <code>int *</code> should become.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/06_arrays_and_pointers.rin"><code>src/lessons/06_arrays_and_pointers.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/06_arrays_and_pointers.rin</span><span class="lines">103 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/06_arrays_and_pointers.rin"><code>src/lessons/06_arrays_and_pointers.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/06_arrays_and_pointers.rin</span><span class="lines">103 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 <span class="c">// An array is not a collection. It is a run of bytes, one element after</span>
 <span class="c">// another, with nothing in between. Rin gives that memory four shapes, all</span>
@@ -869,7 +869,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>Before you move on</h2>
 <p>You can nest a struct in a struct and reach a leaf field.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/07_structs_and_enums.rin"><code>src/lessons/07_structs_and_enums.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/07_structs_and_enums.rin</span><span class="lines">27 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/07_structs_and_enums.rin"><code>src/lessons/07_structs_and_enums.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/07_structs_and_enums.rin</span><span class="lines">27 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 Point: <span class="k">struct</span> = {
     x: <span class="t">f32</span>;
@@ -912,7 +912,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>Before you move on</h2>
 <p>You can reorder a struct to shrink it, and say by how much before compiling.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/08_layout_and_padding.rin"><code>src/lessons/08_layout_and_padding.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/08_layout_and_padding.rin</span><span class="lines">82 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/08_layout_and_padding.rin"><code>src/lessons/08_layout_and_padding.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/08_layout_and_padding.rin</span><span class="lines">82 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 <span class="c">// A struct is not a bag of fields. It is a block of bytes with your fields</span>
 <span class="c">// placed at fixed offsets inside it, and the placement follows rules you can</span>
@@ -1010,7 +1010,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>Before you move on</h2>
 <p>You can add a third operation and swap it in without touching the struct.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/09_procs_and_callbacks.rin"><code>src/lessons/09_procs_and_callbacks.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/09_procs_and_callbacks.rin</span><span class="lines">27 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/09_procs_and_callbacks.rin"><code>src/lessons/09_procs_and_callbacks.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/09_procs_and_callbacks.rin</span><span class="lines">27 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 Op: <span class="k">alias</span> = *<span class="k">proc</span>(a: <span class="t">i32</span>, b: <span class="t">i32</span>) -&gt; <span class="t">i32</span>;
 
@@ -1056,7 +1056,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>Before you move on</h2>
 <p>For any declaration you can say which of the three it is and why.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/10_storage_and_lifetime.rin"><code>src/lessons/10_storage_and_lifetime.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/10_storage_and_lifetime.rin</span><span class="lines">90 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/10_storage_and_lifetime.rin"><code>src/lessons/10_storage_and_lifetime.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/10_storage_and_lifetime.rin</span><span class="lines">90 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 <span class="c">// Every value lives somewhere, and where it lives decides how long it lasts.</span>
 <span class="c">// There are three answers in this language and you pick one every time you</span>
@@ -1152,23 +1152,23 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <p>An arena holds a block of memory and a cursor. Allocating moves the cursor forward and hands back what it passed. There is no free list, no per-allocation header, and no way to release one piece on its own — you release everything at once by moving the cursor back.</p>
 <p>That sounds like a limitation and is mostly a relief. Most memory in a real program has the same lifetime as some phase: a frame, a level load, a parse. When the phase ends the whole arena resets, and nothing can be leaked or freed twice because nothing was individually owned.</p>
 <p>std&#x27;s containers are all built on it, and all take the arena as their first argument:</p>
-<table><thead><tr><th>container</th><th>what it is</th></tr></thead><tbody><tr><td><code>Array&lt;T&gt;</code></td><td>a fixed length, set when it is reserved</td></tr><tr><td><code>Vec&lt;T&gt;</code></td><td>grows on append, doubling its storage</td></tr><tr><td><code>Map&lt;T&gt;</code></td><td>string keys to values</td></tr><tr><td><code>List&lt;T&gt;</code>, <code>Stack&lt;T&gt;</code>, <code>Queue&lt;T&gt;</code></td><td>linked nodes, pushed from the arena</td></tr></tbody></table>
+<table><thead><tr><th>container</th><th>what it is</th></tr></thead><tbody><tr><td><code>array&lt;T&gt;</code></td><td>a fixed length, set when it is reserved</td></tr><tr><td><code>vec&lt;T&gt;</code></td><td>grows on append, doubling its storage</td></tr><tr><td><code>map&lt;T&gt;</code></td><td>string keys to values</td></tr><tr><td><code>list&lt;T&gt;</code>, <code>stack&lt;T&gt;</code>, <code>queue&lt;T&gt;</code></td><td>linked nodes, pushed from the arena</td></tr></tbody></table>
 <h2>What the lesson shows</h2>
 <ul>
-<li>one arena feeding an <code>Array</code>, a <code>Vec</code> and a <code>Map</code></li>
+<li>one arena feeding an <code>array</code>, a <code>vec</code> and a <code>map</code></li>
 <li><code>squares.data[0..squares.length]</code>: a container&#x27;s storage as a checked slice</li>
-<li><code>Vec&lt;f32&gt;get</code> returning an <code>Option</code> instead of reading past the end</li>
+<li><code>vec&lt;f32&gt;get</code> returning an <code>option</code> instead of reading past the end</li>
 <li><code>memops_arena_clear</code> freeing every container at once</li>
 </ul>
 <h2>Why this is here</h2>
 <p>Every container in std takes an arena. Once you see why, the signature stops looking like boilerplate and starts looking like the allocation decision being made where it belongs: at the call site, by you.</p>
 <h2>Before you move on</h2>
-<p>You can say what happens to an <code>Array</code>, a <code>Vec</code> and a <code>Map</code> when their arena is cleared, and why none of them has a destructor.</p>
+<p>You can say what happens to an <code>array</code>, a <code>vec</code> and a <code>map</code> when their arena is cleared, and why none of them has a destructor.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/11_arenas_and_array.rin"><code>src/lessons/11_arenas_and_array.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/11_arenas_and_array.rin</span><span class="lines">67 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
-<span class="k">import</span> <span class="s">&quot;std/Array.rin&quot;</span>
-<span class="k">import</span> <span class="s">&quot;std/Vec.rin&quot;</span>
-<span class="k">import</span> <span class="s">&quot;std/Map.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/11_arenas_and_array.rin"><code>src/lessons/11_arenas_and_array.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/11_arenas_and_array.rin</span><span class="lines">67 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
+<span class="k">import</span> <span class="s">&quot;std/array.rin&quot;</span>
+<span class="k">import</span> <span class="s">&quot;std/vec.rin&quot;</span>
+<span class="k">import</span> <span class="s">&quot;std/map.rin&quot;</span>
 <span class="k">import</span> <span class="s">&quot;std/memops.rin&quot;</span>
 
 <span class="c">// Every std container takes the arena it allocates from. The call site</span>
@@ -1178,32 +1178,32 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
     arena: memops_arena = {};
     memops_arena_initialize(arena&amp;);
 
-    <span class="c">// Array&lt;T&gt;: a length fixed when it is made. `data` is the raw storage;</span>
+    <span class="c">// array&lt;T&gt;: a length fixed when it is made. `data` is the raw storage;</span>
     <span class="c">// `data[0..length]` turns it into a checked slice.</span>
-    squares: Array&lt;<span class="t">i32</span>&gt; = Array&lt;<span class="t">i32</span>&gt;reserve(arena&amp;, <span class="n">5</span>);
+    squares: array&lt;<span class="t">i32</span>&gt; = array&lt;<span class="t">i32</span>&gt;reserve(arena&amp;, <span class="n">5</span>);
     view: []<span class="t">i32</span> = squares.data[<span class="n">0..squares.length</span>];
     <span class="k">for</span> (i: <span class="t">u64</span> = <span class="n">0</span>; i &lt; view.length; i += <span class="n">1</span>) {
         view[i] = <span class="k">cast</span>(i * i, <span class="t">i32</span>);
     }
     printfmt(<span class="s">&quot;squares: {} {} {}\n&quot;</span>, view[<span class="n">0</span>], view[<span class="n">2</span>], view[<span class="n">4</span>]);
 
-    <span class="c">// Vec&lt;T&gt;: grows as you append, doubling its storage from the arena.</span>
-    path: Vec&lt;<span class="t">f32</span>&gt; = {};
+    <span class="c">// vec&lt;T&gt;: grows as you append, doubling its storage from the arena.</span>
+    path: vec&lt;<span class="t">f32</span>&gt; = {};
     <span class="k">for</span> (step: <span class="t">i32</span> = <span class="n">1</span>; step &lt;= <span class="n">6</span>; step += <span class="n">1</span>) {
-        Vec&lt;<span class="t">f32</span>&gt;append(arena&amp;, path&amp;, step * <span class="n">0.5</span>);
+        vec&lt;<span class="t">f32</span>&gt;append(arena&amp;, path&amp;, step * <span class="n">0.5</span>);
     }
     printfmt(<span class="s">&quot;path has {} points, last is {}\n&quot;</span>, path.length, path.data[path.length - <span class="n">1</span>]);
 
     <span class="c">// A lookup that can miss returns an Option rather than garbage.</span>
-    seventh: Option&lt;<span class="t">f32</span>&gt; = Vec&lt;<span class="t">f32</span>&gt;get(path&amp;, <span class="n">7</span>);
+    seventh: option&lt;<span class="t">f32</span>&gt; = vec&lt;<span class="t">f32</span>&gt;get(path&amp;, <span class="n">7</span>);
     printfmt(<span class="s">&quot;path[7] exists: {}\n&quot;</span>, seventh.has_value);
 
-    <span class="c">// Map&lt;T&gt;: string keys to values.</span>
-    ages: *Map&lt;<span class="t">i32</span>&gt; = Map&lt;<span class="t">i32</span>&gt;create(arena&amp;);
-    Map&lt;<span class="t">i32</span>&gt;set(arena&amp;, ages, <span class="s">&quot;ada&quot;</span>, <span class="n">36</span>);
-    Map&lt;<span class="t">i32</span>&gt;set(arena&amp;, ages, <span class="s">&quot;linus&quot;</span>, <span class="n">54</span>);
-    linus: *<span class="t">i32</span> = Map&lt;<span class="t">i32</span>&gt;get(arena&amp;, ages, <span class="s">&quot;linus&quot;</span>);
-    printfmt(<span class="s">&quot;{} entries; linus is {}\n&quot;</span>, Map&lt;<span class="t">i32</span>&gt;length(arena&amp;, ages), linus[<span class="n">0</span>]);
+    <span class="c">// map&lt;T&gt;: string keys to values.</span>
+    ages: *map&lt;<span class="t">i32</span>&gt; = map&lt;<span class="t">i32</span>&gt;create(arena&amp;);
+    map&lt;<span class="t">i32</span>&gt;set(arena&amp;, ages, <span class="s">&quot;ada&quot;</span>, <span class="n">36</span>);
+    map&lt;<span class="t">i32</span>&gt;set(arena&amp;, ages, <span class="s">&quot;linus&quot;</span>, <span class="n">54</span>);
+    linus: *<span class="t">i32</span> = map&lt;<span class="t">i32</span>&gt;get(arena&amp;, ages, <span class="s">&quot;linus&quot;</span>);
+    printfmt(<span class="s">&quot;{} entries; linus is {}\n&quot;</span>, map&lt;<span class="t">i32</span>&gt;length(arena&amp;, ages), linus[<span class="n">0</span>]);
 
     <span class="c">// Nothing above is freed one by one: clearing the arena resets its cursor,</span>
     <span class="c">// and every container that lived in it is gone at once.</span>
@@ -1220,7 +1220,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <span class="c">//    pointer does not. `data[0..length]` puts them back together as a slice,</span>
 <span class="c">//    and from then on `view[i]` is checked.</span>
 <span class="c">//</span>
-<span class="c">// 3. `Vec&lt;f32&gt;get` returns an Option. Index 7 is past the end, so `has_value`</span>
+<span class="c">// 3. `vec&lt;f32&gt;get` returns an Option. Index 7 is past the end, so `has_value`</span>
 <span class="c">//    is 0 -- nothing was read. `path.data[7]` would have read whatever was there.</span>
 <span class="c">//</span>
 <span class="c">// 4. `step * 0.5` is an i32 times a float literal: the int becomes an f32,</span>
@@ -1231,7 +1231,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <span class="c">// - write `view[5] = 1;` with a variable 5 and run it; then the same through</span>
 <span class="c">//   `squares.data[5]`, which nothing checks</span>
 <span class="c">// - append a hundred points and print `path.border` as it grows</span>
-<span class="c">// - look up a key that is not in the map: `Map&lt;i32&gt;get` returns null</span></code></pre></div></section>
+<span class="c">// - look up a key that is not in the map: `map&lt;i32&gt;get` returns null</span></code></pre></div></section>
 <section class="lesson" id="12_generics_box"><h1>12 — Generics</h1>
 <blockquote>One definition, many types, resolved at compile time.</blockquote>
 <h2>The idea</h2>
@@ -1245,11 +1245,11 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <li>the generated C has one concrete struct per instantiation</li>
 </ul>
 <h2>Why this is here</h2>
-<p><code>Array&lt;T&gt;</code>, <code>Vec&lt;T&gt;</code>, <code>Option&lt;T&gt;</code>, <code>Map&lt;K,V&gt;</code> and <code>slice&lt;T&gt;</code> are all this. So is every container you will write. And because rin has no methods, generics plus proc pointers are the whole of its abstraction budget.</p>
+<p><code>array&lt;T&gt;</code>, <code>vec&lt;T&gt;</code>, <code>option&lt;T&gt;</code>, <code>map&lt;K,V&gt;</code> and <code>slice&lt;T&gt;</code> are all this. So is every container you will write. And because rin has no methods, generics plus proc pointers are the whole of its abstraction budget.</p>
 <h2>Before you move on</h2>
 <p>You can write a generic type with two parameters and instantiate it.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/12_generics_box.rin"><code>src/lessons/12_generics_box.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/12_generics_box.rin</span><span class="lines">23 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/12_generics_box.rin"><code>src/lessons/12_generics_box.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/12_generics_box.rin</span><span class="lines">23 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 Box: <span class="k">struct</span>&lt;T&gt; = {
     value: T;
@@ -1288,7 +1288,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>Before you move on</h2>
 <p>You can add a <code>print</code> overload for a struct of your own.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/13_std_print.rin"><code>src/lessons/13_std_print.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/13_std_print.rin</span><span class="lines">41 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/13_std_print.rin"><code>src/lessons/13_std_print.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/13_std_print.rin</span><span class="lines">41 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 Color: <span class="k">enum</span> = {
     Red,
@@ -1345,7 +1345,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>Before you move on</h2>
 <p>You can add a fourth <code>Stat</code> member and predict what changes.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/14_enum_sized_tables.rin"><code>src/lessons/14_enum_sized_tables.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/14_enum_sized_tables.rin</span><span class="lines">21 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/14_enum_sized_tables.rin"><code>src/lessons/14_enum_sized_tables.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/14_enum_sized_tables.rin</span><span class="lines">21 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 Stat: <span class="k">enum</span> = {
     Health,
@@ -1419,7 +1419,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>Before you move on</h2>
 <p>You can print the size of a type two ways and get the same number.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/16_reflection_metadata.rin"><code>src/lessons/16_reflection_metadata.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/16_reflection_metadata.rin</span><span class="lines">33 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/16_reflection_metadata.rin"><code>src/lessons/16_reflection_metadata.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/16_reflection_metadata.rin</span><span class="lines">33 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 <span class="k">import</span> <span class="s">&quot;std/reflect.rin&quot;</span>
 
 Payload: <span class="k">struct</span> = {
@@ -1469,7 +1469,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>Before you move on</h2>
 <p>You can find a field by name and print its offset.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/17_reflection_fields.rin"><code>src/lessons/17_reflection_fields.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/17_reflection_fields.rin</span><span class="lines">41 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/17_reflection_fields.rin"><code>src/lessons/17_reflection_fields.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/17_reflection_fields.rin</span><span class="lines">41 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 <span class="k">import</span> <span class="s">&quot;std/reflect.rin&quot;</span>
 
 Inner: <span class="k">struct</span> = {
@@ -1527,7 +1527,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>Before you move on</h2>
 <p>You can write one proc that prints any type&#x27;s members, whatever its kind.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/18_reflection_one_record.rin"><code>src/lessons/18_reflection_one_record.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/18_reflection_one_record.rin</span><span class="lines">68 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/18_reflection_one_record.rin"><code>src/lessons/18_reflection_one_record.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/18_reflection_one_record.rin</span><span class="lines">68 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 <span class="k">import</span> <span class="s">&quot;std/reflect.rin&quot;</span>
 
 <span class="c">// Three different kinds of type, described by one record apiece.</span>
@@ -1611,7 +1611,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>Before you move on</h2>
 <p>You can describe what you would build with these two together.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/19_metaprogramming_shape.rin"><code>src/lessons/19_metaprogramming_shape.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/19_metaprogramming_shape.rin</span><span class="lines">40 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/Print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/19_metaprogramming_shape.rin"><code>src/lessons/19_metaprogramming_shape.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/19_metaprogramming_shape.rin</span><span class="lines">40 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 Slot: <span class="k">struct</span>&lt;T&gt; = {
     value: T;

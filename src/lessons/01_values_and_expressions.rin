@@ -1,4 +1,4 @@
-import "std/Print.rin"
+import "std/print.rin"
 
 main: proc() -> i32 = {
     count: i32 = 6;

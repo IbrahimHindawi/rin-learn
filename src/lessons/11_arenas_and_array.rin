@@ -1,7 +1,7 @@
-import "std/Print.rin"
-import "std/Array.rin"
-import "std/Vec.rin"
-import "std/Map.rin"
+import "std/print.rin"
+import "std/array.rin"
+import "std/vec.rin"
+import "std/map.rin"
 import "std/memops.rin"
 
 // Every std container takes the arena it allocates from. The call site
@@ -11,32 +11,32 @@ main: proc() -> i32 = {
     arena: memops_arena = {};
     memops_arena_initialize(arena&);
 
-    // Array<T>: a length fixed when it is made. `data` is the raw storage;
+    // array<T>: a length fixed when it is made. `data` is the raw storage;
     // `data[0..length]` turns it into a checked slice.
-    squares: Array<i32> = Array<i32>reserve(arena&, 5);
+    squares: array<i32> = array<i32>reserve(arena&, 5);
     view: []i32 = squares.data[0..squares.length];
     for (i: u64 = 0; i < view.length; i += 1) {
         view[i] = cast(i * i, i32);
     }
     printfmt("squares: {} {} {}\n", view[0], view[2], view[4]);
 
-    // Vec<T>: grows as you append, doubling its storage from the arena.
-    path: Vec<f32> = {};
+    // vec<T>: grows as you append, doubling its storage from the arena.
+    path: vec<f32> = {};
     for (step: i32 = 1; step <= 6; step += 1) {
-        Vec<f32>append(arena&, path&, step * 0.5);
+        vec<f32>append(arena&, path&, step * 0.5);
     }
     printfmt("path has {} points, last is {}\n", path.length, path.data[path.length - 1]);
 
     // A lookup that can miss returns an Option rather than garbage.
-    seventh: Option<f32> = Vec<f32>get(path&, 7);
+    seventh: option<f32> = vec<f32>get(path&, 7);
     printfmt("path[7] exists: {}\n", seventh.has_value);
 
-    // Map<T>: string keys to values.
-    ages: *Map<i32> = Map<i32>create(arena&);
-    Map<i32>set(arena&, ages, "ada", 36);
-    Map<i32>set(arena&, ages, "linus", 54);
-    linus: *i32 = Map<i32>get(arena&, ages, "linus");
-    printfmt("{} entries; linus is {}\n", Map<i32>length(arena&, ages), linus[0]);
+    // map<T>: string keys to values.
+    ages: *map<i32> = map<i32>create(arena&);
+    map<i32>set(arena&, ages, "ada", 36);
+    map<i32>set(arena&, ages, "linus", 54);
+    linus: *i32 = map<i32>get(arena&, ages, "linus");
+    printfmt("{} entries; linus is {}\n", map<i32>length(arena&, ages), linus[0]);
 
     // Nothing above is freed one by one: clearing the arena resets its cursor,
     // and every container that lived in it is gone at once.
@@ -53,7 +53,7 @@ main: proc() -> i32 = {
 //    pointer does not. `data[0..length]` puts them back together as a slice,
 //    and from then on `view[i]` is checked.
 //
-// 3. `Vec<f32>get` returns an Option. Index 7 is past the end, so `has_value`
+// 3. `vec<f32>get` returns an Option. Index 7 is past the end, so `has_value`
 //    is 0 -- nothing was read. `path.data[7]` would have read whatever was there.
 //
 // 4. `step * 0.5` is an i32 times a float literal: the int becomes an f32,
@@ -64,4 +64,4 @@ main: proc() -> i32 = {
 // - write `view[5] = 1;` with a variable 5 and run it; then the same through
 //   `squares.data[5]`, which nothing checks
 // - append a hundred points and print `path.border` as it grows
-// - look up a key that is not in the map: `Map<i32>get` returns null
+// - look up a key that is not in the map: `map<i32>get` returns null

@@ -69,7 +69,7 @@ what the next chapter is about.
 arena: memops_arena = {};
 memops_arena_initialize(arena&);
 
-values: Array<i32> = Array<i32>reserve(arena&, 5);
+values: array<i32> = array<i32>reserve(arena&, 5);
 ```
 
 An arena is a large block of memory obtained once, handed out in pieces, and
@@ -82,7 +82,7 @@ the `malloc`/`free` pair you may expect.
 **Allocation is nearly free.** A bump is an addition. `malloc` has to search a
 structure of free blocks, and may take a lock.
 
-**There is no individual free.** You do not release one `Array`; you release the
+**There is no individual free.** You do not release one `array`; you release the
 arena and everything in it goes at once. That sounds like a limitation and is
 usually the point -- most programs have natural moments where a whole batch of
 work is finished. A frame ends. A request completes. A file finishes parsing.
@@ -94,5 +94,5 @@ lesson 09's mistake wearing different clothes.
 
 **Everything in it is contiguous**, so it inherits lesson 05's cache behaviour.
 
-`Array<i32>` here is a pointer plus a length, pointing into the arena. It does
+`array<i32>` here is a pointer plus a length, pointing into the arena. It does
 not own the memory and does not free anything.

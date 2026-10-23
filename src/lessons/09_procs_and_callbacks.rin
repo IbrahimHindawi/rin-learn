@@ -1,4 +1,4 @@
-import "std/Print.rin"
+import "std/print.rin"
 
 Op: alias = *proc(a: i32, b: i32) -> i32;
 

@@ -51,7 +51,7 @@ the fastest route to C++-shaped complexity.
 
 `src/lessons/13_std_print.rin`
 
-`printfmt` is not built into the language. It is a procedure in `std/Print.rin`,
+`printfmt` is not built into the language. It is a procedure in `std/print.rin`,
 and the `{}` placeholders are resolved at compile time by matching each argument
 against a `print<T>` overload.
 
