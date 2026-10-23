@@ -16,13 +16,35 @@ Sprite: struct = {
     pos: Point;
 }
 
+// An enum that says whether something worked. `must_use` makes ignoring one a
+// compile error, so a failure cannot be dropped by accident.
+LoadStatus: enum[must_use] = {
+    Ok,
+    FileMissing,
+    BadHeader,
+}
+
+load_level: proc(index: i32) -> LoadStatus = {
+    if (index < 0) { return LoadStatus.FileMissing; }
+    return LoadStatus.Ok;
+}
+
 main: proc() -> i32 = {
     s: Sprite = {};
     s.kind = SpriteKind.Player;
     s.pos.x = 3.0;
     s.pos.y = 4.0;
 
-    printfmt("sprite kind={} pos=({},{})\n", cast(s.kind, i32), s.pos.x, s.pos.y);
+    // `{}` on an enum prints the member's name: this prints "kind=Player".
+    printfmt("sprite kind={} pos=({},{})\n", s.kind, s.pos.x, s.pos.y);
+
+    status: LoadStatus = load_level(-1);
+    if (status != LoadStatus.Ok) {
+        printfmt("load failed: {}\n", status);
+    }
+
+    // load_level(2);      // error: result of type 'LoadStatus' is ignored
+    _ = load_level(2);     // ignored on purpose, and the reader can see that
     return 0;
 }
 

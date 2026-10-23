@@ -863,13 +863,16 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <li>a struct containing another struct, reached with <code>.</code></li>
 <li>an enum member written <code>SpriteKind.Player</code>, always qualified</li>
 <li>zero-initialisation with <code>= {}</code></li>
+<li><code>printfmt</code> printing an enum by its member name, <code>Player</code>, rather than <code>0</code></li>
+<li>a status enum marked <code>enum[must_use]</code>, and <code>_ = f();</code> to ignore one on purpose</li>
 </ul>
 <h2>Why this is here</h2>
 <p>Enum members are always written with their type in front. That is why two different enums can never be compared by accident, and why <code>Stat&lt;&gt;.count</code> in lesson 12 knows which enum you mean.</p>
+<p>That is also why an enum works as an error code. A proc returns <code>LoadStatus</code>, and the caller compares it against <code>LoadStatus.Ok</code>. <code>must_use</code> closes the gap C leaves open: there, calling <code>load_level(2);</code> and ignoring the result compiles silently. Here it is an error. When ignoring it really is what you want, <code>_ = load_level(2);</code> says so in the code. Printing the status gives its name (<code>FileMissing</code>), so the message stays right when you add a member.</p>
 <h2>Before you move on</h2>
-<p>You can nest a struct in a struct and reach a leaf field.</p>
+<p>You can nest a struct in a struct and reach a leaf field. Uncomment <code>load_level(2);</code> and read the error.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/07_structs_and_enums.rin"><code>src/lessons/07_structs_and_enums.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/07_structs_and_enums.rin</span><span class="lines">27 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/07_structs_and_enums.rin"><code>src/lessons/07_structs_and_enums.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/07_structs_and_enums.rin</span><span class="lines">49 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 Point: <span class="k">struct</span> = {
     x: <span class="t">f32</span>;
@@ -887,13 +890,35 @@ Sprite: <span class="k">struct</span> = {
     pos: Point;
 }
 
+<span class="c">// An enum that says whether something worked. `must_use` makes ignoring one a</span>
+<span class="c">// compile error, so a failure cannot be dropped by accident.</span>
+LoadStatus: <span class="k">enum</span>[must_use] = {
+    Ok,
+    FileMissing,
+    BadHeader,
+}
+
+load_level: <span class="k">proc</span>(index: <span class="t">i32</span>) -&gt; LoadStatus = {
+    <span class="k">if</span> (index &lt; <span class="n">0</span>) { <span class="k">return</span> LoadStatus.FileMissing; }
+    <span class="k">return</span> LoadStatus.Ok;
+}
+
 main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
     s: Sprite = {};
     s.kind = SpriteKind.Player;
     s.pos.x = <span class="n">3.0</span>;
     s.pos.y = <span class="n">4.0</span>;
 
-    printfmt(<span class="s">&quot;sprite kind={} pos=({},{})\n&quot;</span>, <span class="k">cast</span>(s.kind, <span class="t">i32</span>), s.pos.x, s.pos.y);
+    <span class="c">// `{}` on an enum prints the member&#x27;s name: this prints &quot;kind=Player&quot;.</span>
+    printfmt(<span class="s">&quot;sprite kind={} pos=({},{})\n&quot;</span>, s.kind, s.pos.x, s.pos.y);
+
+    status: LoadStatus = load_level(-<span class="n">1</span>);
+    <span class="k">if</span> (status != LoadStatus.Ok) {
+        printfmt(<span class="s">&quot;load failed: {}\n&quot;</span>, status);
+    }
+
+    <span class="c">// load_level(2);      // error: result of type &#x27;LoadStatus&#x27; is ignored</span>
+    _ = load_level(<span class="n">2</span>);     <span class="c">// ignored on purpose, and the reader can see that</span>
     <span class="k">return</span> <span class="n">0</span>;
 }</code></pre></div></section>
 <section class="lesson" id="08_layout_and_padding"><h1>08 — Layout and padding</h1>
@@ -1283,12 +1308,13 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <li>a user-written <code>print</code> overload for an enum</li>
 <li>the overload being picked automatically at the call site</li>
 </ul>
+<p>An enum needs no overload to be printed. Without one, <code>{}</code> prints the member&#x27;s name. The overload here is only needed for a different spelling, <code>red</code> instead of <code>Red</code>.</p>
 <h2>Why this is here</h2>
 <p>This is the pattern for &quot;the language knows how to handle my type&quot; in a language with no methods and no interfaces. It generalises: overload per type, resolved at compile time, extended by declaring one more.</p>
 <h2>Before you move on</h2>
 <p>You can add a <code>print</code> overload for a struct of your own.</p>
 <hr>
-<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/13_std_print.rin"><code>src/lessons/13_std_print.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/13_std_print.rin</span><span class="lines">41 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
+<p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/13_std_print.rin"><code>src/lessons/13_std_print.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/13_std_print.rin</span><span class="lines">42 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
 Color: <span class="k">enum</span> = {
     Red,
@@ -1296,7 +1322,8 @@ Color: <span class="k">enum</span> = {
 }
 
 <span class="c">// `print&lt;T&gt;` is one overload per type, and you can add your own. printfmt finds</span>
-<span class="c">// this the same way it finds the built-in ones.</span>
+<span class="c">// this the same way it finds the built-in ones. Without it, an enum prints its</span>
+<span class="c">// member name (&quot;Green&quot;); this one replaces that with its own spelling.</span>
 print: <span class="k">proc</span>&lt;Color&gt;(c: Color) -&gt; <span class="t">void</span> = {
     <span class="k">if</span> (c == Color.Red) {
         print_cstr(<span class="s">&quot;red&quot;</span>);

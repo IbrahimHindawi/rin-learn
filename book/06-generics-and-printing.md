@@ -71,6 +71,9 @@ Now `printfmt("{}", some_color)` finds it, the same way it finds the one for
 `i32`. Nothing registered it and nothing looked it up at runtime -- the compiler
 picked the overload by type when it compiled the call.
 
+For an enum, the overload is optional. Without one, `{}` prints the member's
+name (`Red`), so you only write `print<Color>` to spell it differently.
+
 That is worth contrasting with C's `printf`, where `%d` is a promise you make in
 a string and nothing checks. Pass an `i32` to a `%s` and you get whatever
 happens. Here the argument's type selects the code, so there is no format string

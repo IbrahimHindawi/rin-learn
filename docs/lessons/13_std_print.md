@@ -17,6 +17,10 @@ selected while compiling, from the type of the argument.
 - a user-written `print` overload for an enum
 - the overload being picked automatically at the call site
 
+An enum needs no overload to be printed. Without one, `{}` prints the member's
+name. The overload here is only needed for a different spelling, `red` instead
+of `Red`.
+
 ## Why this is here
 
 This is the pattern for "the language knows how to handle my type" in a

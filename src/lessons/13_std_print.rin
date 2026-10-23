@@ -6,7 +6,8 @@ Color: enum = {
 }
 
 // `print<T>` is one overload per type, and you can add your own. printfmt finds
-// this the same way it finds the built-in ones.
+// this the same way it finds the built-in ones. Without it, an enum prints its
+// member name ("Green"); this one replaces that with its own spelling.
 print: proc<Color>(c: Color) -> void = {
     if (c == Color.Red) {
         print_cstr("red");
