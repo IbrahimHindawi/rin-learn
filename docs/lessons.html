@@ -211,13 +211,13 @@ main:   proc() -&gt; i32 = { return 0; }</code></pre>
 <h2>What it does differently</h2>
 <p><strong>Sizes are in the names.</strong> <code>i32</code> is a signed 32-bit integer, on every machine, for ever. There is no <code>int</code> whose width depends on where you compiled it.</p>
 <p><strong>Only lossless conversions are silent.</strong> Widening an integer, or turning one into a float, happens on its own. Anything that can drop bits, a fraction or a sign needs a <code>cast</code>, at the place it happens. Literals have no suffixes: <code>2.5</code> is whatever its context wants, and it must fit.</p>
-<p><strong>Lengths travel with memory.</strong> <code>[N]T</code> is an array, <code>[]T</code> a slice that carries its length, <code>*T</code> the address of exactly one value, and <code>[*]T</code> C&#x27;s raw pointer. All four read with <code>x[i]</code>. Indexes are checked wherever the length is known — at compile time for constants, in debug builds for the rest.</p>
+<p><strong>Lengths travel with memory.</strong> <code>[N]T</code> is an array, <code>[]T</code> a slice that carries its length, <code>*T</code> the address of exactly one value, and <code>^T</code> C&#x27;s raw pointer. All four read with <code>x[i]</code>. Indexes are checked wherever the length is known — at compile time for constants, in debug builds for the rest.</p>
 <p><strong>Order does not matter.</strong> A type or proc may be used before it is declared. No forward declarations, no header discipline, no include order to get right.</p>
 <p><strong>Memory is arenas.</strong> You ask once for a block, hand out pieces, and release the whole thing at once. Most memory in a real program shares a lifetime with some phase — a frame, a level load, a parse — and an arena says so out loud.</p>
 <p><strong>Generics and reflection, no macros.</strong> One definition instantiated per type, resolved while compiling, and a record describing every type that anything asks about. There is no macro system and no compile-time execution; that is the whole metaprogramming budget, deliberately.</p>
 <p><strong>No methods.</strong> Not now and not later. Data is data, procs are procs, and a proc pointer in a struct is the whole of what dispatch needs.</p>
 <h2>What it does not do</h2>
-<p>It does not manage memory for you. A slice into an arena that was cleared still points at it, arithmetic that overflows still wraps, and a raw <code>[*]T</code> is as unchecked as the C it came from. What the compiler refuses is the set of mistakes it can genuinely see: a conversion that loses information, a literal that does not fit, a constant index out of range, mismatched arities, two enums compared to each other, a <code>switch</code> that stopped covering its enum.</p>
+<p>It does not manage memory for you. A slice into an arena that was cleared still points at it, arithmetic that overflows still wraps, and a raw <code>^T</code> is as unchecked as the C it came from. What the compiler refuses is the set of mistakes it can genuinely see: a conversion that loses information, a literal that does not fit, a constant index out of range, mismatched arities, two enums compared to each other, a <code>switch</code> that stopped covering its enum.</p>
 <h2>Is it real</h2>
 <p>The compiler is about 18,700 lines of C with a suite of several hundred discriminating checks. The largest program written in rin is a 3D engine of roughly 35,000 lines with a D3D11 renderer, which uses no C string functions at all.</p>
 <p>Debug information points at your <code>.rin</code> files, not the generated C — you step through rin in a debugger, and the machine-code line tables name your source.</p>
@@ -259,8 +259,8 @@ build\hello.exe</code></pre>
 <p>It finds the compiler through <code>RIN_HOME</code>, then <code>PATH</code>, then the default location, compiles every lesson, links it, runs it, and reports.</p>
 <h2>5. Or use <code>rin build</code></h2>
 <p>For a project of your own, describe the build once in a <code>build.rin</code> and let the compiler drive cmake:</p>
-<pre><code>build_name:  [*]const char = &quot;hello&quot;;
-build_entry: [*]const char = &quot;src/main.rin&quot;;</code></pre>
+<pre><code>build_name:  ^const char = &quot;hello&quot;;
+build_entry: ^const char = &quot;src/main.rin&quot;;</code></pre>
 <p>Then:</p>
 <pre><code>rin build</code></pre>
 <p>which transpiles, generates a <code>CMakeLists.txt</code> and runs cmake and ninja. This repository has one that builds all twenty lessons as separate programs.</p>
@@ -494,7 +494,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <span class="c">//    and the last `if` adds one more: 38.</span>
 <span class="c">//</span>
 <span class="c">// 2. `||` never evaluates its right side once the left is true, and `&amp;&amp;` never</span>
-<span class="c">//    does once the left is false. That is what makes `p != null &amp;&amp; p[0] &gt; 0`</span>
+<span class="c">//    does once the left is false. That is what makes `p != null &amp;&amp; p* &gt; 0`</span>
 <span class="c">//    safe to write.</span>
 <span class="c">//</span>
 <span class="c">// Try this</span>
@@ -561,7 +561,7 @@ clamp: <span class="k">proc</span>(value: <span class="t">i32</span>, low: <span
 }
 
 <span class="c">// A proc that returns nothing says so with `void`, and just ends.</span>
-announce: <span class="k">proc</span>(label: [*]<span class="k">const</span> <span class="t">char</span>, value: <span class="t">i32</span>) -&gt; <span class="t">void</span> = {
+announce: <span class="k">proc</span>(label: ^<span class="k">const</span> <span class="t">char</span>, value: <span class="t">i32</span>) -&gt; <span class="t">void</span> = {
     printfmt(<span class="s">&quot;{} = {}\n&quot;</span>, label, value);
 }
 
@@ -634,8 +634,8 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>The idea</h2>
 <p>Two operators do all the work, and they are exact opposites:</p>
 <pre><code>value&amp;     the address of value
-place[0]    the value at place</code></pre>
-<p>So <code>x&amp;[0]</code> is <code>x</code> again. A pointer is an ordinary value — it has a size, it can be copied, it can be stored in a struct. It just happens to mean &quot;the thing over there&quot;.</p>
+place*     the value at place</code></pre>
+<p>So <code>x&amp;*</code> is <code>x</code> again. A pointer is an ordinary value — it has a size, it can be copied, it can be stored in a struct. It just happens to mean &quot;the thing over there&quot;.</p>
 <p>The lesson passes an address to a proc that then writes through it. The proc never sees the caller&#x27;s variable; it sees a number, goes to that place, and writes. That is the entire mechanism, and every data structure later is built from it.</p>
 <h2>What the lesson shows</h2>
 <ul>
@@ -643,12 +643,12 @@ place[0]    the value at place</code></pre>
 <li>nothing promises declaration order matches address order</li>
 <li>a proc changes its caller&#x27;s variable by writing through an address</li>
 <li>repointing a pointer moves 8 bytes and no <code>i32</code> at all</li>
-<li>a <code>*i32</code> is the address of one <code>i32</code>: <code>p[0]</code> compiles, <code>p[1]</code> does not</li>
+<li>a <code>*i32</code> is the address of one <code>i32</code>: <code>p*</code> reads it, <code>p[1]</code> does not compile</li>
 </ul>
 <h2>Why this is here</h2>
 <p>Arrays, structs, arenas and every container in std are addresses plus arithmetic. If this lesson is fuzzy, the rest will feel like magic instead of like counting.</p>
 <h2>Before you move on</h2>
-<p>You can explain why <code>a&amp;[0] = 5</code> and <code>a = 5</code> do the same thing.</p>
+<p>You can explain why <code>a&amp;* = 5</code> and <code>a = 5</code> do the same thing.</p>
 <hr>
 <p><em>Source: <a href="https://github.com/IbrahimHindawi/rin-learn/blob/main/src/lessons/05_addresses.rin"><code>src/lessons/05_addresses.rin</code></a>. The file itself carries &quot;What to notice&quot; and &quot;Try this&quot; sections — read the code first, then come back here.</em></p><h2>The code</h2><div class="source"><div class="bar"><span class="path">src/lessons/05_addresses.rin</span><span class="lines">79 lines</span></div><pre><code><span class="k">import</span> <span class="s">&quot;std/print.rin&quot;</span>
 
@@ -658,14 +658,14 @@ place[0]    the value at place</code></pre>
 <span class="c">// Two operators do all the work:</span>
 <span class="c">//</span>
 <span class="c">//   value&amp;    the address of `value`</span>
-<span class="c">//   place[0]   the value at `place`</span>
+<span class="c">//   place*     the value at `place`</span>
 <span class="c">//</span>
-<span class="c">// They are exact opposites. `x&amp;[0]` is `x` again.</span>
+<span class="c">// They are exact opposites. `x&amp;*` is `x` again.</span>
 
 set_to_seven: <span class="k">proc</span>(place: *<span class="t">i32</span>) -&gt; <span class="t">void</span> = {
     <span class="c">// `place` is an address. Writing through it changes the caller&#x27;s variable,</span>
     <span class="c">// because there is only one place and both names refer to it.</span>
-    place[<span class="n">0</span>] = <span class="n">7</span>;
+    place* = <span class="n">7</span>;
 }
 
 main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
@@ -689,7 +689,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
     <span class="c">// A pointer is an ordinary value. It has a size, it can be copied, and it</span>
     <span class="c">// can be stored -- it just happens to mean &quot;the thing over there&quot;.</span>
     p: *<span class="t">i32</span> = a&amp;;
-    printfmt(<span class="s">&quot;p holds {}, and p[0] is {}\n&quot;</span>, <span class="k">cast</span>(p, <span class="t">uintptr</span>), p[<span class="n">0</span>]);
+    printfmt(<span class="s">&quot;p holds {}, and p* is {}\n&quot;</span>, <span class="k">cast</span>(p, <span class="t">uintptr</span>), p*);
 
     set_to_seven(p);
     printfmt(<span class="s">&quot;after set_to_seven, a = {}\n&quot;</span>, a);
@@ -697,7 +697,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
     <span class="c">// Point it somewhere else. Nothing about `a` or `b` changed; only what the</span>
     <span class="c">// pointer refers to.</span>
     p = b&amp;;
-    printfmt(<span class="s">&quot;now p[0] is {}\n&quot;</span>, p[<span class="n">0</span>]);
+    printfmt(<span class="s">&quot;now p* is {}\n&quot;</span>, p*);
 
     <span class="k">return</span> <span class="n">0</span>;
 }
@@ -713,7 +713,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <span class="c">//</span>
 <span class="c">// 3. `p = b&amp;` did not move any i32. It changed 8 bytes of pointer.</span>
 <span class="c">//</span>
-<span class="c">// 4. A `*i32` points at exactly one i32, so `p[0]` is the only index it takes:</span>
+<span class="c">// 4. A `*i32` points at exactly one i32, so `p*` reads it and</span>
 <span class="c">//    `p[1]` does not compile. Pointing at many is a different type, and</span>
 <span class="c">//    lesson 06 is about those.</span>
 <span class="c">//</span>
@@ -734,7 +734,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <h2>The idea</h2>
 <p>There is no header, no length field, no bookkeeping. <code>[4]i32</code> is sixteen bytes with four values laid end to end, and its size is the element size times the count. That one fact explains why indexing is fast and why the compiler can compute an offset at compile time.</p>
 <p>Rin gives that memory four shapes, all read with <code>x[i]</code> and addressed with <code>x[i]&amp;</code>:</p>
-<table><thead><tr><th>type</th><th>what it is</th><th>indexing</th></tr></thead><tbody><tr><td><code>[N]T</code></td><td>N elements, stored inline</td><td>checked against N</td></tr><tr><td><code>[]T</code></td><td>a pointer and a length</td><td>checked against the length</td></tr><tr><td><code>*T</code></td><td>the address of exactly one <code>T</code></td><td>only <code>[0]</code></td></tr><tr><td><code>[*]T</code></td><td>a raw address, C&#x27;s pointer</td><td>unchecked</td></tr></tbody></table>
+<table><thead><tr><th>type</th><th>what it is</th><th>indexing</th></tr></thead><tbody><tr><td><code>[N]T</code></td><td>N elements, stored inline</td><td>checked against N</td></tr><tr><td><code>[]T</code></td><td>a pointer and a length</td><td>checked against the length</td></tr><tr><td><code>*T</code></td><td>the address of exactly one <code>T</code></td><td><code>p*</code> reads it; <code>[0]</code> also works</td></tr><tr><td><code>^T</code></td><td>a raw address, C&#x27;s pointer</td><td>unchecked</td></tr></tbody></table>
 <p>The slice is the useful one. <code>sum(xs: []const i32)</code> takes a whole array, part of one, or memory from anywhere else, and never needs a second &quot;how many&quot; argument. An array converts to a slice with the length taken from its type, and <code>values[1..3]</code> is a sub-slice: the same memory with a new start and length, no copy.</p>
 <h2>What the lesson shows</h2>
 <ul>
@@ -743,10 +743,10 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <li><code>values[0]&amp;</code> is a <code>*i32</code>, and writing through it changes the array</li>
 <li>an array passes to a <code>[]const i32</code> parameter as is</li>
 <li><code>values[1..3]</code> has two elements, and writing to it writes the array</li>
-<li>a raw <code>[*]i32</code> becomes a checked slice once you name its length: <code>raw[0..4]</code></li>
+<li>a raw <code>^i32</code> becomes a checked slice once you name its length: <code>raw[0..4]</code></li>
 </ul>
 <h2>Why this is here</h2>
-<p>Every &quot;pointer plus count&quot; API in C is a slice waiting to happen, and every buffer overrun is that count going wrong. A constant index out of range does not compile. A variable index into an array or a slice is checked in debug builds, and the check compiles away in release. Only <code>[*]T</code> is unchecked, because only there is the length unknown.</p>
+<p>Every &quot;pointer plus count&quot; API in C is a slice waiting to happen, and every buffer overrun is that count going wrong. A constant index out of range does not compile. A variable index into an array or a slice is checked in debug builds, and the check compiles away in release. Only <code>^T</code> is unchecked, because only there is the length unknown.</p>
 <h2>Before you move on</h2>
 <p>You can compute the byte offset of <code>values[3]</code> without running anything, and say which of the four types a C function&#x27;s <code>int *</code> should become.</p>
 <hr>
@@ -759,10 +759,10 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <span class="c">//     [N]T   an array: N elements, stored inline, length in the type</span>
 <span class="c">//     []T    a slice: a pointer and a length, travelling together</span>
 <span class="c">//     *T     a pointer to exactly one T</span>
-<span class="c">//     [*]T   a raw pointer to &quot;some&quot; T -- C&#x27;s pointer, unchecked</span>
+<span class="c">//     ^T   a raw pointer to &quot;some&quot; T -- C&#x27;s pointer, unchecked</span>
 
 increment: <span class="k">proc</span>(value: *<span class="t">i32</span>) -&gt; <span class="t">void</span> = {
-    value[<span class="n">0</span>] += <span class="n">1</span>;   <span class="c">// a *T is read at [0], and only at [0]</span>
+    value* += <span class="n">1</span>;   <span class="c">// a *T is read with *, never indexed past [0]</span>
 }
 
 <span class="c">// A slice parameter takes any run of i32: a whole array, part of one, or</span>
@@ -818,9 +818,9 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
     middle[<span class="n">0</span>] = <span class="n">99</span>;
     printfmt(<span class="s">&quot;values[1] is now {}\n&quot;</span>, values[<span class="n">1</span>]);
 
-    <span class="c">// A raw [*]T is what C hands you: an address and no count. Indexing it is</span>
+    <span class="c">// A raw ^T is what C hands you: an address and no count. Indexing it is</span>
     <span class="c">// unchecked, so you name the length once and get a checked slice back.</span>
-    raw: [*]<span class="t">i32</span> = values;
+    raw: ^<span class="t">i32</span> = values;
     checked: []<span class="t">i32</span> = raw[<span class="n">0..4</span>];
     printfmt(<span class="s">&quot;through the raw pointer, sum = {}\n&quot;</span>, sum(checked));
 
@@ -840,7 +840,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <span class="c">// 3. Indexes are checked where the length is known. A constant index out of</span>
 <span class="c">//    range -- `values[7]`, or `first[1]` on a *T -- does not compile. A</span>
 <span class="c">//    variable index into an array or a slice is checked at run time in debug</span>
-<span class="c">//    builds and stops the program with the file and line. Only [*]T is</span>
+<span class="c">//    builds and stops the program with the file and line. Only ^T is</span>
 <span class="c">//    unchecked, because only there is the length unknown.</span>
 <span class="c">//</span>
 <span class="c">// 4. `sum` never asks how big its input is. The slice says.</span>
@@ -1228,7 +1228,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
     map&lt;<span class="t">i32</span>&gt;set(arena&amp;, ages, <span class="s">&quot;ada&quot;</span>, <span class="n">36</span>);
     map&lt;<span class="t">i32</span>&gt;set(arena&amp;, ages, <span class="s">&quot;linus&quot;</span>, <span class="n">54</span>);
     linus: *<span class="t">i32</span> = map&lt;<span class="t">i32</span>&gt;get(arena&amp;, ages, <span class="s">&quot;linus&quot;</span>);
-    printfmt(<span class="s">&quot;{} entries; linus is {}\n&quot;</span>, map&lt;<span class="t">i32</span>&gt;length(arena&amp;, ages), linus[<span class="n">0</span>]);
+    printfmt(<span class="s">&quot;{} entries; linus is {}\n&quot;</span>, map&lt;<span class="t">i32</span>&gt;length(arena&amp;, ages), linus*);
 
     <span class="c">// Nothing above is freed one by one: clearing the arena resets its cursor,</span>
     <span class="c">// and every container that lived in it is gone at once.</span>
@@ -1241,7 +1241,7 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <span class="c">// 1. No container here owns memory the way a C++ vector does. Each one holds a</span>
 <span class="c">//    pointer into the arena, and the arena decides when it all goes away.</span>
 <span class="c">//</span>
-<span class="c">// 2. `squares.data` is a raw `[*]i32`: the struct knows the length, the</span>
+<span class="c">// 2. `squares.data` is a raw `^i32`: the struct knows the length, the</span>
 <span class="c">//    pointer does not. `data[0..length]` puts them back together as a slice,</span>
 <span class="c">//    and from then on `view[i]` is checked.</span>
 <span class="c">//</span>
@@ -1335,12 +1335,12 @@ print: <span class="k">proc</span>&lt;Color&gt;(c: Color) -&gt; <span class="t">
 main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
     count: <span class="t">i32</span> = <span class="n">42</span>;
     ratio: <span class="t">f32</span> = <span class="n">0.5</span>;
-    name: [*]<span class="k">const</span> <span class="t">char</span> = <span class="s">&quot;std print&quot;</span>;
+    name: ^<span class="k">const</span> <span class="t">char</span> = <span class="s">&quot;std print&quot;</span>;
 
     <span class="c">// The long way: one call per piece, picking the overload by hand.</span>
-    print&lt;[*]<span class="k">const</span> <span class="t">char</span>&gt;(<span class="s">&quot;std print says &quot;</span>);
+    print&lt;^<span class="k">const</span> <span class="t">char</span>&gt;(<span class="s">&quot;std print says &quot;</span>);
     print&lt;<span class="t">i32</span>&gt;(count);
-    print&lt;[*]<span class="k">const</span> <span class="t">char</span>&gt;(<span class="s">&quot;\n&quot;</span>);
+    print&lt;^<span class="k">const</span> <span class="t">char</span>&gt;(<span class="s">&quot;\n&quot;</span>);
 
     <span class="c">// The short way. Each `{}` takes the next argument and prints it with the</span>
     <span class="c">// `print&lt;T&gt;` for that argument&#x27;s type -- so there is no format letter to get</span>
@@ -1404,9 +1404,9 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <li><code>cinclude</code> and <code>proc[external]</code> used together, and why both are needed</li>
 <li><code>#define</code> passing straight through to the C preprocessor</li>
 <li>a varargs C function declared with <code>...</code></li>
-<li><code>[*]const char</code> as the C string type</li>
+<li><code>^const char</code> as the C string type</li>
 </ul>
-<p>Every pointer that crosses into C is a <code>[*]T</code>. A header cannot say whether <code>char *</code> means one character or a million, so rin does not guess: the pointer stays raw and unchecked, and your code turns it into a <code>*T</code> (<code>p[0]&amp;</code>) or a slice (<code>p[0..n]</code>) once it knows which it is. A string literal is a <code>[*]const char</code> for the same reason.</p>
+<p>Every pointer that crosses into C is a <code>^T</code>. A header cannot say whether <code>char *</code> means one character or a million, so rin does not guess: the pointer stays raw and unchecked, and your code turns it into a <code>*T</code> (<code>p[0]&amp;</code>) or a slice (<code>p[0..n]</code>) once it knows which it is. A string literal is a <code>^const char</code> for the same reason.</p>
 <h2>Why this is here</h2>
 <p>Every real rin program has a boundary like this — njinn calls D3D11, cgltf and miniaudio through exactly these declarations. The discipline of writing them out is what lets the compiler check the calls at all.</p>
 <h2>Before you move on</h2>
@@ -1421,8 +1421,8 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
 <span class="c">// Every C function needs one of these before you can call it. `cinclude` sends</span>
 <span class="c">// the header to the C compiler; it does not bring any name into rin. That is why</span>
 <span class="c">// `printf` is declared here too, even though &lt;stdio.h&gt; is included above.</span>
-puts: <span class="k">proc</span>[<span class="k">external</span>](text: [*]<span class="k">const</span> <span class="t">char</span>) -&gt; <span class="t">i32</span> = {}
-printf: <span class="k">proc</span>[<span class="k">external</span>](fmt: [*]<span class="k">const</span> <span class="t">char</span>, ...) -&gt; <span class="t">i32</span> = {}
+puts: <span class="k">proc</span>[<span class="k">external</span>](text: ^<span class="k">const</span> <span class="t">char</span>) -&gt; <span class="t">i32</span> = {}
+printf: <span class="k">proc</span>[<span class="k">external</span>](fmt: ^<span class="k">const</span> <span class="t">char</span>, ...) -&gt; <span class="t">i32</span> = {}
 
 main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
     puts(<span class="s">&quot;this call is checked by rin and provided by C&quot;</span>);
@@ -1516,10 +1516,10 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
     <span class="k">for</span> (i: <span class="t">u64</span> = <span class="n">0</span>; i &lt; Thing&lt;&gt;.count; i += <span class="n">1</span>) {
         field: *<span class="k">const</span> reflect_field = Thing&lt;&gt;.variant.fields[i]&amp;;
         printfmt(<span class="s">&quot;  {} : {} size={} attrs={}\n&quot;</span>,
-            field[<span class="n">0</span>].name,
-            field[<span class="n">0</span>].type,
-            field[<span class="n">0</span>].size,
-            field[<span class="n">0</span>].attrs);
+            field*.name,
+            field*.type,
+            field*.size,
+            field*.attrs);
     }
 
     <span class="c">// `type` is only a name. `info` is the link: the record for the field&#x27;s own</span>
@@ -1528,11 +1528,11 @@ main: <span class="k">proc</span>() -&gt; <span class="t">i32</span> = {
     printfmt(<span class="s">&quot;nested:\n&quot;</span>);
     <span class="k">for</span> (i: <span class="t">u64</span> = <span class="n">0</span>; i &lt; Thing&lt;&gt;.count; i += <span class="n">1</span>) {
         field: *<span class="k">const</span> reflect_field = Thing&lt;&gt;.variant.fields[i]&amp;;
-        <span class="k">if</span> (field[<span class="n">0</span>].info != <span class="k">null</span>) {
+        <span class="k">if</span> (field*.info != <span class="k">null</span>) {
             printfmt(<span class="s">&quot;  {} -&gt; {} ({} fields)\n&quot;</span>,
-                field[<span class="n">0</span>].name, field[<span class="n">0</span>].info[<span class="n">0</span>].name, field[<span class="n">0</span>].info[<span class="n">0</span>].count);
+                field*.name, field*.info*.name, field*.info*.count);
         } <span class="k">else</span> {
-            printfmt(<span class="s">&quot;  {} -&gt; (builtin, no record)\n&quot;</span>, field[<span class="n">0</span>].name);
+            printfmt(<span class="s">&quot;  {} -&gt; (builtin, no record)\n&quot;</span>, field*.name);
         }
     }
     <span class="k">return</span> <span class="n">0</span>;
@@ -1577,19 +1577,19 @@ Slot: <span class="k">enum</span> = {
 <span class="c">// checked accessors hand back the payload only when it matches -- so this one</span>
 <span class="c">// procedure describes all three types without a cast in sight.</span>
 describe: <span class="k">proc</span>(meta: *<span class="k">const</span> reflect) -&gt; <span class="t">void</span> = {
-    fields: [*]<span class="k">const</span> reflect_field = reflect_fields(meta);
-    values: [*]<span class="k">const</span> reflect_value = reflect_values(meta);
+    fields: ^<span class="k">const</span> reflect_field = reflect_fields(meta);
+    values: ^<span class="k">const</span> reflect_value = reflect_values(meta);
 
     printfmt(<span class="s">&quot;{}: kind={} members={} size={}\n&quot;</span>,
-        meta[<span class="n">0</span>].name, reflect_kind_name(meta[<span class="n">0</span>].kind), meta[<span class="n">0</span>].count, meta[<span class="n">0</span>].size);
+        meta*.name, reflect_kind_name(meta*.kind), meta*.count, meta*.size);
 
     <span class="k">if</span> (fields != <span class="k">null</span>) {
-        <span class="k">for</span> (i: <span class="t">u64</span> = <span class="n">0</span>; i &lt; meta[<span class="n">0</span>].count; i += <span class="n">1</span>) {
+        <span class="k">for</span> (i: <span class="t">u64</span> = <span class="n">0</span>; i &lt; meta*.count; i += <span class="n">1</span>) {
             printfmt(<span class="s">&quot;    {}: {} at offset {}\n&quot;</span>, fields[i].name, fields[i].type, fields[i].offset);
         }
     }
     <span class="k">if</span> (values != <span class="k">null</span>) {
-        <span class="k">for</span> (i: <span class="t">u64</span> = <span class="n">0</span>; i &lt; meta[<span class="n">0</span>].count; i += <span class="n">1</span>) {
+        <span class="k">for</span> (i: <span class="t">u64</span> = <span class="n">0</span>; i &lt; meta*.count; i += <span class="n">1</span>) {
             printfmt(<span class="s">&quot;    {} = {}\n&quot;</span>, values[i].name, values[i].value);
         }
     }

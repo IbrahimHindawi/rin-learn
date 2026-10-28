@@ -79,7 +79,7 @@ The loop is the heart of the lesson:
 ```i
 for (i: u64 = 0; i < Thing<>.count; i += 1) {
     field: *const reflect_field = Thing<>.variant.fields[i]&;
-    printfmt("{} : {}\n", field[0].name, field[0].type);
+    printfmt("{} : {}\n", field*.name, field*.type);
 }
 ```
 
@@ -93,9 +93,9 @@ at the record for the field's own type, so a walk can descend instead of stoppin
 at a string. It is null for anything with no record of its own, like a builtin.
 
 ```i
-if (field[0].info != null) {
+if (field*.info != null) {
     printfmt("{} -> {} ({} fields)\n",
-        field[0].name, field[0].info[0].name, field[0].info[0].count);
+        field*.name, field*.info*.name, field*.info*.count);
 }
 ```
 

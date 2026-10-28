@@ -21,19 +21,19 @@ Slot: enum = {
 // checked accessors hand back the payload only when it matches -- so this one
 // procedure describes all three types without a cast in sight.
 describe: proc(meta: *const reflect) -> void = {
-    fields: [*]const reflect_field = reflect_fields(meta);
-    values: [*]const reflect_value = reflect_values(meta);
+    fields: ^const reflect_field = reflect_fields(meta);
+    values: ^const reflect_value = reflect_values(meta);
 
     printfmt("{}: kind={} members={} size={}\n",
-        meta[0].name, reflect_kind_name(meta[0].kind), meta[0].count, meta[0].size);
+        meta*.name, reflect_kind_name(meta*.kind), meta*.count, meta*.size);
 
     if (fields != null) {
-        for (i: u64 = 0; i < meta[0].count; i += 1) {
+        for (i: u64 = 0; i < meta*.count; i += 1) {
             printfmt("    {}: {} at offset {}\n", fields[i].name, fields[i].type, fields[i].offset);
         }
     }
     if (values != null) {
-        for (i: u64 = 0; i < meta[0].count; i += 1) {
+        for (i: u64 = 0; i < meta*.count; i += 1) {
             printfmt("    {} = {}\n", values[i].name, values[i].value);
         }
     }

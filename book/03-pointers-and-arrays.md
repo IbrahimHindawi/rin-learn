@@ -12,16 +12,16 @@ A variable is a place, and a place has a number. This is the chapter K&R puts fi
 Two operators do all of it:
 
     value&      the address of `value`
-    place[0]     the value at `place`
+    place*      the value at `place`
 
-They are exact inverses. `x&[0]` is `x`.
+They are exact inverses. `x&*` is `x`.
 
 The lesson prints where `a` and `b` live, then passes `a`'s address to a
 procedure that never sees `a`:
 
 ```i
 set_to_seven: proc(place: *i32) -> void = {
-    place[0] = 7;
+    place* = 7;
 }
 ```
 

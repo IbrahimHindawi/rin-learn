@@ -45,7 +45,7 @@ main: proc() -> i32 = {
 //    and the last `if` adds one more: 38.
 //
 // 2. `||` never evaluates its right side once the left is true, and `&&` never
-//    does once the left is false. That is what makes `p != null && p[0] > 0`
+//    does once the left is false. That is what makes `p != null && p* > 0`
 //    safe to write.
 //
 // Try this

@@ -19,12 +19,12 @@ print: proc<Color>(c: Color) -> void = {
 main: proc() -> i32 = {
     count: i32 = 42;
     ratio: f32 = 0.5;
-    name: [*]const char = "std print";
+    name: ^const char = "std print";
 
     // The long way: one call per piece, picking the overload by hand.
-    print<[*]const char>("std print says ");
+    print<^const char>("std print says ");
     print<i32>(count);
-    print<[*]const char>("\n");
+    print<^const char>("\n");
 
     // The short way. Each `{}` takes the next argument and prints it with the
     // `print<T>` for that argument's type -- so there is no format letter to get

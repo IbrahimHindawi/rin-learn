@@ -6,14 +6,14 @@ import "std/print.rin"
 // Two operators do all the work:
 //
 //   value&    the address of `value`
-//   place[0]   the value at `place`
+//   place*     the value at `place`
 //
-// They are exact opposites. `x&[0]` is `x` again.
+// They are exact opposites. `x&*` is `x` again.
 
 set_to_seven: proc(place: *i32) -> void = {
     // `place` is an address. Writing through it changes the caller's variable,
     // because there is only one place and both names refer to it.
-    place[0] = 7;
+    place* = 7;
 }
 
 main: proc() -> i32 = {
@@ -37,7 +37,7 @@ main: proc() -> i32 = {
     // A pointer is an ordinary value. It has a size, it can be copied, and it
     // can be stored -- it just happens to mean "the thing over there".
     p: *i32 = a&;
-    printfmt("p holds {}, and p[0] is {}\n", cast(p, uintptr), p[0]);
+    printfmt("p holds {}, and p* is {}\n", cast(p, uintptr), p*);
 
     set_to_seven(p);
     printfmt("after set_to_seven, a = {}\n", a);
@@ -45,7 +45,7 @@ main: proc() -> i32 = {
     // Point it somewhere else. Nothing about `a` or `b` changed; only what the
     // pointer refers to.
     p = b&;
-    printfmt("now p[0] is {}\n", p[0]);
+    printfmt("now p* is {}\n", p*);
 
     return 0;
 }
@@ -61,7 +61,7 @@ main: proc() -> i32 = {
 //
 // 3. `p = b&` did not move any i32. It changed 8 bytes of pointer.
 //
-// 4. A `*i32` points at exactly one i32, so `p[0]` is the only index it takes:
+// 4. A `*i32` points at exactly one i32, so `p*` reads it and
 //    `p[1]` does not compile. Pointing at many is a different type, and
 //    lesson 06 is about those.
 //

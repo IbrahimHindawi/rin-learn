@@ -30,7 +30,7 @@ sign needs a `cast`, at the place it happens. Literals have no suffixes: `2.5`
 is whatever its context wants, and it must fit.
 
 **Lengths travel with memory.** `[N]T` is an array, `[]T` a slice that carries
-its length, `*T` the address of exactly one value, and `[*]T` C's raw pointer.
+its length, `*T` the address of exactly one value, and `^T` C's raw pointer.
 All four read with `x[i]`. Indexes are checked wherever the length is known —
 at compile time for constants, in debug builds for the rest.
 
@@ -52,7 +52,7 @@ pointer in a struct is the whole of what dispatch needs.
 ## What it does not do
 
 It does not manage memory for you. A slice into an arena that was cleared still
-points at it, arithmetic that overflows still wraps, and a raw `[*]T` is as
+points at it, arithmetic that overflows still wraps, and a raw `^T` is as
 unchecked as the C it came from. What the compiler refuses is the set of mistakes
 it can genuinely see: a conversion that loses information, a literal that does
 not fit, a constant index out of range, mismatched arities, two enums compared to

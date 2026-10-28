@@ -18,10 +18,10 @@ main: proc() -> i32 = {
     for (i: u64 = 0; i < Thing<>.count; i += 1) {
         field: *const reflect_field = Thing<>.variant.fields[i]&;
         printfmt("  {} : {} size={} attrs={}\n",
-            field[0].name,
-            field[0].type,
-            field[0].size,
-            field[0].attrs);
+            field*.name,
+            field*.type,
+            field*.size,
+            field*.attrs);
     }
 
     // `type` is only a name. `info` is the link: the record for the field's own
@@ -30,11 +30,11 @@ main: proc() -> i32 = {
     printfmt("nested:\n");
     for (i: u64 = 0; i < Thing<>.count; i += 1) {
         field: *const reflect_field = Thing<>.variant.fields[i]&;
-        if (field[0].info != null) {
+        if (field*.info != null) {
             printfmt("  {} -> {} ({} fields)\n",
-                field[0].name, field[0].info[0].name, field[0].info[0].count);
+                field*.name, field*.info*.name, field*.info*.count);
         } else {
-            printfmt("  {} -> (builtin, no record)\n", field[0].name);
+            printfmt("  {} -> (builtin, no record)\n", field*.name);
         }
     }
     return 0;

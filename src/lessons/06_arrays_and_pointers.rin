@@ -7,10 +7,10 @@ import "std/print.rin"
 //     [N]T   an array: N elements, stored inline, length in the type
 //     []T    a slice: a pointer and a length, travelling together
 //     *T     a pointer to exactly one T
-//     [*]T   a raw pointer to "some" T -- C's pointer, unchecked
+//     ^T   a raw pointer to "some" T -- C's pointer, unchecked
 
 increment: proc(value: *i32) -> void = {
-    value[0] += 1;   // a *T is read at [0], and only at [0]
+    value* += 1;   // a *T is read with *, never indexed past [0]
 }
 
 // A slice parameter takes any run of i32: a whole array, part of one, or
@@ -66,9 +66,9 @@ main: proc() -> i32 = {
     middle[0] = 99;
     printfmt("values[1] is now {}\n", values[1]);
 
-    // A raw [*]T is what C hands you: an address and no count. Indexing it is
+    // A raw ^T is what C hands you: an address and no count. Indexing it is
     // unchecked, so you name the length once and get a checked slice back.
-    raw: [*]i32 = values;
+    raw: ^i32 = values;
     checked: []i32 = raw[0..4];
     printfmt("through the raw pointer, sum = {}\n", sum(checked));
 
@@ -88,7 +88,7 @@ main: proc() -> i32 = {
 // 3. Indexes are checked where the length is known. A constant index out of
 //    range -- `values[7]`, or `first[1]` on a *T -- does not compile. A
 //    variable index into an array or a slice is checked at run time in debug
-//    builds and stops the program with the file and line. Only [*]T is
+//    builds and stops the program with the file and line. Only ^T is
 //    unchecked, because only there is the length unknown.
 //
 // 4. `sum` never asks how big its input is. The slice says.

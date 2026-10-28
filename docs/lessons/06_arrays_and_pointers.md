@@ -16,8 +16,8 @@ Rin gives that memory four shapes, all read with `x[i]` and addressed with
 |---|---|---|
 | `[N]T` | N elements, stored inline | checked against N |
 | `[]T` | a pointer and a length | checked against the length |
-| `*T` | the address of exactly one `T` | only `[0]` |
-| `[*]T` | a raw address, C's pointer | unchecked |
+| `*T` | the address of exactly one `T` | `p*` reads it; `[0]` also works |
+| `^T` | a raw address, C's pointer | unchecked |
 
 The slice is the useful one. `sum(xs: []const i32)` takes a whole array, part
 of one, or memory from anywhere else, and never needs a second "how many"
@@ -32,14 +32,14 @@ length, no copy.
 - `values[0]&` is a `*i32`, and writing through it changes the array
 - an array passes to a `[]const i32` parameter as is
 - `values[1..3]` has two elements, and writing to it writes the array
-- a raw `[*]i32` becomes a checked slice once you name its length: `raw[0..4]`
+- a raw `^i32` becomes a checked slice once you name its length: `raw[0..4]`
 
 ## Why this is here
 
 Every "pointer plus count" API in C is a slice waiting to happen, and every
 buffer overrun is that count going wrong. A constant index out of range does
 not compile. A variable index into an array or a slice is checked in debug
-builds, and the check compiles away in release. Only `[*]T` is unchecked,
+builds, and the check compiles away in release. Only `^T` is unchecked,
 because only there is the length unknown.
 
 ## Before you move on

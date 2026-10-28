@@ -36,7 +36,7 @@ main: proc() -> i32 = {
     map<i32>set(arena&, ages, "ada", 36);
     map<i32>set(arena&, ages, "linus", 54);
     linus: *i32 = map<i32>get(arena&, ages, "linus");
-    printfmt("{} entries; linus is {}\n", map<i32>length(arena&, ages), linus[0]);
+    printfmt("{} entries; linus is {}\n", map<i32>length(arena&, ages), linus*);
 
     // Nothing above is freed one by one: clearing the arena resets its cursor,
     // and every container that lived in it is gone at once.
@@ -49,7 +49,7 @@ main: proc() -> i32 = {
 // 1. No container here owns memory the way a C++ vector does. Each one holds a
 //    pointer into the arena, and the arena decides when it all goes away.
 //
-// 2. `squares.data` is a raw `[*]i32`: the struct knows the length, the
+// 2. `squares.data` is a raw `^i32`: the struct knows the length, the
 //    pointer does not. `data[0..length]` puts them back together as a slice,
 //    and from then on `view[i]` is checked.
 //
